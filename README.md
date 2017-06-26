@@ -21,3 +21,5 @@
 | 6 | ユーザーのメッセージの背後にある感情の判別               | [ドキュメント](./exercise6-MoodDetection.md)          | [C\#](./CSharp/exercise6-MoodDetection.md) - [Node](./Node/exercise6-MoodDetection.md)                   |
 | 7 | ヒューマン エージェントへの会話の受け渡し                | [ドキュメント](./exercise7-HandOffToHuman.md)         | [C\#](./CSharp/exercise7-HandOffToHuman.md) - [Node](./Node/exercise7-HandOffToHuman.md)                 |
 | 8 | バックチャネルを通したイベントの送受信                   | [ドキュメント](./exercise8-BackChannel.md)            | [C\#](./CSharp/exercise8-BackChannel.md) - [Node](./Node/exercise8-BackChannel.md)                       |
+
+オリジナルの英語版: https://github.com/GeekTrainer/help-desk-bot-lab
