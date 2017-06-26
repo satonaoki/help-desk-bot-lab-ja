@@ -34,6 +34,7 @@
     private string severity;
     private string description;
     ```
+
 4.  MessageReceivedAsync メソッドを次のコードで置き換えます。
 
     ```csharp
