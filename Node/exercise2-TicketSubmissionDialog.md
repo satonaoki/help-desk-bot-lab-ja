@@ -60,7 +60,7 @@ f
 
 3.  コンソール (nodemon app.js)
     からアプリを実行し、エミュレーターを開きます。いつもどおりにボットの URL
-    を入力し (http://localhost:3978/api/messages)、ボットをテストします。
+    を入力し (http://localhost:3978/api/messages )、ボットをテストします。
 
    ![](./media/2-1.png)
 
