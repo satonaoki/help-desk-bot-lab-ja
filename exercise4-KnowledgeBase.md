@@ -74,7 +74,7 @@ Search は、さまざまなソース (Azure SQL DB、Cosmos DB、BLOB ストレ
 -   [Azure](https://azureinfo.microsoft.com/us-freetrial.html?cr_cc=200744395&wt.mc_id=usdx_evan_events_reg_dev_0_iottour_0_0)
     サブスクリプション
 
-**Azure サービスを作成して構成する**
+## Azure サービスを作成して構成する
 
 DocumentDB API を使用して Azure Cosmos DB
 を作成した後、新しいコレクションを作成する必要があります。ドキュメント
