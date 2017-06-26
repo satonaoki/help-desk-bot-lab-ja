@@ -1,6 +1,6 @@
-**演習 6: ユーザーのメッセージの背後にあるセンチメントの判別 (Node.js)**
+# 演習 6: ユーザーのメッセージの背後にあるセンチメントの判別 (Node.js)
 
-**概要**
+## 概要
 
 ユーザーとボットとの対話はほとんどの場合自由形式で行われるため、ボットは言語を自然に、かつ文脈に応じて理解する必要があります。この演習では、Azure
 Text Analytics API を使用してユーザーの感情や気分を検出する方法を学習します。
@@ -17,7 +17,7 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 npm install を実行し、.env ファイル内の Text Analytics
 キー値を設定してください。
 
-**前提条件**
+## 前提条件
 
 この演習を完了するには、以下のソフトウェアが必要です。
 
@@ -32,7 +32,7 @@ npm install を実行し、.env ファイル内の Text Analytics
 -   [Bot Framework Emulator](https://emulator.botframework.com/) (en-US
     ロケールで構成されていることを確認してください)
 
-**タスク 1: Text Analytics API キーの作成**
+## タスク 1: Text Analytics API キーの作成
 
 このタスクでは、Text Analytics アカウントを作成します。
 
@@ -47,7 +47,7 @@ npm install を実行し、.env ファイル内の Text Analytics
 
 >   ![](./media/6-1.png)
 
-**タスク 2: Text Analytics API クライアントの追加**
+## タスク 2: Text Analytics API クライアントの追加
 
 このタスクでは、ボットから Text Analytics API
 を呼び出す新しいモジュールを作成します。
@@ -128,8 +128,7 @@ npm install を実行し、.env ファイル内の Text Analytics
 
 >   };
 
-**タスク 3:
-フィードバックを要求してユーザーのセンチメントを分析できるようにするためのボットの変更**
+## タスク 3: フィードバックを要求してユーザーのセンチメントを分析できるようにするためのボットの変更
 
 このタスクでは、新たな Text Analytics
 モデルを導入し、ボットの新しいダイアログからこのモデルを使用します。
@@ -258,7 +257,7 @@ npm install を実行し、.env ファイル内の Text Analytics
 
 >   session.replaceDialog('UserFeedbackRequest');
 
-**タスク 4: エミュレーターからのボットのテスト**
+## タスク 4: エミュレーターからのボットのテスト
 
 1.  コンソール (nodemon app.js)
     からアプリを実行し、エミュレーターを開きます。ボットの URL
@@ -283,7 +282,7 @@ npm install を実行し、.env ファイル内の Text Analytics
 >   この後の演習 (7) では、会話を人間の担当者に引き渡し
 >   (ハンドオフ)、担当者を通じてユーザーを支援する方法について学習します。
 
-**その他の課題**
+## その他の課題
 
 自主的に学習を続ける場合は、次のタスクを利用できます。
 
