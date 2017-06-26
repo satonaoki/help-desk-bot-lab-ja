@@ -19,9 +19,8 @@ install` を実行してください。
 
 Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのある方法でボットを記述する手段を提供する、強力で使いやすいフレームワークです。Express や Restify のようなフレームワークを利用して、JavaScript 開発者にとってなじみのある方法でボットを記述する手段を提供します。  
 
-1.  Bot Builder SDK
-    とその依存関係をインストールするには、まず、ボット用のフォルダー(今後のプロジェクトルートフォルダーになります。）を作成し、コンソールウィンドウを開いてそこに移動し、以下の npm コマンドを実行します。`app.js` をエントリ ポイントとして使用し、残りはそのままにします。
-
+1. Bot Builder SDK とその依存関係をインストールするには、まず、ボット用のフォルダー(今後のプロジェクトルートフォルダーになります。）を作成し、コンソールウィンドウを開いてそこに移動し、以下の npm コマンドを実行します。`app.js` をエントリ ポイントとして使用し、残りはそのままにします。
+    
     ```
     npm init
     ```
@@ -29,10 +28,7 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 <!-- ドライラン時に補足追加 -->
 > 補足: init 時にプロンプト画面でいくつかパラメータの確認が出ますが、ハンズオンの内容とは特に関係ないため、今回は任意のパラメータをセットしてください。
 
-2.  次に、以下の npm コマンドを実行して、[Bot Builder
-    SDK](https://dev.botframework.com/)、[Restify](http://restify.com/)、および
-    [Dotenv](https://github.com/motdotla/dotenv)
-    モジュールをインストールします。
+2. 次に、以下の npm コマンドを実行して、[Bot Builder SDK](https://dev.botframework.com/)、[Restify](http://restify.com/)、および[Dotenv](https://github.com/motdotla/dotenv)モジュールをインストールします。
 
     ```
     npm install --save botbuilder restify dotenv
@@ -45,9 +41,7 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 > npm WARN helpbot@1.0.0 No description
 > npm WARN helpbot@1.0.0 No repository field.
 
-1.  [Nodemon](https://nodemon.io/) の dev
-    依存関係をインストールします。これは、アプリケーションをホストし、JavaScript
-    に変更が加えられるたびに更新します。
+3. [Nodemon](https://nodemon.io/) の dev 依存関係をインストールします。これは、アプリケーションをホストし、JavaScript に変更が加えられるたびに更新します。
 
     ```
     npm install -g nodemon
@@ -55,7 +49,7 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 
 ## タスク 2: ボットを作成する
 
-1.  プロジェクトのルート ディレクトリ(に、以下の内容を含む .envという名前のファイルを作成します。このファイルを使用して、ボットを構成します。
+1. プロジェクトのルート ディレクトリ(に、以下の内容を含む .envという名前のファイルを作成します。このファイルを使用して、ボットを構成します。
 
     ```
     PORT=3978
@@ -63,9 +57,9 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
     MICROSOFT_APP_PASSWORD=
     ```
 
-2.  ルート ディレクトリに `app.js` という名前のファイルを作成します。ルートディレクトリはアプリケーションおよびボットのルートとなります。ボットは Restify フレームワークを使用して、既定でポート 3978 をリッスンします。Restify フレームワークは、ボットを開発する際の標準となっています。
+2. ルート ディレクトリに `app.js` という名前のファイルを作成します。ルートディレクトリはアプリケーションおよびボットのルートとなります。ボットは Restify フレームワークを使用して、既定でポート 3978 をリッスンします。Restify フレームワークは、ボットを開発する際の標準となっています。
 
-　　以下のコードは主に3つのセクションで構成されています。
+    以下のコードは主に3つのセクションで構成されています。
 
     -   ChatConnector クラスを使用してチャット コネクターを作成する。
     -   Restify ルートでこのコネクターを使用して、メッセージをリッスンする。
@@ -120,9 +114,9 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
     `http://localhost:3978/api/messages`
     と入力します。これは、ボットがローカルにホストされたときにリッスンする既定のエンドポイントです。
 
-2.  **[ロケール]** を `en-US` に設定し、**[接続]**
+3.  **[ロケール]** を `en-US` に設定し、**[接続]**
     をクリックします。ボットをローカルに実行しているので、**[Microsoft App ID]** と **[Microsoft App Password]** を指定する必要はありません。これらのフィールドは、今のところ空白のままにしてかまいません。この情報は、演習5 で Bot Framework Portal にボットを登録する際に取得します。
 
-3.  送信した各メッセージに対して、メッセージの先頭に "You said"、末尾に "which was \#\# characters" (\#\# はユーザーのメッセージの文字数) のテキストを付けて、おうむ返しにボットが応答するのを確認します。
+4.  送信した各メッセージに対して、メッセージの先頭に "You said"、末尾に "which was \#\# characters" (\#\# はユーザーのメッセージの文字数) のテキストを付けて、おうむ返しにボットが応答するのを確認します。
 
     >   ![](./media/1-1.png)
