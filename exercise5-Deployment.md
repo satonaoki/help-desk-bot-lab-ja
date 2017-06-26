@@ -1,9 +1,9 @@
-**演習 5: クラウドへのボットの展開**
+# 演習 5: クラウドへのボットの展開
 
 この演習では、自分のボットを登録し、Azure
 に展開して、他の人々がそのボットを使用できるようにする方法を学習します。
 
-**目標**
+## 目標
 
 この演習を完了するためには、以下の操作を実行できなければなりません。
 
@@ -11,7 +11,7 @@
 
 -   Azure Web アプリの作成、およびアプリでのボット コードの発行
 
-**前提条件**
+## 前提条件
 
 -   前の演習を完了していること、あるいは
     [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise4-LuisDialog)
@@ -27,7 +27,7 @@
 
 -   [Skype](https://www.skype.com/) アカウント (オプション)。
 
-**Bot Framework へのボットの登録**
+## Bot Framework へのボットの登録
 
 自分のボットを他の人々が使用できるようにするためには、そのボットを Bot Framework
 に登録する必要があります。登録は簡単に行えます。そのボットに関する情報を入力するように求められます。入力すると、そのボットが
@@ -36,12 +36,12 @@ Bot Framework での認証に使用するアプリ ID
 
 ![](media/fcb92a16375bee8d386fde934483f6e0.png)
 
-**Azure へのボットの発行**
+## Azure へのボットの発行
 
 自分のボットを他の人々が使用できるようにするためには、そのボットをクラウドに展開する必要があります。Azure
 または他の任意のクラウド サービスに展開できます。
 
-**Node.js**
+### Node.js
 
 次のような**アプリ設定**キーを Web アプリに追加する必要があります。
 
@@ -61,10 +61,9 @@ git
 リポジトリをプロジェクトに追加する必要があります。変更内容をリポジトリにプッシュすると、コードが自動的に
 Web アプリに発行されます。
 
-**C\#**
+### C#
 
-Visual Studio から Web
-アプリに直接ボットを発行する必要があります。まだ何も作成していない場合は、作成します。または、既存のものを選択します。
+Visual Studio から Web アプリに直接ボットを発行する必要があります。まだ何も作成していない場合は、作成します。または、既存のものを選択します。
 
 ![](media/6591781d7291d3a21fa1a8ca7169940b.png)
 
@@ -79,7 +78,7 @@ Visual Studio から Web
 | MicrosoftAppPassword | **ボット パスワード**を使用します。                                              |
 | TicketsAPIBaseUrl    | Web アプリの URL (例: <https://help-desk-bot.azurewebsites.net/>) を使用します。 |
 
-**ボット構成の更新**
+## ボット構成の更新
 
 **Bot Framework Portal** でボットのアプリ サービス URL を Web アプリの URL
 によって更新する必要があります。URL の末尾には必ず /api/messages
@@ -91,7 +90,7 @@ Visual Studio から Web
 で、発行したボットをテストできます。また Skype でもテストできます (Skype
 をインストールする必要があります)。
 
-**その他の課題**
+## その他の課題
 
 -   Bot Emulator
     でボットをテストします。[ngrok](https://docs.microsoft.com/en-us/bot-framework/debug-bots-emulator#a-idngroka-install-and-configure-ngrok)
@@ -107,7 +106,7 @@ Visual Studio から Web
 
 -   [Slack](https://slack.com/) などの別のチャネルにボットを登録します。
 
-**参考資料**
+## 参考資料
 
 -   [Register a bot with the Bot Framework (Bot Framework
     へのボットの登録)](https://docs.microsoft.com/en-us/bot-framework/portal-register-bot)
