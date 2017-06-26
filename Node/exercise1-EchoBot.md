@@ -1,6 +1,6 @@
-**演習 1: Bot Builder SDK for Node.js による初めての "おうむ返し" ボットの作成**
+# 演習 1: Bot Builder SDK for Node.js による初めての "おうむ返し" ボットの作成
 
-**概要**
+## 概要
 
 この演習では、Bot Builder SDK for Node.js を使用してボットを構築し、それを Bot
 Framework Emulator でテストする方法を示します。
@@ -8,7 +8,7 @@ Framework Emulator でテストする方法を示します。
 [このフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise1-EchoBot)の中には、ソリューションと、この演習のステップで作成するコードが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。ソリューションを使用する前に必ず、npm
 install を実行してください。
 
-**前提条件**
+## 前提条件
 
 この演習を完了するには、以下のソフトウェアが必要です。
 
@@ -20,7 +20,7 @@ install を実行してください。
 -   [Bot Framework Emulator](https://emulator.botframework.com/)
     (ボットのテストに使用するクライアント)
 
-**タスク 1: アプリを初期化し Bot Builder SDK をインストールする**
+## タスク 1: アプリを初期化し Bot Builder SDK をインストールする
 
 Bot Builder SDK for Node.js は、Node.js
 開発者にとってなじみのある方法でボットを記述する手段を提供する、強力で使いやすいフレームワークです。Express
@@ -55,7 +55,7 @@ Bot Builder SDK for Node.js は、Node.js
 
 2.  npm install --save-dev nodemon
 
-**タスク 2: ボットを作成する**
+## タスク 2: ボットを作成する
 
 1.  プロジェクトのルート ディレクトリに、以下の内容を含む .env
     という名前のファイルを作成します。このファイルを使用して、ボットを構成します。
@@ -135,7 +135,7 @@ Bot Builder SDK for Node.js は、Node.js
 
 >   ]);
 
-**タスク 3: ボットをテストする**
+## タスク 3: ボットをテストする
 
 次に、Bot Framework Emulator
 を使用してボットをテストし、動作の様子を見てみましょう。このエミュレーターは、localhost
