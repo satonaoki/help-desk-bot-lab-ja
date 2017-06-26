@@ -486,10 +486,9 @@ Cosmos DB
     }
     ```
 
-10.  AfterMenuSelection
-    メソッドを追加します。このメソッドは、ユーザーが検索するカテゴリを選択する際に呼び出されます。
+10. AfterMenuSelection メソッドを追加します。このメソッドは、ユーザーが検索するカテゴリを選択する際に呼び出されます。
 
-    ``` csharp
+    ```csharp
     public virtual async Task AfterMenuSelection(IDialogContext context, IAwaitable<string> result)
     {
         this.category = await result;
@@ -503,10 +502,9 @@ Cosmos DB
     }
     ```
 
-11.  最後に、RootDialog で、CategoryExplorerDialog
-    の署名のマッチングを行えるように ExploreCategory メソッドを更新します。
+11. 最後に、RootDialog で、CategoryExplorerDialog の署名のマッチングを行えるように ExploreCategory メソッドを更新します。
 
-    ``` csharp
+    ```csharp
     [LuisIntent("ExploreKnowledgeBase")]
     public async Task ExploreCategory(IDialogContext context, LuisResult result)
     {
@@ -518,10 +516,9 @@ Cosmos DB
     }
     ```
 
-12.  また、ナレッジ ベースの機能が含まれるように Help
-    メソッドのテキストを更新できます。
-
-    ``` csharp
+12. また、ナレッジ ベースの機能が含まれるように Help メソッドのテキストを更新できます。
+    
+    ```csharp
     [LuisIntent("Help")]
     public async Task Help(IDialogContext context, LuisResult result)
     {
