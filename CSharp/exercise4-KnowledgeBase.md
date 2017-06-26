@@ -418,7 +418,7 @@ Cosmos DB
     hardware」と入力します。そのカテゴリに属する記事がボットにより一覧表示されることを確認します。他のカテゴリ値
     (例: ネットワーキング、ソフトウェア) で試してもかまいません。
 
->   [./media/image13.png](./media/image13.png)
+>   ![](./media/4-13.png)
 
 **タスク 6: カテゴリと記事を表示できるようにボットを更新する**
 
@@ -737,25 +737,25 @@ Cosmos DB
 2.  「explore knowledge base」と入力します。Cosmos DB
     にアップロードした記事カテゴリの一覧、および各カテゴリの記事の数が表示されます。
 
->   [./media/image14.png](./media/image14.png)
+>   ![](./media/4-14.png)
 
 1.  一覧表示されたカテゴリのいずれかをクリックすると、そのカテゴリの記事が表示されます。
 
->   [./media/image15.png](./media/image15.png)
+>   ![](./media/4-15.png)
 
 1.  記事の [More Details] ボタンをクリックすると、記事の全文が表示されます。
 
->   [./media/image16.png](./media/image16.png)
+>   ![](./media/4-16.png)
 
 1.  特定のカテゴリを検索してみてもかまいません。「explore
     software」と入力すると、そのカテゴリに属する記事がいくつか表示されます。
 
->   [./media/image17.png](./media/image17.png)
+>   ![](./media/4-17.png)
 
 1.  同様に、特定のトピックに関する記事を検索してみてもかまいません。たとえば、「search
     about OneDrive」と入力します。
 
->   [./media/image18.png](./media/image18.png)
+>   ![](./media/4-18.png)
 
 >   **注:** 検索によって返されるドキュメントごとにスコア (関連度)
 >   が返されることを確認してください。

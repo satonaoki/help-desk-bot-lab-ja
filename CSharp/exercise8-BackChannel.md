@@ -64,13 +64,13 @@ Web.config で LUIS モデルの値、および Azure Search
     ) リンクをクリックします。開いたウィンドウで [Add new site]
     をクリックします。サイト名 (例: ヘルプ デスク チケット検索) を入力します。
 
->   [./media/image3.png](./media/image3.png)
+>   ![](./media/8-3.png)
 
 1.  [完了] をクリックすると、次のページが表示されます。**秘密鍵**が 2
     つあることに注意してください。後で使用できるように、いずれか 1
     つを保存しておきます。[完了] をクリックします。
 
->   [./media/image4.png](./media/image4.png)
+>   ![](./media/8-4.png)
 
 **タスク 2: 埋め込み済み Web チャットによる HTML ページの追加**
 
@@ -257,7 +257,7 @@ BackChannel 機能を追加します。
     は、ボットを実行しているポート番号であることに注意してください。別のポート番号を使用している場合は、変更します。次に、転送先の
     **https** URL も保存しておきます。
 
->   [./media/image5.png](./media/image5.png)
+>   ![](./media/8-5.png)
 
 >   **注:** IIS Express ではどの開発サイトを表示するかを Host
 >   ヘッダーを使用して判別するため、-host-header
@@ -275,7 +275,7 @@ BackChannel 機能を追加します。
     my password, this is urgent」(急いでパスワードを変更する必要があります)
     と入力します。入力した説明に応じて、右側に記事リストが表示されるのがわかります。
 
->   [./media/image6.png](./media/image6.png)
+>   ![](./media/8-6.png)
 
 **タスク 5: Web ページを更新して event メッセージをボットに送信**
 
@@ -437,4 +437,4 @@ BackChannel 機能を追加します。
 3.  いずれかの記事のタイトルをクリックすると、Web Chat
     コントロールに記事のコンテンツが表示されます。
 
->   [./media/image7.png](./media/image7.png)
+>   ![](./media/8-7.png)
