@@ -1,4 +1,4 @@
-**演習 4: Azure Search と Cosmos DB によるヘルプ デスク ナレッジ ベースの実装**
+# 演習 4: Azure Search と Cosmos DB によるヘルプ デスク ナレッジ ベースの実装
 
 ボットは、ユーザーが大量のコンテンツをナビゲートする支援を行い、ユーザーのためにデータ駆動型の検索エクスペリエンスを実現することもできます。この演習では、検索機能をボットに追加し、ユーザーがナレッジ
 ベースを検索する支援を行う方法について学習します。これを行うには、Azure Cosmos
@@ -32,7 +32,7 @@ Search は、さまざまなソース (Azure SQL DB、Cosmos DB、BLOB ストレ
 
 ![](media/6002c05ae7223b25b34d254ca6a7e53c.png)
 
-**目標**
+## 目標
 
 この演習を完了するためには、ボットが以下の操作を実行できなければなりません。
 
@@ -61,7 +61,7 @@ Search は、さまざまなソース (Azure SQL DB、Cosmos DB、BLOB ストレ
 
 ![](media/5f9d2c2c3ee03d59a5152dec49ece523.png)
 
-**前提条件**
+## 前提条件
 
 -   前の演習を完了している必要があります。あるいは
     [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise3-LuisDialog)
@@ -91,7 +91,7 @@ DocumentDB API を使用して Azure Cosmos DB
 Azure Search
 インデックスの詳細については、[こちらの記事](https://docs.microsoft.com/en-us/azure/search/search-what-is-an-index)を参照してください。
 
-**ExploreKnowledgeBase インテントが含まれるように LUIS モデルを更新する**
+## ExploreKnowledgeBase インテントが含まれるように LUIS モデルを更新する
 
 ナレッジ ベースを検索するインテントに対応するために、LUIS
 モデルに新しいインテントを追加する必要があります。発話の一例を次に示します。
@@ -102,7 +102,7 @@ Azure Search
 
 -   「find me articles about hardware」
 
-**Azure Search API を呼び出せるようにボットを更新する**
+## Azure Search API を呼び出せるようにボットを更新する
 
 REST API を使用して Azure Search
 に対してクエリを行うためにコードを追加する必要があります。使用する URL
@@ -129,7 +129,7 @@ https://helpdeskbotsearch.search.windows.net/indexes/knowledge-base-index/docs?a
 -   [OData Expression Syntax for Azure
     Search](https://docs.microsoft.com/en-us/rest/api/searchservice/odata-expression-syntax-for-azure-search)
 
-**カテゴリと記事を表示できるようにボットを更新する**
+## カテゴリと記事を表示できるようにボットを更新する
 
 ボットのダイアログはさまざまな方法で実装できます。ここでは、各言語で推奨される方法について説明します。
 
@@ -186,7 +186,7 @@ C\# の場合は、以下のダイアログと Scorable を追加します。
 Scorable
 の詳細については、[こちらのサンプル](https://github.com/Microsoft/BotBuilder-Samples/tree/master/CSharp/core-GlobalMessageHandlers)を参照してください。
 
-**その他の課題**
+## その他の課題
 
 自分で作業を続ける場合は、次のタスクを利用できます。
 
@@ -199,7 +199,7 @@ Scorable
     [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/assets)
     フォルダーの[こちらのモジュール](https://github.com/GeekTrainer/help-desk-bot-lab/blob/assets/exercise4-KnowledgeBase/FurtherChallenge/imageSearchApiClient.js)を使用できます。
 
-**参考資料**
+## 参考資料
 
 -   [Azure Search](https://azure.microsoft.com/en-us/services/search/)
 
