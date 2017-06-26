@@ -476,186 +476,139 @@ namespace HelpDeskBot.Dialogs
 
 1.  Global.asax.cs を開き、以下の using ステートメントを追加します。
 
-2.  using Autofac;
+```
+using Autofac;
+using HelpDeskBot.Dialogs;
+using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Scorables;
+using Microsoft.Bot.Connector;
+```
 
-3.  using HelpDeskBot.Dialogs;
-
-4.  using Microsoft.Bot.Builder.Dialogs;
-
-5.  using Microsoft.Bot.Builder.Scorables;
-
->   using Microsoft.Bot.Connector;
 
 1.  同じファイルで、Application\_Start
     メソッドを以下のコードに置き換え、会話コンテナーに Scorable を登録します。
 
-2.  protected void Application\_Start()
+```
+protected void Application\_Start()
+{
+    GlobalConfiguration.Configure(WebApiConfig.Register);
+    var builder = new ContainerBuilder();
+    builder.RegisterType\<SearchScorable\>()
+        .As\<IScorable\<IActivity, double\>\>()
+        .InstancePerLifetimeScope();
+    builder.RegisterType\<ShowArticleDetailsScorable\>()
+        .As\<IScorable\<IActivity, double\>\>()
+        .InstancePerLifetimeScope();
+    builder.Update(Conversation.Container);
+}
+```
 
-3.  {
-
-4.  GlobalConfiguration.Configure(WebApiConfig.Register);
-
-5.  var builder = new ContainerBuilder();
-
-6.  builder.RegisterType\<SearchScorable\>()
-
-7.  .As\<IScorable\<IActivity, double\>\>()
-
-8.  .InstancePerLifetimeScope();
-
-9.  builder.RegisterType\<ShowArticleDetailsScorable\>()
-
-10. .As\<IScorable\<IActivity, double\>\>()
-
-11. .InstancePerLifetimeScope();
-
-12. builder.Update(Conversation.Container);
-
->   }
 
 1.  CategoryExplorerDialog で変数 originalText
     を追加し、そのコンストラクターを更新し、これを受け取り、これを設定します。
 
-2.  private string originalText = null;
+```
+private string originalText = null;
+public CategoryExplorerDialog(string category, string originalText)
+{
+    this.category = category;
+    this.originalText = originalText;
+}
+```
 
-3.  public CategoryExplorerDialog(string category, string originalText)
-
-4.  {
-
-5.  this.category = category;
-
-6.  this.originalText = originalText;
-
->   }
 
 1.  ボットが元のメッセージでカテゴリを検出しなかった場合にカテゴリの一覧を取得するように
     StartAsync
     の実装を変更します。メソッドのコードを以下のコードに置き換えます。
 
-2.  public async Task StartAsync(IDialogContext context)
+```
+    public async Task StartAsync(IDialogContext context) 
+    { 
+        if (string.IsNullOrWhiteSpace(this.category)) 
+        { 
+            FacetResult facetResult = await this.searchService.FetchFacets(); 
+            if (facetResult.Facets.Category.Length != 0) 
+            { 
+                List<string> categories = new List<string>(); 
+                foreach (Category category in facetResult.Facets.Category) 
+                { 
+                    categories.Add($"{category.Value} ({category.Count})");    
+                }     
+                PromptDialog.Choice(context, this.AfterMenuSelection, categories, 
+                    "Let\'s see if I can find something in the knowledge for you. Which category is your question about?"); 
+            } 
+        } 
+        else 
+        { 
+            SearchResult searchResult = await this.searchService.SearchByCategory(this.category); 
 
-3.  {
-
-4.  if (string.IsNullOrWhiteSpace(this.category))
-
-5.  {
-
-6.  FacetResult facetResult = await this.searchService.FetchFacets();
-
-7.  if (facetResult.Facets.Category.Length != 0)
-
-8.  {
-
-9.  List\<string\> categories = new List\<string\>();
-
-10. foreach (Category category in facetResult.Facets.Category)
-
-11. {
-
-12. categories.Add(\$"{category.Value} ({category.Count})");
-
-13. }
-
-14. PromptDialog.Choice(context, this.AfterMenuSelection, categories, "Let\\'s
-    see if I can find something in the knowledge for you. Which category is your
-    question about?");
-
-15. }
-
-16. }
-
-17. else
-
-18. {
-
-19. SearchResult searchResult = await
-    this.searchService.SearchByCategory(this.category);
-
-20. if (searchResult.Value.Length \> 0)
-
-21. {
-
-22. await context.PostAsync(\$"These are some articles I\\'ve found in the
-    knowledge base for \_'{this.category}'\_, click \*\*More details\*\* to read
-    the full article:");
-
-23. }
-
-24. await CardUtil.ShowSearchResults(context, searchResult, \$"Sorry, I could
-    not find any results in the knowledge base for \_'{this.category}'\_");
-
-25. context.Done\<object\>(null);
-
-26. }
-
->   }
+            if (searchResult.Value.Length > 0) 
+            { 
+                await context.PostAsync($"These are some articles I\'ve found in the knowledge base for _'{this.category}'_, 
+                    click **More details** to read the full article:"); 
+            } 
+ 
+            await CardUtil.ShowSearchResults(context, searchResult, 
+                 $"Sorry, I could not find any results in the knowledge base for _'{this.category}'_"); 
+ 
+            context.Done<object>(null); 
+        }
+    }
+```
 
 1.  AfterMenuSelection
     メソッドを追加します。このメソッドは、ユーザーが検索するカテゴリを選択する際に呼び出されます。
 
-2.  public virtual async Task AfterMenuSelection(IDialogContext context,
-    IAwaitable\<string\> result)
+```
+    public virtual async Task AfterMenuSelection(IDialogContext context,
+        IAwaitable\<string\> result)
+    {
+        this.category = await result;
+        this.category = Regex.Replace(this.category, \@"\\s\\([\^)]\*\\)",
+            string.Empty);
+        SearchResult searchResult = await
+        this.searchService.SearchByCategory(this.category);
+        await context.PostAsync(\$"These are some articles I\\'ve found in the
+            knowledge base for \_'{this.category}'\_, click \*\*More details\*\* to read
+            the full article:");
+        
+        await CardUtil.ShowSearchResults(context, searchResult, \$"Sorry, I could
+            not find any results in the knowledge base for \_'{this.category}'\_");
 
-3.  {
-
-4.  this.category = await result;
-
-5.  this.category = Regex.Replace(this.category, \@"\\s\\([\^)]\*\\)",
-    string.Empty);
-
-6.  SearchResult searchResult = await
-    this.searchService.SearchByCategory(this.category);
-
-7.  await context.PostAsync(\$"These are some articles I\\'ve found in the
-    knowledge base for \_'{this.category}'\_, click \*\*More details\*\* to read
-    the full article:");
-
-8.  await CardUtil.ShowSearchResults(context, searchResult, \$"Sorry, I could
-    not find any results in the knowledge base for \_'{this.category}'\_");
-
-9.  context.Done\<object\>(null);
-
->   }
+        context.Done\<object\>(null);
+    }
+```
 
 1.  最後に、RootDialog で、CategoryExplorerDialog
     の署名のマッチングを行えるように ExploreCategory メソッドを更新します。
 
-2.  [LuisIntent("ExploreKnowledgeBase")]
-
-3.  public async Task ExploreCategory(IDialogContext context, LuisResult result)
-
-4.  {
-
-5.  EntityRecommendation categoryEntityRecommendation;
-
-6.  result.TryFindEntity("category", out categoryEntityRecommendation);
-
-7.  var category =
-    ((Newtonsoft.Json.Linq.JArray)categoryEntityRecommendation?.Resolution["values"])?[0]?.ToString();
-
-8.  context.Call(new CategoryExplorerDialog(category, result.Query),
-    this.ResumeAndEndDialogAsync);
-
->   }
+```
+    [LuisIntent("ExploreKnowledgeBase")]
+    public async Task ExploreCategory(IDialogContext context, LuisResult result)
+    {
+        EntityRecommendation categoryEntityRecommendation;
+        result.TryFindEntity("category", out categoryEntityRecommendation);
+        var category =
+            ((Newtonsoft.Json.Linq.JArray)categoryEntityRecommendation?.Resolution["values"])?[0]?.ToString();
+        context.Call(new CategoryExplorerDialog(category, result.Query),
+        this.ResumeAndEndDialogAsync);
+    }
+```
 
 1.  また、ナレッジ ベースの機能が含まれるように Help
     メソッドのテキストを更新できます。
+```
+    [LuisIntent("Help")]
+    public async Task Help(IDialogContext context, LuisResult result)
+    {
+    await context.PostAsync("I'm the help desk bot and I can help you create a
+        ticket or explore the knowledge base.\\n" +
+    "You can tell me things like \_I need to reset my password\_ or \_explore
+        hardware articles\_.");
 
-2.  [LuisIntent("Help")]
-
-3.  public async Task Help(IDialogContext context, LuisResult result)
-
-4.  {
-
-5.  await context.PostAsync("I'm the help desk bot and I can help you create a
-    ticket or explore the knowledge base.\\n" +
-
-6.  "You can tell me things like \_I need to reset my password\_ or \_explore
-    hardware articles\_.");
-
-7.  context.Done\<object\>(null);
-
->   }
+    context.Done\<object\>(null);
+    }
+```
 
 ## タスク 7: エミュレーターからボットをテストする
 
