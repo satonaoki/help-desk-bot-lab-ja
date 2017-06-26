@@ -30,7 +30,7 @@
 2.  [My bots] ボタンをクリックし、次に [Create a bot] をクリックするか
     (他のボットがある場合)、または [Register] ボタンをクリックします。
 
-3.  [logo.png](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/logo.png)
+3.  [logo.png](../assets/logo.png)
     を**カスタム アイコン**としてアップロードします。
 
 4.  [Display Name] に「Help Desk Bot」と入力します。[Bot Handle]
@@ -141,7 +141,7 @@
 のリファレンスを参照してください。
 
 1.  前の演習で得られたアプリ
-    フォルダーでコンソールを開きます。または、[exercise4-KnowledgeBase](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise4-KnowledgeBase)
+    フォルダーでコンソールを開きます。または、[exercise4-KnowledgeBase](./exercise4-KnowledgeBase)
     フォルダーにあるアプリを使用することもできます。このコード用の Git
     リポジトリを作成していない場合は、コンソールで次のコマンドを入力します
     (このコードを Git

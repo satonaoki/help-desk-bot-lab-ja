@@ -27,7 +27,7 @@
 2.  [My bots] ボタンをクリックし、次に [Create a bot] をクリックするか
     (他のボットがある場合)、または [Register] ボタンをクリックします。
 
-3.  [logo.png](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/logo.png)
+3.  [logo.png](../assets/logo.png)
     を**カスタム アイコン**としてアップロードします。
 
 4.  [Display Name] に「Help Desk Bot」と入力します。[Bot Handle]
@@ -70,7 +70,7 @@
 
 このタスクでは、Visual Studio から Azure へボットを発行する方法を学習します。
 
-1.  前の演習から得られたソリューションを開きます。または、[exercise4-KnowledgeBase](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise4-KnowledgeBase)
+1.  前の演習から得られたソリューションを開きます。または、[exercise4-KnowledgeBase](./exercise4-KnowledgeBase)
     フォルダーからソリューション
     ファイルを開くこともできます。その場合は、Dialogs\\RootDialog.cs 内の
     **[LuisModel("{LUISAppID}", "{LUISKey}")]**

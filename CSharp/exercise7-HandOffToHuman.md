@@ -10,7 +10,7 @@
 Scorable を使用するようにボットを変更し、ボットの会話をヒューマン
 エージェントにハンドオフするダイアログを追加します。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise7-HandOffToHuman)内には、この演習で作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。Scorable
+[こちらのフォルダー](./exercise7-HandOffToHuman)内には、この演習で作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。Scorable
 を使用する場合は、最初に Web.config でキーを作成する必要があります。
 
 この演習で使用するハンドオフ アプローチの詳細については、[BUILD
@@ -53,7 +53,7 @@ IScorable
 IScorable に渡されて処理されますScorable
 の詳細については、[こちらのサンプル](https://github.com/Microsoft/BotBuilder-Samples/tree/master/CSharp/core-GlobalMessageHandlers)を参照してください。
 
-1.  前の演習から得られたアプリを開きます。または、[exercise6-MoodDetection](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise6-MoodDetection)
+1.  前の演習から得られたアプリを開きます。または、[exercise6-MoodDetection](./exercise6-MoodDetection)
     フォルダーにあるアプリを使用することもできます。
 
 >   **注:**
@@ -72,21 +72,21 @@ IScorable に渡されて処理されますScorable
     で説明しています)。
 
 1.  プロジェクトに HandOff
-    フォルダーを作成し、[assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+    フォルダーを作成し、[assets](../assets)
     フォルダーの次のファイルを追加します。
 
-    -   [AgentExtensions.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/AgentExtensions.cs)
+    -   [AgentExtensions.cs](../assets/exercise7-HandOffToHuman/AgentExtensions.cs)
 
 >   通常ユーザーをエージェントに切り替え、エージェントを識別する、シンプルなロジックが含まれています。これを使用して、いずれは、会話、ユーザー、およびエージェントを管理する独自のロジックを実装できます。
 
--   [Provider.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/Provider.cs)
+-   [Provider.cs](../assets/exercise7-HandOffToHuman/Provider.cs)
 
 >   ヒューマン
 >   エージェントとの通信を待つユーザーを入れるキューを作成します。このクラスでは、外部ストレージでキューを存続させません。これは、会話のメタデータを格納する場所でもあります。会話をデータ
 >   ストアに格納する場合は、カスタムの実装で Provider
 >   を更新するか、カスタムの実装を含む Provider を継承できます。
 
--   [CommandScorable.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/CommandScorable.cs)
+-   [CommandScorable.cs](../assets/exercise7-HandOffToHuman/CommandScorable.cs)
 
 >   この Scorable はメッセージがエージェントからの場合にアクセスされ、agent
 >   help、connect、または resume
@@ -328,13 +328,13 @@ IScorable に渡されて処理されますScorable
     -   *Operator*
 
 >   必要に応じて、[こちらの LUIS
->   モデル](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/luis_model.json)をインポートして使用できます。
+>   モデル](../assets/exercise7-HandOffToHuman/luis_model.json)をインポートして使用できます。
 
 1.  アプリをトレーニングして再度発行します。
 
-2.  [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+2.  [assets](../assets)
     フォルダーにある
-    [AgentLoginScorable.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/AgentLoginScorable.cs)
+    [AgentLoginScorable.cs](../assets/exercise7-HandOffToHuman/AgentLoginScorable.cs)
     を Dialogs フォルダーにコピーします。このクラスは、通常ユーザーとヒューマン
     エージェント間の切り替えを管理します。
 
@@ -636,7 +636,7 @@ IScorable に渡されて処理されますScorable
     の認証を追加します。ユーザーの認証プロセスを起動するには、[Sign-inCard](https://docs.botframework.com/en-us/csharp/builder/sdkreference/dc/d03/class_microsoft_1_1_bot_1_1_connector_1_1_signin_card.html)
     を追加する必要があります。
 
--   [Provider.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/Provider.cs)
+-   [Provider.cs](../assets/exercise7-HandOffToHuman/Provider.cs)
     を変更して、会話データが持続されるようにします。現状では、アクティブな会話はメモリ内に格納され、ボットの拡大/縮小は困難です。
 
 -   ルーターに新しい状態を実装して、会話を監視できます。この場合、ユーザーとボットのメッセージはヒューマン

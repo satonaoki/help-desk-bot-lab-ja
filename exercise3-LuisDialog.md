@@ -16,9 +16,9 @@ Intelligent Service) を使用します。
 を解釈します。
 
 この
-[C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise3-LuisDialog)
+[C\#](./CSharp/exercise3-LuisDialog)
 または
-[Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise3-LuisDialog)
+[Node.js](./Node/exercise3-LuisDialog)
 のフォルダー内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
 
 ## 目標
@@ -38,9 +38,9 @@ Intelligent Service) を使用します。
 ## 前提条件
 
 -   前の演習を完了していること、あるいは
-    [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise2-TicketSubmissionDialog)
+    [C\#](./CSharp/exercise2-TicketSubmissionDialog)
     または
-    [Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise2-TicketSubmissionDialog)
+    [Node.js](./Node/exercise2-TicketSubmissionDialog)
     用の開始点を使用できること
 
 -   [LUIS ポータル](https://www.luis.ai/)のアカウント
@@ -69,7 +69,7 @@ callback(null, enabled);
 bot.recognizer(luisRecognizer);
 
 **注:** 既に LUIS に習熟している場合は、この演習の
-[assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise3-LuisDialog)
+[assets](./assets/exercise3-LuisDialog)
 フォルダーにあるファイル luis\_model.json
 を各自のアカウントにインポートして、モデルをトレーニングおよび発行できます。しかし、LUIS
 の初心者である場合は、学習のためにモデルを最初から作成することをお勧めします。

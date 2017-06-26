@@ -24,7 +24,7 @@ API を使用して実装します。この API
 ボットのバックチャネル
 パターンについては、[こちらの記事](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-backchannel)で詳しく説明します。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise8-BackChannel)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用する前に、まず
+[こちらのフォルダー](./exercise8-BackChannel)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用する前に、まず
 Web.config で LUIS モデルの値、および Azure Search
 インデックスの名前とキーを指定しておく必要があることを覚えておいてください。
 
@@ -54,7 +54,7 @@ Web.config で LUIS モデルの値、および Azure Search
 
 >   **注:** この演習では、Bot Framework
 >   ポータルにボットが既に登録されていることを前提としています。登録していない場合は、[演習
->   5](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise5-Deployment.md)
+>   5](./exercise5-Deployment.md)
 >   の説明を参照してください。
 
 1.  Web チャット チャネルの [編集] (
@@ -79,7 +79,7 @@ Web.config で LUIS モデルの値、および Azure Search
 ページを追加します。次に、event アクティビティをボットから Web ページに送信する
 BackChannel 機能を追加します。
 
-1.  前の演習から得られたアプリを開きます。または、[exercise7-HandOffToHuman](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise7-HandOffToHuman)
+1.  前の演習から得られたアプリを開きます。または、[exercise7-HandOffToHuman](./exercise7-HandOffToHuman)
     フォルダーにあるソリューションを使用することもできます。
 
 >   **注:**
@@ -97,10 +97,10 @@ BackChannel 機能を追加します。
     アカウント、インデックス名、キーに置き換えます (演習 4 で説明しています)。
 
 1.  default.htm を
-    [こちらのテンプレート](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise8-BackChannel/default.htm)に置き換えます。
+    [こちらのテンプレート](../assets/exercise8-BackChannel/default.htm)に置き換えます。
 
 2.  [botchat.js script
-    element](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise8-BackChannel/default.htm#L52)の下に、Web
+    element](../assets/exercise8-BackChannel/default.htm#L52)の下に、Web
     Channel Secret で **DirectLine**
     オブジェクトを作成する以下のコードを含む、新しいスクリプト要素を追加します。{DIRECTLINE\_SECRET}
     プレースホルダーを、これまでに取得した秘密鍵で置き換え、{BOT\_ID}
@@ -281,7 +281,7 @@ BackChannel 機能を追加します。
 
 1.  default.htm ファイルを開きます。ファイル冒頭の \<style\>
     セクションで、[\#results h3
-    selector](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise8-BackChannel/default.htm#L25)
+    selector](../assets/exercise8-BackChannel/default.htm#L25)
     を次の CSS で置き換えます。
 
 2.  \#results h3 {

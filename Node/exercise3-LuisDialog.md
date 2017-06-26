@@ -14,7 +14,7 @@ Service)
 を使用します。これはボットがコマンドを理解して行動できるようにさせるための言語モデルを、開発者が構築できるようにします。たとえば、前の演習ではユーザーが重大度とカテゴリを入力する必要がありました。今回は、ユーザーのメッセージから両方の
 "エンティティ" が認識されるようにします。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise3-LuisDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用するには、まず
+[こちらのフォルダー](./exercise3-LuisDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用するには、まず
 npm install を実行して、.env ファイルに LUIS
 モデルの値を入力しておく必要があることを忘れないでください。
 
@@ -40,7 +40,7 @@ npm install を実行して、.env ファイルに LUIS
 このタスクでは、LUIS ポータルでアプリを作成します。
 
 **注:** 既に LUIS に習熟している場合は、この演習の
-[assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise3-LuisDialog)
+[assets](../assets/exercise3-LuisDialog)
 フォルダーにあるファイル luis\_model.json
 を各自のアカウントにインポートして、モデルをトレーニングおよび発行し、タスク 4
 に進むことができます。しかし、LUIS
@@ -86,7 +86,7 @@ npm install を実行して、.env ファイルに LUIS
     Lists] リンクをクリックします。
 
 2.  このハンズオンラボのルートにある
-    [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+    [assets](../assets)
     フォルダーで categories.json ファイルを探します。有効化したら、[Import]
     をクリックします。
 
@@ -189,7 +189,7 @@ npm install を実行して、.env ファイルに LUIS
 アプリを使用するようにします。
 
 1.  前の演習から得られた app.js
-    ファイルを開きます。または、[exercise2-TicketSubmissionDialog](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise2-TicketSubmissionDialog)
+    ファイルを開きます。または、[exercise2-TicketSubmissionDialog](./exercise2-TicketSubmissionDialog)
     フォルダーから このファイルを開くこともできます。
 
 2.  次の行を追加して .env ファイルを更新し、LUIS\_MODEL\_URL

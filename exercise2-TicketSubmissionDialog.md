@@ -4,9 +4,9 @@
 チケットの作成をユーザーに案内する方法を学習します。
 
 こちらの
-[C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise2-TicketSubmissionDialog)
+[C\#](./CSharp/exercise2-TicketSubmissionDialog)
 または
-[Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise2-TicketSubmissionDialog)
+[Node.js](./Node/exercise2-TicketSubmissionDialog)
 のフォルダー内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
 
 ## 目標
@@ -26,9 +26,9 @@
 ## 前提条件
 
 -   前の演習を完了していること、あるいは
-    [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise1-EchoBot)
+    [C\#](./CSharp/exercise1-EchoBot)
     または
-    [Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise1-EchoBot)
+    [Node.js](./Node/exercise1-EchoBot)
     用の開始点を使用できること。
 
 -   [Visual Studio Code](https://code.visualstudio.com/download) (推奨) や
@@ -93,9 +93,9 @@ API を呼び出します。
 -   Node.js
     の場合は、[こちら](https://docs.microsoft.com/en-us/bot-framework/rest-api/bot-framework-rest-connector-add-rich-cards#adaptive-card)で説明するように、このハンズオン
     ラボの
-    [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+    [assets](./assets)
     フォルダーの
-    [ticket.json](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise2-TicketSubmissionDialog/ticket.json)
+    [ticket.json](./assets/exercise2-TicketSubmissionDialog/ticket.json)
     ファイルを使用できます。
 
 -   C\#

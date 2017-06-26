@@ -5,7 +5,7 @@
 この演習では、ボットに会話機能を追加して、ヘルプ デスク
 チケットの作成をユーザーに案内する方法を学習します。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise2-TicketSubmissionDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。ソリューションを使用するには、まず必ず
+[こちらのフォルダー](./exercise2-TicketSubmissionDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。ソリューションを使用するには、まず必ず
 npm install を実行してください。
 
 ## 前提条件
@@ -30,7 +30,7 @@ f
 このタスクでは、ボットを変更して、いくつかアクションを実行する前に、ユーザーに一連の質問をします。
 
 1.  前の演習から得られた app.js
-    ファイルを開きます。または、[exercise1-EchoBot](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise1-EchoBot)
+    ファイルを開きます。または、[exercise1-EchoBot](./exercise1-EchoBot)
     フォルダーからこのファイルを開くこともできます。
 
 2.  以下のように、UniversalBot
@@ -318,7 +318,7 @@ Framework チャネル)
 内でネイティブにレンダリングでき、ホストの外観に自動的に適合します。
 
 カードを簡単に作成するため、カードの JSON は
-[ticket.json](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise2-TicketSubmissionDialog/ticket.json)
+[ticket.json](../assets/exercise2-TicketSubmissionDialog/ticket.json)
 ファイルに既に用意されています。通常は、コンテンツに対して構造が既に作成されており、ランタイムに動的に追加します。ticket.json
 を探す際は、{ticketId}、{severity}、{category}、および {description}
 のプレースホルダーに注意します。オブジェクト内でこれらの文字列を探し、適切な値を指定して更新します。
@@ -326,7 +326,7 @@ Framework チャネル)
 1.  アプリのルート フォルダーで、**cards**
     という名前のフォルダーを作成します。この新しいフォルダーで、このハンズオン
     ラボのルートにある
-    [assets/exercise2](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise2-TicketSubmissionDialog)
+    [assets/exercise2](../assets/exercise2-TicketSubmissionDialog)
     フォルダーから **ticket.json** ファイルをコピーします。
 
 2.  前のタスクで得られた app.js ファイルを開きます。require

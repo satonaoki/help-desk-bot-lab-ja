@@ -12,9 +12,9 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 スコアは、分類の手法により生成されます。
 
 こちらの
-[C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise6-MoodDetection)
+[C\#](./CSharp/exercise6-MoodDetection)
 または
-[Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise6-MoodDetection)
+[Node.js](./Node/exercise6-MoodDetection)
 のフォルダー内には、この演習のステップで作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
 
 ## 目標
@@ -35,9 +35,9 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 ## 前提条件
 
 -   前の演習を完了していること、あるいは
-    [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise4-KnowledgeBase)
+    [C\#](./CSharp/exercise4-KnowledgeBase)
     または
-    [Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise4-KnowledgeBase)
+    [Node.js](./Node/exercise4-KnowledgeBase)
     用の開始点を使用できることが必要です。
 
 -   [Azure](https://azureinfo.microsoft.com/us-freetrial.html?cr_cc=200744395&wt.mc_id=usdx_evan_events_reg_dev_0_iottour_0_0)

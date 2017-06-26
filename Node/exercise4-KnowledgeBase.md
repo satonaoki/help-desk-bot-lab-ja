@@ -32,7 +32,7 @@ Search は、さまざまなソース (Azure SQL DB、Cosmos DB、BLOB ストレ
 を使用しますが、どの検索エンジンおよびバッキング
 ストアを使用してももちろんかまいません。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise4-KnowledgeBase)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用には、まず
+[こちらのフォルダー](./exercise4-KnowledgeBase)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用には、まず
 npm install を実行し、.env ファイルで LUIS モデルの値、および Azure Search
 インデックスの名前とキーを指定しておく必要があることを覚えておいてください。
 
@@ -87,7 +87,7 @@ Cosmos DB
 1.  左側で [ドキュメント エクスプローラー] を選択し、次に [アップロード]
     ボタンをクリックします。
 
-2.  開いたウィンドウで、[assets/kb](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/kb)
+2.  開いたウィンドウで、[assets/kb](../assets/kb)
     フォルダーのファイルをすべて選択します。各ファイルは、ナレッジ ベースの 1
     つの記事に相当します。[アップロード]
     をクリックします。ブラウザーを閉じないでください。
@@ -194,7 +194,7 @@ Cosmos DB
 このタスクでは、先ほど作成したインテントに対応し、Azure Search
 サービスを呼び出すためのダイアログを追加します。
 
-1.  前の演習から得られたアプリを開きます。または、[exercise3-LuisDialog](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise3-LuisDialog)
+1.  前の演習から得られたアプリを開きます。または、[exercise3-LuisDialog](./exercise3-LuisDialog)
     フォルダーのアプリを使用することもできます。その場合は、.env
     ファイルを編集し、**LUIS\_MODEL\_URL** キーをご使用のモデル URL
     に置き換えます。
@@ -624,10 +624,10 @@ Cosmos DB
 自主的に学習を続ける場合は、次のタスクを利用できます。
 
 -   カルーセルで使用される記事 ThumbnailCard をアダプティブ
-    カードで変更できます。例として[こちら](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/FurtherChallenge/articlesCard.js)で提供されているコードを使用できます。
+    カードで変更できます。例として[こちら](../assets/exercise4-KnowledgeBase/FurtherChallenge/articlesCard.js)で提供されているコードを使用できます。
 
 -   記事 ThumbnailCard で既定の画像を表示する代わりに、[Bing Image Search
     API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/)
     を使用して、記事のカテゴリに関連する画像を表示できます。ハンズオン ラボの
-    [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
-    フォルダーの[こちらのモジュール](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/FurtherChallenge/imageSearchApiClient.js)を使用できます。
+    [assets](../assets)
+    フォルダーの[こちらのモジュール](../assets/exercise4-KnowledgeBase/FurtherChallenge/imageSearchApiClient.js)を使用できます。

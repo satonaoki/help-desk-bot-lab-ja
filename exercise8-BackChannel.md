@@ -23,9 +23,9 @@ API を使用して実装します。この API
 パターンについては、[こちらの記事](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-backchannel)で詳しく説明します。
 
 この
-[C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise8-BackChannel)
+[C\#](./CSharp/exercise8-BackChannel)
 または
-[Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise7-BackChannel)
+[Node.js](./Node/exercise7-BackChannel)
 のフォルダー内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
 
 この図は、この演習のコンポーネントを簡単に示しています。
@@ -51,9 +51,9 @@ API を使用して実装します。この API
 ## 前提条件
 
 -   前の演習を完了していること、あるいは
-    [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise7-HandOffToHuman)
+    [C\#](./CSharp/exercise7-HandOffToHuman)
     または
-    [Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise7-HandOffToHuman)
+    [Node.js](./Node/exercise7-HandOffToHuman)
     用の開始点を使用できることが必要です。
 
 -   [LUIS ポータル](https://www.luis.ai/)のアカウント
@@ -66,7 +66,7 @@ API を使用して実装します。この API
 ### クライアント側のコード
 
 -   ボット アプリに HTML
-    ページを追加する必要があります。[assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+    ページを追加する必要があります。[assets](./assets)
     フォルダー内に用意されている[こちら](https://github.com/GeekTrainer/help-desk-bot-lab/blob/assets/exercise8-BackChannel/default.htm)を使用できます。
 
 -   [Bot Framework ポータル](https://dev.botframework.com/)を使用して、ボットの

@@ -28,7 +28,7 @@ Search は、さまざまなソース (Azure SQL DB、Cosmos DB、BLOB ストレ
 を使用しますが、どの検索エンジンおよびバッキング
 ストアを使用してももちろんかまいません。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise4-KnowledgeBase)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用する前に、まず
+[こちらのフォルダー](./exercise4-KnowledgeBase)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用する前に、まず
 Web.config で LUIS モデルの値、および Azure Search
 インデックスの名前とキーを指定しておく必要があることを覚えておいてください。
 
@@ -84,7 +84,7 @@ Cosmos DB
 1.  左側のパネルで [ドキュメント エクスプローラー] を選択し、次に [アップロード]
     ボタンをクリックします。
 
-2.  開いたウィンドウで、[assets/kb](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/kb)
+2.  開いたウィンドウで、[assets/kb](../assets/kb)
     フォルダーのファイルをすべて選択します。各ファイルは、ナレッジ ベースの 1
     つの記事に相当します。[アップロード]
     をクリックします。ブラウザーを閉じないでください。
@@ -188,7 +188,7 @@ Cosmos DB
 このタスクでは、先ほど作成したインテントに対応し、Azure Search
 サービスを呼び出すためのダイアログを追加します。
 
-1.  前の演習から得られたソリューションを開きます。開始点として[こちら](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise3-LuisDialog)のソリューションを使用してもかまいません。その場合は、Dialogs\\RootDialog.cs
+1.  前の演習から得られたソリューションを開きます。開始点として[こちら](./exercise3-LuisDialog)のソリューションを使用してもかまいません。その場合は、Dialogs\\RootDialog.cs
     内の **[LuisModel("{LUISAppID}", "{LUISKey}")]**
     属性のプレースホルダーを自分が使用している LUIS アプリ ID
     とプログラマティック API キーに置き換えてください。
@@ -208,11 +208,11 @@ Cosmos DB
 >   ...
 
 1.  新しい Model
-    フォルダーをプロジェクトに追加します。[assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+    フォルダーをプロジェクトに追加します。[assets](../assets)
     フォルダーから新しいフォルダーに
-    [SearchResult.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/SearchResult.cs)
+    [SearchResult.cs](../assets/exercise4-KnowledgeBase/SearchResult.cs)
     と
-    [SearchResultHit.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/SearchResultHit.cs)
+    [SearchResultHit.cs](../assets/exercise4-KnowledgeBase/SearchResultHit.cs)
     をコピーします。これらのクラスは、Azure からの記事の検索に対応します。
 
 2.  プロジェクトで Services フォルダーを作成し、以下のコード内に
@@ -425,10 +425,10 @@ Cosmos DB
 
 1.  アプリを停止します。
 
-2.  [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+2.  [assets](../assets)
     フォルダーからプロジェクトの Model フォルダーにファイル
-    [FacetResult.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/FacetResult.cs)、[SearchFacets.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/SearchFacets.cs)、および
-    [Category.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/Category.cs)
+    [FacetResult.cs](../assets/exercise4-KnowledgeBase/FacetResult.cs)、[SearchFacets.cs](../assets/exercise4-KnowledgeBase/SearchFacets.cs)、および
+    [Category.cs](../assets/exercise4-KnowledgeBase/Category.cs)
     をコピーします。これらのクラスは、Azure Search
     サービスのクエリに必要となります。
 
@@ -512,18 +512,18 @@ Cosmos DB
 >   クエリは、インデックス内のすべてのフィルター可能フィールドでブール式を評価します。検索クエリとは異なり、フィルター
 >   クエリは、フィールドの正確なコンテンツのマッチングを行います。つまり、文字列フィールドの大文字と小文字が区別されます。
 
-1.  [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+1.  [assets](../assets)
     フォルダーからプロジェクトの Util フォルダーに
-    [CardUtil.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/CardUtil.cs)
+    [CardUtil.cs](../assets/exercise4-KnowledgeBase/CardUtil.cs)
     ファイルをコピーします。このクラスは、Azure Search からの記事の一覧で
     ThumbnailCard
     のカルーセルを作成するのに使用されます。ユーザーに対してリッチなカードを示す方法の詳細については、[こちらの記事](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-send-rich-cards)を参照してください。
 
-2.  [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+2.  [assets](../assets)
     フォルダーからプロジェクトの Dialogs フォルダーに
-    [SearchScorable.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/SearchScorable.cs)
+    [SearchScorable.cs](../assets/exercise4-KnowledgeBase/SearchScorable.cs)
     と
-    [ShowArticleDetailsScorable.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/ShowArticleDetailsScorable.cs)
+    [ShowArticleDetailsScorable.cs](../assets/exercise4-KnowledgeBase/ShowArticleDetailsScorable.cs)
     をコピーします。これらのクラスは、ボットに送信されるすべてのメッセージをインターセプトし、検索サービスを起動する
     Scorable です。
 
@@ -764,9 +764,9 @@ Cosmos DB
 
 -   記事 ThumbnailCard で既定の画像を表示する代わりに、[Bing Image Search
     API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/)
-    を使用して、記事のカテゴリに関連する画像を表示できます。[こちら](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/FurtherChallenge/ImageSearchService.cs)で提供されている
-    [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+    を使用して、記事のカテゴリに関連する画像を表示できます。[こちら](../assets/exercise4-KnowledgeBase/FurtherChallenge/ImageSearchService.cs)で提供されている
+    [assets](../assets)
     フォルダーのコードを使用できます。
 
 -   カルーセルで使用される記事 ThumbnailCard をアダプティブ
-    カードで変更できます。例として[こちら](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise4-KnowledgeBase/FurtherChallenge/CardUtil.cs)で提供されているコードを使用できます。
+    カードで変更できます。例として[こちら](../assets/exercise4-KnowledgeBase/FurtherChallenge/CardUtil.cs)で提供されているコードを使用できます。

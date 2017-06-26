@@ -7,9 +7,9 @@
 パターンについては、[こちらの記事](https://docs.microsoft.com/en-us/bot-framework/bot-design-pattern-handoff-human)で詳しく説明します。
 
 この
-[C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise7-HandOffToHuman)
+[C\#](./CSharp/exercise7-HandOffToHuman)
 または
-[Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise7-HandOffToHuman)
+[Node.js](./Node/exercise7-HandOffToHuman)
 のフォルダー内には、この演習のステップで作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
 
 ハンドオフ ロジックを実装できる複数の方法があることがわかります。このハンズオン
@@ -52,9 +52,9 @@
 ## 前提条件
 
 -   前の演習を完了していること、あるいは
-    [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise6-MoodDetection)
+    [C\#](./CSharp/exercise6-MoodDetection)
     または
-    [Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise6-MoodDetection)
+    [Node.js](./Node/exercise6-MoodDetection)
     用の開始点を使用できることが必要です。
 
 -   [LUIS ポータル](https://www.luis.ai/)のアカウント
@@ -76,19 +76,19 @@
     -   *Contact me to a human being*
 
 2.  ハンズオン ラボの
-    [assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
+    [assets](./assets)
     フォルダーから次のファイルをコピーします。
 
-    -   [provider.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/provider.js):
+    -   [provider.js](./assets/exercise7-HandOffToHuman/provider.js):
         ヒューマン
         エージェントとの通信を待つユーザーを入れるキューを作成します。各会話には、次の
         3 つの状態があります:
         ConnectedToBot、WaitingForAgent、ConnectedToAgent。状態に応じて、(次のステップで構築する)
         ルーターがメッセージをどちらか一方の会話に転送します。このモジュールでは、外部ストレージでキューを存続させません。これは、会話のメタデータを格納する場所でもあります。
 
-    -   [command.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/command.js):
+    -   [command.js](./assets/exercise7-HandOffToHuman/command.js):
         エージェントとボット間の特別な対話を処理し、会話や会話の再開を待つユーザーをピークします。このモジュールには、ヒューマン
-        エージェントからのメッセージをインターセプトして、ユーザーとの接続や通信の再開を実行するオプションにメッセージをルーティングする[ミドルウェア](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/command.js#L9)があります。
+        エージェントからのメッセージをインターセプトして、ユーザーとの接続や通信の再開を実行するオプションにメッセージをルーティングする[ミドルウェア](./assets/exercise7-HandOffToHuman/command.js#L9)があります。
 
 3.  router.js
     ファイルを作成します。ルーターには、各メッセージがエージェントまたはユーザーのいずれに送信される必要があるかを把握する役割があります。ルーターによって公開される
@@ -145,22 +145,22 @@
 
 1.  ハンズオン ラボの assets フォルダーにある次のファイルを使用します。
 
-    -   [AgentExtensions.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/AgentExtensions.cs):
+    -   [AgentExtensions.cs](./assets/exercise7-HandOffToHuman/AgentExtensions.cs):
         通常ユーザーをエージェントに切り替え、エージェントを識別する、シンプルなロジックが含まれています。これを使用して、いずれは、会話、ユーザー、およびエージェントを管理する独自のロジックを実装できます。
 
-    -   [Provider.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/Provider.cs):
+    -   [Provider.cs](./assets/exercise7-HandOffToHuman/Provider.cs):
         ヒューマン
         エージェントとの通信を待つユーザーを入れるキューを作成します。このクラスでは、外部ストレージでキューを存続させません。これは、会話のメタデータを格納する場所でもあります。会話をデータ
         ストアに格納する場合は、カスタムの実装で Provider
         を更新するか、カスタムの実装を含む Provider を継承できます。
 
-    -   [CommandScorable.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/CommandScorable.cs):
+    -   [CommandScorable.cs](./assets/exercise7-HandOffToHuman/CommandScorable.cs):
         この Scorable はメッセージがエージェントからの場合にアクセスされ、agent
         help、connect、または resume
         メッセージを受信した場合に限り、その解決をトリガーします。ユーザーのメッセージがこれらのメッセージと一致しない場合、ユーザーのメッセージはこの
         Scorable で処理されません。
 
-    -   [AgentLoginScorable.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/AgentLoginScorable.cs):
+    -   [AgentLoginScorable.cs](./assets/exercise7-HandOffToHuman/AgentLoginScorable.cs):
         通常ユーザーとヒューマン エージェント間の切り替えを管理するクラスです。
 
 2.  各メッセージがエージェントまたはユーザーのいずれに送信される必要があるかを把握する役割を持つ、RouterScorable.cs
@@ -255,9 +255,9 @@
     ダイアログに、認証を追加します。ユーザーの認証プロセスを起動するには、[Sign-inCard](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.signincard.html)
     を追加する必要があります。
 
--   [provider.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/provider.js#L13)
+-   [provider.js](./assets/exercise7-HandOffToHuman/provider.js#L13)
     または
-    [Provider.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/Provider.cs)
+    [Provider.cs](./assets/exercise7-HandOffToHuman/Provider.cs)
     を変更して、会話データが持続されるようにします。現状では、アクティブな会話はメモリ内に格納され、ボットの拡大/縮小は困難です。
 
 -   ルーターに新しい状態を実装して、会話を監視できます。この場合、ユーザーとボットのメッセージはヒューマン

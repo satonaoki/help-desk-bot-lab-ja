@@ -24,7 +24,7 @@ API を使用して実装します。この API
 Bot Framework
 のドキュメントでは、[バックチャネルの仕組み](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-backchannel)の詳細を説明しています。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise8-BackChannel)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用するには、まず
+[こちらのフォルダー](./exercise8-BackChannel)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用するには、まず
 npm install を実行して、.env
 ファイルに値を入力しておく必要があることを忘れないでください。
 
@@ -54,7 +54,7 @@ npm install を実行して、.env
 
 >   **注:** この演習では、Bot Framework
 >   ポータルにボットが既に登録されていることを前提としています。登録していない場合は、[演習
->   5](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise5-Deployment.md)
+>   5](./exercise5-Deployment.md)
 >   の説明を参照してください。
 
 1.  Web チャット チャネルの [編集] (
@@ -79,7 +79,7 @@ npm install を実行して、.env
 ページを追加します。次に、event アクティビティをボットから Web ページに送信する
 BackChannel 機能を追加します。
 
-1.  前の演習から得られたアプリを開きます。または、[exercise7-HandOffToHuman](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise7-HandOffToHuman)
+1.  前の演習から得られたアプリを開きます。または、[exercise7-HandOffToHuman](./exercise7-HandOffToHuman)
     フォルダーにあるアプリを使用することもできます。
 
 >   **注:**
@@ -98,12 +98,12 @@ BackChannel 機能を追加します。
     ポータルからのボットの値に置き換えます
 
 1.  ソリューションのルート フォルダーに web-ui
-    という名前の新規フォルダーを作成します。そのフォルダーに、[assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets)
-    フォルダーの[default.htm](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise8-BackChannel/default.htm)
+    という名前の新規フォルダーを作成します。そのフォルダーに、[assets](../assets)
+    フォルダーの[default.htm](../assets/exercise8-BackChannel/default.htm)
     ファイルをコピーします。
 
 2.  [botchat.js script
-    element](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise8-BackChannel/default.htm#L52)
+    element](../assets/exercise8-BackChannel/default.htm#L52)
     の下に、以下のコードを含む新しいスクリプト要素を追加します。このコードでは、Web
     Channel Secret で **DirectLine** オブジェクトを作成し、WebChat
     コントロールをそのページに登録します。{DIRECTLINE\_SECRET}

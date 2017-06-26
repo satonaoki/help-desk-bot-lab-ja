@@ -13,7 +13,7 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 に近いスコアは否定的なセンチメントを示します。センチメント
 スコアは、分類の手法により生成されます。
 
-[このフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise6-MoodDetection)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。このソリューションを使用する場合は、必ず事前に
+[このフォルダー](./exercise6-MoodDetection)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。このソリューションを使用する場合は、必ず事前に
 npm install を実行し、.env ファイル内の Text Analytics
 キー値を設定してください。
 
@@ -52,7 +52,7 @@ npm install を実行し、.env ファイル内の Text Analytics
 このタスクでは、ボットから Text Analytics API
 を呼び出す新しいモジュールを作成します。
 
-1.  前の演習から得られたアプリを開きます。または、[exercise4-LuisDialog](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise4-KnowledgeBase)
+1.  前の演習から得られたアプリを開きます。または、[exercise4-LuisDialog](./exercise4-KnowledgeBase)
     フォルダーにあるアプリを使用することもできます。
 
 >   **注:** あらかじめ提供しているソリューションを使用する場合は、.env

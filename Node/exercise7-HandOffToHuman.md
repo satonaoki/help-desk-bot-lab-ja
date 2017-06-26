@@ -8,7 +8,7 @@
 最初に、送受信イベント/メッセージをインターセプトするミドルウェアを作成する方法を学習します。このミドルウェアでは、ユーザーとエージェント間の通信およびエージェントのみで利用できる特別なコマンドを処理します。後半では、新しいミドルウェアを使用するようにボットを変更し、ボットの会話をヒューマン
 エージェントにハンドオフするダイアログを追加します。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise7-HandOffToHuman)内には、この演習のステップで作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。ミドルウェアを使用するには、npm
+[こちらのフォルダー](./exercise7-HandOffToHuman)内には、この演習のステップで作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。ミドルウェアを使用するには、npm
 install を実行し、LUIS モデルの値、Azure Search インデックスの名前とキー、および
 Text Analytics キーを .env ファイルで設定する必要があります。
 
@@ -48,7 +48,7 @@ Bot Builder SDK for Node.js
 のミドルウェア機能により、ボットは、ユーザーとボット間で交換されるすべてのメッセージをインターセプトできます。インターセプトされるメッセージごとに、指定したデータ
 ストアにメッセージを保存して会話ログを生成したり、何らかの方法でメッセージを検査して、コードで指定したアクションを実行したりするなどの処理を行うことができます。ミドルウェアの詳細については、[こちらのリンク](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-intercept-messages)を参照してください。
 
-1.  前の演習から得られたアプリを開きます。または、[exercise6-MoodDetection](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise6-MoodDetection)
+1.  前の演習から得られたアプリを開きます。または、[exercise6-MoodDetection](./exercise6-MoodDetection)
     フォルダーにあるアプリを使用することもできます。
 
 >   **注:**
@@ -66,16 +66,16 @@ Bot Builder SDK for Node.js
 
 1.  ハンズオン ラボの assets フォルダーから次のファイルをコピーします。
 
-    -   [provider.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/provider.js):
+    -   [provider.js](../assets/exercise7-HandOffToHuman/provider.js):
         ヒューマン
         エージェントとの通信を待つユーザーを入れるキューを作成します。各会話には、次の
         3 つの状態があります:
         ConnectedToBot、WaitingForAgent、ConnectedToAgent。状態に応じて、(次のステップで構築する)
         ルーターがメッセージをどちらか一方の会話に転送します。このモジュールでは、外部ストレージでキューを存続させません。これは、会話のメタデータを格納する場所でもあります。
 
-    -   [command.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/command.js):
+    -   [command.js](../assets/exercise7-HandOffToHuman/command.js):
         エージェントとボット間の特別な対話を処理し、会話や会話の再開を待つユーザーをピークします。このモジュールには、ヒューマン
-        エージェントからのメッセージをインターセプトして、ユーザーとの接続や通信の再開を実行するオプションにメッセージをルーティングする[ミドルウェア](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/command.js#L9)があります。
+        エージェントからのメッセージをインターセプトして、ユーザーとの接続や通信の再開を実行するオプションにメッセージをルーティングする[ミドルウェア](../assets/exercise7-HandOffToHuman/command.js#L9)があります。
 
 2.  次のボイラープレート コードを使用して、handoff フォルダーに router.js
     ファイルを作成します。ルーターには、各メッセージがエージェントまたはユーザーのいずれに送信される必要があるかを把握する役割があります。
@@ -230,7 +230,7 @@ Bot Builder SDK for Node.js
     -   *Operator*
 
 **注:** 既に LUIS に習熟している場合は、この演習の
-[assets](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/luis_model.json)
+[assets](../assets/exercise7-HandOffToHuman/luis_model.json)
 フォルダーにあるファイル luis\_model.json
 を各自のアカウントにインポートし、モデルをトレーニングおよび発行して、タスク 3
 に進むことができます。しかし、LUIS
@@ -465,7 +465,7 @@ Bot Builder SDK for Node.js
     ダイアログに、認証を追加します。ユーザーの認証プロセスを起動するには、[Sign-inCard](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.signincard.html)
     を追加する必要があります。
 
--   [provider.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise7-HandOffToHuman/provider.js#L13)
+-   [provider.js](../assets/exercise7-HandOffToHuman/provider.js#L13)
     を変更して、会話データが持続されるようにします。現状では、アクティブな会話はメモリ内に格納され、ボットの拡大/縮小は困難です。
 
 -   ルーターに新しい状態を実装して、会話を監視できます。この場合、ユーザーとボットのメッセージはヒューマン

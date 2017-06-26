@@ -11,7 +11,7 @@ Bot Builder SDK for .NET は、Visual Studio と Windows
 を活用し、.NET
 開発者にとってなじみのある方法で強力なボットを作成する手段を提供します。
 
-[このフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise1-EchoBot)の中には、Visual
+[このフォルダー](./exercise1-EchoBot)の中には、Visual
 Studio
 ソリューションと、この演習のステップで作成するコードが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
 

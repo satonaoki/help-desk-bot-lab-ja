@@ -5,7 +5,7 @@
 この演習では、ボットに会話機能を追加して、ヘルプ デスク
 チケットの作成をユーザーに案内する方法を学習します。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise2-TicketSubmissionDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
+[こちらのフォルダー](./exercise2-TicketSubmissionDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
 
 ## 前提条件
 
@@ -21,7 +21,7 @@
 このタスクでは、ボット
 コードを変更して、いくつかアクションを実行する前に、ユーザーに一連の質問をします。
 
-1.  前の演習から得られたソリューションを開きます。または、[exercise1-EchoBot](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise1-EchoBot)
+1.  前の演習から得られたソリューションを開きます。または、[exercise1-EchoBot](./exercise1-EchoBot)
     フォルダーからソリューションを開くこともできます。
 
 2.  **Dialogs\\RootDialog.cs** ファイルを開きます。

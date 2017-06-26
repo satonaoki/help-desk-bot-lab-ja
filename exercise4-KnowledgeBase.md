@@ -23,9 +23,9 @@ Search は、さまざまなソース (Azure SQL DB、Cosmos DB、BLOB ストレ
 インデックスに取り込まれることで、ボットのダイアログからクエリを行えるようになります。
 
 この
-[C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise4-KnowledgeBase)
+[C\#](./CSharp/exercise4-KnowledgeBase)
 または
-[Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise4-KnowledgeBase)
+[Node.js](./Node/exercise4-KnowledgeBase)
 のフォルダー内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
 
 次の図は、この演習でコンポーネントどうしがどのようなやりとりをするかを示したものです。
@@ -64,9 +64,9 @@ Search は、さまざまなソース (Azure SQL DB、Cosmos DB、BLOB ストレ
 ## 前提条件
 
 -   前の演習を完了している必要があります。あるいは
-    [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise3-LuisDialog)
+    [C\#](./CSharp/exercise3-LuisDialog)
     または
-    [Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise3-LuisDialog)
+    [Node.js](./Node/exercise3-LuisDialog)
     用の開始点を使用できます。
 
 -   [LUIS ポータル](https://www.luis.ai/)のアカウント
@@ -79,7 +79,7 @@ Search は、さまざまなソース (Azure SQL DB、Cosmos DB、BLOB ストレ
 DocumentDB API を使用して Azure Cosmos DB
 を作成した後、新しいコレクションを作成する必要があります。ドキュメント
 エクスプローラーを使用して、ナレッジ
-ベースのサンプル記事をアップロードします。[assets/kb](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/kb)
+ベースのサンプル記事をアップロードします。[assets/kb](./assets/kb)
 フォルダーのファイルを使用できます。
 
 次に、Azure Search

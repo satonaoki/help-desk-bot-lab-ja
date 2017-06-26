@@ -13,7 +13,7 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 に近いスコアは否定的なセンチメントを示します。センチメント
 スコアは、分類の手法により生成されます。
 
-[こちらのフォルダー](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise6-MoodDetection)内には、この演習のステップで作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。このソリューションを使用する場合は、必ず事前に
+[こちらのフォルダー](./exercise6-MoodDetection)内には、この演習のステップで作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。このソリューションを使用する場合は、必ず事前に
 Web.config で値を設定してください。
 
 ## 前提条件
@@ -49,7 +49,7 @@ Web.config で値を設定してください。
 を呼び出す新しいクラスを作成します。
 
 1.  演習 4
-    から得られたソリューションを開きます。または、[exercise4-KnowledgeBase](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise4-KnowledgeBase)
+    から得られたソリューションを開きます。または、[exercise4-KnowledgeBase](./exercise4-KnowledgeBase)
     フォルダーにあるアプリを使用することもできます。
 
 >   **注:**
@@ -65,7 +65,7 @@ Web.config で値を設定してください。
     で説明しています)。
 
 1.  プロジェクトの [Services] フォルダー内の
-    [TextAnalyticsService.cs](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/assets/exercise6-MoodDetection/TextAnalyticsService.cs)
+    [TextAnalyticsService.cs](../assets/exercise6-MoodDetection/TextAnalyticsService.cs)
     をコピーします。このファイルには、Text Analytics API を使用する 3
     つのクラスが含まれています。
 
