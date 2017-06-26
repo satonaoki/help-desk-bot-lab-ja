@@ -56,261 +56,175 @@ IScorable に渡されて処理されますScorable
 1.  前の演習から得られたアプリを開きます。または、[exercise6-MoodDetection](./exercise6-MoodDetection)
     フォルダーにあるアプリを使用することもできます。
 
->   **注:**
->   あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
+    > **注:** あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
+    > -   RootDialog.cs 内の **[LuisModel("{LUISAppID}", "{LUISKey}")]** 属性のプレースホルダーを、自分が使用している LUIS アプリ ID とプログラマティック API キーに置き換えます
+    > -   Web.config 内の **TextAnalyticsApiKey** を、自分が使用している Text Analytics キーに置き換えます (演習 6 で説明しています)。
+    > -   Web.config 内の **AzureSearchAccount**、**AzureSearchIndex**、および **AzureSearchKey** を、自分の Search アカウント、インデックス名、およびキーに置き換えます (演習 4 で説明しています)。
 
--   RootDialog.cs 内の **[LuisModel("{LUISAppID}", "{LUISKey}")]**
-    属性のプレースホルダーを、自分が使用している LUIS アプリ ID
-    とプログラマティック API キーに置き換えます
-
--   Web.config 内の **TextAnalyticsApiKey** を、自分が使用している Text
-    Analytics キーに置き換えます (演習 6 で説明しています)。
-
--   Web.config 内の **AzureSearchAccount**、**AzureSearchIndex**、および
-    **AzureSearchKey** を、自分の Search
-    アカウント、インデックス名、およびキーに置き換えます (演習 4
-    で説明しています)。
-
-1.  プロジェクトに HandOff
+2.  プロジェクトに HandOff
     フォルダーを作成し、[assets](../assets)
     フォルダーの次のファイルを追加します。
 
     -   [AgentExtensions.cs](../assets/exercise7-HandOffToHuman/AgentExtensions.cs)
+    
+    通常ユーザーをエージェントに切り替え、エージェントを識別する、シンプルなロジックが含まれています。これを使用して、いずれは、会話、ユーザー、およびエージェントを管理する独自のロジックを実装できます。
 
->   通常ユーザーをエージェントに切り替え、エージェントを識別する、シンプルなロジックが含まれています。これを使用して、いずれは、会話、ユーザー、およびエージェントを管理する独自のロジックを実装できます。
+    -   [Provider.cs](../assets/exercise7-HandOffToHuman/Provider.cs)
+    
+    ヒューマン エージェントとの通信を待つユーザーを入れるキューを作成します。このクラスでは、外部ストレージでキューを存続させません。これは、会話のメタデータを格納する場所でもあります。会話をデータ ストアに格納する場合は、カスタムの実装で Provider を更新するか、カスタムの実装を含む Provider を継承できます。
 
--   [Provider.cs](../assets/exercise7-HandOffToHuman/Provider.cs)
+    -   [CommandScorable.cs](../assets/exercise7-HandOffToHuman/CommandScorable.cs)
+    
+    この Scorable はメッセージがエージェントからの場合にアクセスされ、agent help、connect、または resume メッセージを受信した場合に限り、その解決をトリガーします。ユーザーのメッセージがこれらのメッセージと一致しない場合、ユーザーのメッセージはこの Scorable で処理されません。
 
->   ヒューマン
->   エージェントとの通信を待つユーザーを入れるキューを作成します。このクラスでは、外部ストレージでキューを存続させません。これは、会話のメタデータを格納する場所でもあります。会話をデータ
->   ストアに格納する場合は、カスタムの実装で Provider
->   を更新するか、カスタムの実装を含む Provider を継承できます。
-
--   [CommandScorable.cs](../assets/exercise7-HandOffToHuman/CommandScorable.cs)
-
->   この Scorable はメッセージがエージェントからの場合にアクセスされ、agent
->   help、connect、または resume
->   メッセージを受信した場合に限り、その解決をトリガーします。ユーザーのメッセージがこれらのメッセージと一致しない場合、ユーザーのメッセージはこの
->   Scorable で処理されません。
-
-1.  次のボイラープレート コードを使用して、RouterScorable.cs クラスを HandOff
+3.  次のボイラープレート コードを使用して、RouterScorable.cs クラスを HandOff
     フォルダーに作成します。ルーターには、各メッセージがエージェントまたはユーザーのどちらに送信される必要があるかを把握する役割があります。
 
-2.  namespace HelpDeskBot.HandOff
+    ```CSharp
+    namespace HelpDeskBot.HandOff
+    {
+        using System;
+        using System.Threading;
+        using System.Threading.Tasks;
+        using Microsoft.Bot.Builder.Dialogs.Internals;
+        using Microsoft.Bot.Builder.Internals.Fibers;
+        using Microsoft.Bot.Builder.Scorables.Internals;
+        using Microsoft.Bot.Connector;
 
-3.  {
+        public class RouterScorable : ScorableBase<IActivity, ConversationReference, double>
+        {
+            private readonly ConversationReference conversationReference;
+            private readonly Provider provider;
+            private readonly IBotData botData;
 
-4.  using System;
+            public RouterScorable(IBotData botData, ConversationReference conversationReference, Provider provider)
+            {
+                SetField.NotNull(out this.botData, nameof(botData), botData);
+                SetField.NotNull(out this.conversationReference, nameof(conversationReference), conversationReference);
+                SetField.NotNull(out this.provider, nameof(provider), provider);
+            }
 
-5.  using System.Threading;
+            protected override Task DoneAsync(IActivity item, ConversationReference state, CancellationToken token)
+            {
+                return Task.CompletedTask;
+            }
+        }
+    }
+    ```
 
-6.  using System.Threading.Tasks;
-
-7.  using Microsoft.Bot.Builder.Dialogs.Internals;
-
-8.  using Microsoft.Bot.Builder.Internals.Fibers;
-
-9.  using Microsoft.Bot.Builder.Scorables.Internals;
-
-10. using Microsoft.Bot.Connector;
-
-11. public class RouterScorable : ScorableBase\<IActivity,
-    ConversationReference, double\>
-
-12. {
-
-13. private readonly ConversationReference conversationReference;
-
-14. private readonly Provider provider;
-
-15. private readonly IBotData botData;
-
-16. public RouterScorable(IBotData botData, ConversationReference
-    conversationReference, Provider provider)
-
-17. {
-
-18. SetField.NotNull(out this.botData, nameof(botData), botData);
-
-19. SetField.NotNull(out this.conversationReference,
-    nameof(conversationReference), conversationReference);
-
-20. SetField.NotNull(out this.provider, nameof(provider), provider);
-
-21. }
-
-22. protected override Task DoneAsync(IActivity item, ConversationReference
-    state, CancellationToken token)
-
-23. {
-
-24. return Task.CompletedTask;
-
-25. }
-
-26. }
-
->   }
-
-1.  PrepareAsync、PrepareRouteableAgentActivity、および
+4.  PrepareAsync、PrepareRouteableAgentActivity、および
     PrepareRouteableUserActivity メソッドを RouterScorable.cs に追加します。
+    
+    PrepareAsync メソッドは受信メッセージを受け取り、他のメソッドをいくつか呼び出して解決をトリガーします。
 
->   PrepareAsync
->   メソッドは受信メッセージを受け取り、他のメソッドをいくつか呼び出して解決をトリガーします。
+    ```CSharp
+    namespace HelpDeskBot.HandOff
+    {
+        using System;
+        using System.Threading;
+        using System.Threading.Tasks;
+        using Microsoft.Bot.Builder.Dialogs.Internals;
+        using Microsoft.Bot.Builder.Internals.Fibers;
+        using Microsoft.Bot.Builder.Scorables.Internals;
+        using Microsoft.Bot.Connector;
 
->   protected override async Task\<ConversationReference\>
->   PrepareAsync(IActivity activity, CancellationToken token)
+        public class RouterScorable : ScorableBase<IActivity, ConversationReference, double>
+        {
+            private readonly ConversationReference conversationReference;
+            private readonly Provider provider;
+            private readonly IBotData botData;
 
->   {
+            public RouterScorable(IBotData botData, ConversationReference conversationReference, Provider provider)
+            {
+                SetField.NotNull(out this.botData, nameof(botData), botData);
+                SetField.NotNull(out this.conversationReference, nameof(conversationReference), conversationReference);
+                SetField.NotNull(out this.provider, nameof(provider), provider);
+            }
 
->   var message = activity as Activity;
+            protected override Task DoneAsync(IActivity item, ConversationReference state, CancellationToken token)
+            {
+                return Task.CompletedTask;
+            }
+        }
+    }
+    ```
+    
+    PrepareRouteableAgentActivity は、メッセージが通常ユーザーと接続されているエージェントからのものであれば、Scorable をトリガーします。
 
->   if (message != null && !string.IsNullOrWhiteSpace(message.Text))
+    ```CSharp
+    protected ConversationReference PrepareRouteableAgentActivity(string conversationId)
+    {
+        var conversation = this.provider.FindByAgentId(conversationId);
+        return conversation?.User;
+    }
+    ```
+    
+    PrepareRouteableUserActivity は、メッセージが、エージェントとの通信を待機している通常ユーザーかエージェントに接続されている通常ユーザーからのものであれば、Scorable をトリガーします。
 
->   {
+    ```CSharp
+    protected ConversationReference PrepareRouteableUserActivity(string conversationId)
+    {
+        var conversation = this.provider.FindByConversationId(conversationId);
+        if (conversation == null)
+        {
+            conversation = this.provider.CreateConversation(this.conversationReference);
+        }
 
->   // determine if the message comes from an agent or user
+        switch (conversation.State)
+        {
+            case ConversationState.ConnectedToBot:
+                return null; // continue normal flow
+            case ConversationState.WaitingForAgent:
+                return conversation.User;
+            case ConversationState.ConnectedToAgent:
+                return conversation.Agent;
+        }
 
->   if (this.botData.IsAgent())
+        return null;
+    }
+    ```
 
->   {
-
->   return this.PrepareRouteableAgentActivity(message.Conversation.Id);
-
->   }
-
->   else
-
->   {
-
->   return this.PrepareRouteableUserActivity(message.Conversation.Id);
-
->   }
-
->   }
-
->   return null;
-
->   }
-
->   PrepareRouteableAgentActivity
->   は、メッセージが通常ユーザーと接続されているエージェントからのものであれば、Scorable
->   をトリガーします。
-
->   protected ConversationReference PrepareRouteableAgentActivity(string
->   conversationId)
-
->   {
-
->   var conversation = this.provider.FindByAgentId(conversationId);
-
->   return conversation?.User;
-
->   }
-
->   PrepareRouteableUserActivity
->   は、メッセージが、エージェントとの通信を待機している通常ユーザーかエージェントに接続されている通常ユーザーからのものであれば、Scorable
->   をトリガーします。
-
->   protected ConversationReference PrepareRouteableUserActivity(string
->   conversationId)
-
->   {
-
->   var conversation = this.provider.FindByConversationId(conversationId);
-
->   if (conversation == null)
-
->   {
-
->   conversation = this.provider.CreateConversation(this.conversationReference);
-
->   }
-
->   switch (conversation.State)
-
->   {
-
->   case ConversationState.ConnectedToBot:
-
->   return null; // continue normal flow
-
->   case ConversationState.WaitingForAgent:
-
->   return conversation.User;
-
->   case ConversationState.ConnectedToAgent:
-
->   return conversation.Agent;
-
->   }
-
->   return null;
-
->   }
-
-1.  HasScore および GetScore メソッドを RouterScorable.cs に追加します。HasScore
+5.  HasScore および GetScore メソッドを RouterScorable.cs に追加します。HasScore
     は、PrepareAsync が有効な ConversationReference を返し、GetScore
     が最大スコアを返してメッセージを解決する場合に限り、評価されます。
 
-2.  protected override bool HasScore(IActivity item, ConversationReference
-    destination)
+    ```CSharp
+    protected override bool HasScore(IActivity item, ConversationReference destination)
+    {
+        return destination != null;
+    }
 
-3.  {
+    protected override double GetScore(IActivity item, ConversationReference destination)
+    {
+        return 1.0;
+    }
+    ```
 
-4.  return destination != null;
-
-5.  }
-
-6.  protected override double GetScore(IActivity item, ConversationReference
-    destination)
-
-7.  {
-
-8.  return 1.0;
-
->   }
-
-1.  PostAsync メソッドを RouterScorable.cs に追加します。この Scorable
+6.  PostAsync メソッドを RouterScorable.cs に追加します。この Scorable
     がメッセージの解決に成功したら、ConversationReference
     はメッセージの宛先を受信します。宛先が現在の会話と同じユーザーである場合、Scorable
     はそのユーザーにメッセージを送信して、キューの状態を通知します。それ以外の場合、Scorable
     は受信メッセージを宛先にルーティングします。
 
-2.  protected override async Task PostAsync(IActivity item,
-    ConversationReference destination, CancellationToken token)
+    ```CSharp
+    protected override async Task PostAsync(IActivity item, ConversationReference destination, CancellationToken token)
+    {
+        string textToReply;
+        if (destination.Conversation.Id == conversationReference.Conversation.Id)
+        {
+            textToReply = "Connecting you to the next available human agent... please wait";
+        }
+        else
+        {
+            textToReply = item.AsMessageActivity().Text;
+        }
 
-3.  {
-
-4.  string textToReply;
-
-5.  if (destination.Conversation.Id == conversationReference.Conversation.Id)
-
-6.  {
-
-7.  textToReply = "Connecting you to the next available human agent... please
-    wait";
-
-8.  }
-
-9.  else
-
-10. {
-
-11. textToReply = item.AsMessageActivity().Text;
-
-12. }
-
-13. ConnectorClient connector = new ConnectorClient(new
-    Uri(destination.ServiceUrl));
-
-14. var reply = destination.GetPostToUserMessage();
-
-15. reply.Text = textToReply;
-
-16. await connector.Conversations.SendToConversationAsync(reply);
-
->   }
+        ConnectorClient connector = new ConnectorClient(new Uri(destination.ServiceUrl));
+        var reply = destination.GetPostToUserMessage();
+        reply.Text = textToReply;
+        await connector.Conversations.SendToConversationAsync(reply);
+    }
+    ```
 
 ## タスク 2: ボットを更新して会話をハンドオフ
 
@@ -326,304 +240,219 @@ IScorable に渡されて処理されますScorable
     -   *Contact me to a human being*
 
     -   *Operator*
+    
+    必要に応じて、[こちらの LUIS モデル](../assets/exercise7-HandOffToHuman/luis_model.json)をインポートして使用できます。
 
->   必要に応じて、[こちらの LUIS
->   モデル](../assets/exercise7-HandOffToHuman/luis_model.json)をインポートして使用できます。
+2.  アプリをトレーニングして再度発行します。
 
-1.  アプリをトレーニングして再度発行します。
-
-2.  [assets](../assets)
+3.  [assets](../assets)
     フォルダーにある
     [AgentLoginScorable.cs](../assets/exercise7-HandOffToHuman/AgentLoginScorable.cs)
     を Dialogs フォルダーにコピーします。このクラスは、通常ユーザーとヒューマン
     エージェント間の切り替えを管理します。
 
-3.  Global.asax.cs を開き、次の using ステートメントを追加します。
+4.  Global.asax.cs を開き、次の using ステートメントを追加します。
 
-4.  using HandOff;
+    ```csharp
+    using HandOff;
+    using Microsoft.Bot.Builder.Dialogs.Internals;
+    ```
 
->   using Microsoft.Bot.Builder.Dialogs.Internals;
-
-1.  Global.asax.cs で、2 ユーザー間の通信を処理するために、新しい IScorable
+5.  Global.asax.cs で、2 ユーザー間の通信を処理するために、新しい IScorable
     の実装の登録を追加します。
 
-2.  protected void Application\_Start()
+    ```csharp
+    protected void Application_Start()
+    {
+        GlobalConfiguration.Configure(WebApiConfig.Register);
 
-3.  {
+        var builder = new ContainerBuilder();
 
-4.  GlobalConfiguration.Configure(WebApiConfig.Register);
+        // Hand Off Scorables, Provider and UserRoleResolver
+        builder.Register(c => new RouterScorable(c.Resolve<IBotData>(), c.Resolve<ConversationReference>(), c.Resolve<Provider>()))
+            .As<IScorable<IActivity, double>>().InstancePerLifetimeScope();
+        builder.Register(c => new CommandScorable(c.Resolve<IBotData>(), c.Resolve<ConversationReference>(), c.Resolve<Provider>()))
+            .As<IScorable<IActivity, double>>().InstancePerLifetimeScope();
+        builder.RegisterType<Provider>()
+            .SingleInstance();
 
-5.  var builder = new ContainerBuilder();
+        // Bot Scorables
+        builder.Register(c => new AgentLoginScorable(c.Resolve<IBotData>(), c.Resolve<Provider>()))
+            .As<IScorable<IActivity, double>>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<SearchScorable>()
+            .As<IScorable<IActivity, double>>()
+            .InstancePerLifetimeScope();
+        builder.RegisterType<ShowArticleDetailsScorable>()
+            .As<IScorable<IActivity, double>>()
+            .InstancePerLifetimeScope();
 
-6.  // Hand Off Scorables, Provider and UserRoleResolver
+        builder.Update(Microsoft.Bot.Builder.Dialogs.Conversation.Container);
+    }
+    ```
 
-7.  builder.Register(c =\> new RouterScorable(c.Resolve\<IBotData\>(),
-    c.Resolve\<ConversationReference\>(), c.Resolve\<Provider\>()))
-
-8.  .As\<IScorable\<IActivity, double\>\>().InstancePerLifetimeScope();
-
-9.  builder.Register(c =\> new CommandScorable(c.Resolve\<IBotData\>(),
-    c.Resolve\<ConversationReference\>(), c.Resolve\<Provider\>()))
-
-10. .As\<IScorable\<IActivity, double\>\>().InstancePerLifetimeScope();
-
-11. builder.RegisterType\<Provider\>()
-
-12. .SingleInstance();
-
-13. // Bot Scorables
-
-14. builder.Register(c =\> new AgentLoginScorable(c.Resolve\<IBotData\>(),
-    c.Resolve\<Provider\>()))
-
-15. .As\<IScorable\<IActivity, double\>\>()
-
-16. .InstancePerLifetimeScope();
-
-17. builder.RegisterType\<SearchScorable\>()
-
-18. .As\<IScorable\<IActivity, double\>\>()
-
-19. .InstancePerLifetimeScope();
-
-20. builder.RegisterType\<ShowArticleDetailsScorable\>()
-
-21. .As\<IScorable\<IActivity, double\>\>()
-
-22. .InstancePerLifetimeScope();
-
-23. builder.Update(Microsoft.Bot.Builder.Dialogs.Conversation.Container);
-
->   }
-
-1.  RootDialog.cs で、HandOffToHuman
+6.  RootDialog.cs で、HandOffToHuman
     インテントを処理し、エージェントと通信するためのキューにユーザーを入れる
     HandOff メソッドを追加します。
 
-2.  [LuisIntent("HandOffToHuman")]
+    ```CSharp
+    [LuisIntent("HandOffToHuman")]
+    public async Task HandOff(IDialogContext context, LuisResult result)
+    {
+        var conversationReference = context.Activity.ToConversationReference();
+        var provider = Conversation.Container.Resolve<HandOff.Provider>();
 
-3.  public async Task HandOff(IDialogContext context, LuisResult result)
+        if (provider.QueueMe(conversationReference))
+        {
+            var waitingPeople = provider.Pending() > 1 ? $", there are { provider.Pending() - 1 } users waiting" : string.Empty;
 
-4.  {
+            await context.PostAsync($"Connecting you to the next available human agent... please wait{waitingPeople}.");
+        }
 
-5.  var conversationReference = context.Activity.ToConversationReference();
+        context.Done<object>(null);
+    }
+    ```
 
-6.  var provider = Conversation.Container.Resolve\<HandOff.Provider\>();
+7.  さらに次の using ステートメントを使用します。
 
-7.  if (provider.QueueMe(conversationReference))
+    ```csharp
+    using Autofac;
+    using Microsoft.Bot.Builder.ConnectorEx;
+    ```
 
-8.  {
-
-9.  var waitingPeople = provider.Pending() \> 1 ? \$", there are {
-    provider.Pending() - 1 } users waiting" : string.Empty;
-
-10. await context.PostAsync(\$"Connecting you to the next available human
-    agent... please wait{waitingPeople}.");
-
-11. }
-
-12. context.Done\<object\>(null);
-
->   }
-
-1.  さらに次の using ステートメントを使用します。
-
-2.  using Autofac;
-
->   using Microsoft.Bot.Builder.ConnectorEx;
-
-1.  UserFeedbackRequestDialog.cs で、ユーザーの満足度スコアが 0.5
+8.  UserFeedbackRequestDialog.cs で、ユーザーの満足度スコアが 0.5
     未満の場合に、前のステップで作成された Handoff
     ダイアログを呼び出すように、MessageReceivedAsync
     メソッドを更新します。簡単にするために、メソッド全体を次のコード (2
     つのメソッド) で置き換えることができます。
 
-2.  public async Task MessageReceivedAsync(IDialogContext context,
-    IAwaitable\<string\> result)
+    ```CSharp
+    public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<string> result)
+    {
+        var response = await result;
 
-3.  {
+        double score = await this.textAnalyticsService.Sentiment(response);
 
-4.  var response = await result;
+        if (score == double.NaN)
+        {
+            await context.PostAsync("Ooops! Something went wrong while analying your answer. An IT representative agent will get in touch with you to follow up soon.");
+        }
+        else
+        {
+            string cardText = string.Empty;
+            string cardImageUrl = string.Empty;
 
-5.  double score = await this.textAnalyticsService.Sentiment(response);
+            if (score < 0.5)
+            {
+                cardText = "I understand that you might be dissatisfied with my assistance. An IT representative will get in touch with you soon to help you.";
+                cardImageUrl = "https://raw.githubusercontent.com/GeekTrainer/help-desk-bot-lab/master/assets/botimages/head-sad-small.png";
+            }
+            else
+            {
+                cardText = "Thanks for sharing your experience.";
+                cardImageUrl = "https://raw.githubusercontent.com/GeekTrainer/help-desk-bot-lab/master/assets/botimages/head-smiling-small.png";
+            }
 
-6.  if (score == double.NaN)
+            var msg = context.MakeMessage();
+            msg.Attachments = new List<Attachment>
+            {
+                new HeroCard
+                {
+                    Text = cardText,
+                    Images = new List<CardImage>
+                    {
+                        new CardImage(cardImageUrl)
+                    }
+                }.ToAttachment()
+            };
+            await context.PostAsync(msg);
 
-7.  {
+            if (score < 0.5)
+            {
+                var text = "Do you want me to escalate this with an IT representative?";
+                PromptDialog.Confirm(context, this.EscalateWithHumanAgent, text);
+            }
+            else
+            {
+                context.Done<object>(null);
+            }
+        }
+    }
 
-8.  await context.PostAsync("Ooops! Something went wrong while analying your
-    answer. An IT representative agent will get in touch with you to follow up
-    soon.");
+    private async Task EscalateWithHumanAgent(IDialogContext context, IAwaitable<bool> argument)
+    {
+        var confirmed = await argument;
 
-9.  }
+        if (confirmed)
+        {
+            var conversationReference = context.Activity.ToConversationReference();
+            var provider = Conversation.Container.Resolve<HandOff.Provider>();
 
-10. else
+            if (provider.QueueMe(conversationReference))
+            {
+                var waitingPeople = provider.Pending() > 1 ? $", there are { provider.Pending() - 1 } users waiting" : string.Empty;
 
-11. {
+                await context.PostAsync($"Connecting you to the next available human agent... please wait{waitingPeople}.");
+            }
 
-12. string cardText = string.Empty;
+        }
 
-13. string cardImageUrl = string.Empty;
+        context.Done<object>(null);
+    }
+    ```
 
-14. if (score \< 0.5)
+9.  さらに次の using ステートメントを使用します。
 
-15. {
-
-16. cardText = "I understand that you might be dissatisfied with my assistance.
-    An IT representative will get in touch with you soon to help you.";
-
-17. cardImageUrl =
-    "https://raw.githubusercontent.com/GeekTrainer/help-desk-bot-lab/develop/assets/botimages/head-sad-small.png";
-
-18. }
-
-19. else
-
-20. {
-
-21. cardText = "Thanks for sharing your experience.";
-
-22. cardImageUrl =
-    "https://raw.githubusercontent.com/GeekTrainer/help-desk-bot-lab/develop/assets/botimages/head-smiling-small.png";
-
-23. }
-
-24. var msg = context.MakeMessage();
-
-25. msg.Attachments = new List\<Attachment\>
-
-26. {
-
-27. new HeroCard
-
-28. {
-
-29. Text = cardText,
-
-30. Images = new List\<CardImage\>
-
-31. {
-
-32. new CardImage(cardImageUrl)
-
-33. }
-
-34. }.ToAttachment()
-
-35. };
-
-36. await context.PostAsync(msg);
-
-37. if (score \< 0.5)
-
-38. {
-
-39. var text = "Do you want me to escalate this with an IT representative?";
-
-40. PromptDialog.Confirm(context, this.EscalateWithHumanAgent, text,
-    promptStyle: PromptStyle.AutoText);
-
-41. }
-
-42. else
-
-43. {
-
-44. context.Done\<object\>(null);
-
-45. }
-
-46. }
-
-47. }
-
-48. private async Task EscalateWithHumanAgent(IDialogContext context,
-    IAwaitable\<bool\> argument)
-
-49. {
-
-50. var confirmed = await argument;
-
-51. if (confirmed)
-
-52. {
-
-53. var conversationReference = context.Activity.ToConversationReference();
-
-54. var provider = Conversation.Container.Resolve\<HandOff.Provider\>();
-
-55. if (provider.QueueMe(conversationReference))
-
-56. {
-
-57. var waitingPeople = provider.Pending() \> 1 ? \$", there are {
-    provider.Pending() - 1 } users waiting" : string.Empty;
-
-58. await context.PostAsync(\$"Connecting you to the next available human
-    agent... please wait{waitingPeople}.");
-
-59. }
-
-60. }
-
-61. context.Done\<object\>(null);
-
->   }
-
-1.  さらに次の using ステートメントを使用します。
-
-2.  using Autofac;
-
->   using Microsoft.Bot.Builder.ConnectorEx;
+    ```csharp
+    using Autofac;
+    using Microsoft.Bot.Builder.ConnectorEx;
+    ```
 
 **タスク 3: エミュレーターからのボットのテスト**
 
 1.  [実行] ボタンをクリックしてアプリを実行し、エミュレーターの 2
     つのインスタンスを開きます。両方にボットの URL
-    (http://localhost:3979/api/messages) をいつもどおり入力します。
+    (http://localhost:3979/api/messages ) をいつもどおり入力します。
 
 2.  1 つのエミュレーターで、「I need to reset my password, this is
     urgent」と入力して、新しいチケットを作成し、送信を確認します。ボットからフィードバックを求められたら、「it
     was
     useless」などの否定的なフレーズを入力します。エージェントと話すかどうかを尋ねる、新しいプロンプトが表示されるはずです。
 
->   ![](./media/7-2.png)
+    ![](./media/7-2.png)
 
-1.  待機ユーザーのキューにユーザーを入れるためのプロンプトを確認します。
+3.  待機ユーザーのキューにユーザーを入れるためのプロンプトを確認します。
 
->   ![](./media/7-3.png)
+   ![](./media/7-3.png)
 
-1.  2 つ目のエミュレーターでは、「/agent
+4.  2 つ目のエミュレーターでは、「/agent
     login」と入力して、エージェントの権限を制御します。ボットから、1
     人のユーザーが待機中であることが通知されるはずです。「agent
     help」と入力すると、エージェントの選択肢を含むメッセージが表示されます。
+    
+    ![](./media/7-4.png)
 
->   ![](./media/7-4.png)
-
-1.  「connect」と入力して、ユーザーとの会話を開始します。1
+5.  「connect」と入力して、ユーザーとの会話を開始します。1
     番目のエミュレーターでは、ボットがこの接続をユーザーに通知します。
 
-| **エージェントのメッセージ**             | **ユーザーのメッセージ**                 |
-|------------------------------------------|------------------------------------------|
-| ![](./media/7-5.png) | ![](./media/7-6.png) |
-|                                          |                                          |
+    | **エージェントのメッセージ**             | **ユーザーのメッセージ**                 |
+    |------------------------------------------|------------------------------------------|
+    | ![](./media/7-5.png) | ![](./media/7-6.png) |
 
-2.  エミュレーターを使用して、エージェントとユーザー間の通信を確認できるようになりました。
+6.  エミュレーターを使用して、エージェントとユーザー間の通信を確認できるようになりました。
 
-| **エージェントのメッセージ**             | **ユーザーのメッセージ**                 |
-|------------------------------------------|------------------------------------------|
-| ![](./media/7-7.png) | ![](./media/7-8.png) |
+    | **エージェントのメッセージ**             | **ユーザーのメッセージ**                 |
+    |------------------------------------------|------------------------------------------|
+    | ![](./media/7-7.png) | ![](./media/7-8.png) |
 
-3.  対話を終了するには、2 番目のエミュレーター (エージェント エミュレーター)
+7.  対話を終了するには、2 番目のエミュレーター (エージェント エミュレーター)
     で「resume」と入力します。ボットから両方の参加者に通信の終了が通知されます。
 
-| **エージェントのメッセージ**             | **ユーザーのメッセージ**                   |
-|------------------------------------------|--------------------------------------------|
-| ![](./media/7-9.png) | ![](./media/7-10.png) |
+    | **エージェントのメッセージ**             | **ユーザーのメッセージ**                   |
+    |------------------------------------------|--------------------------------------------|
+    | ![](./media/7-9.png) | ![](./media/7-10.png) |
 
-4.  **注:** もう 1 つの考えられるシナリオは "管理されたハンドオフ"
-    です。このケースでは、ボットがユーザーの質問に応じてヒューマン
-    エージェントと通信し、ボットが用意しているどの答えが正しいかを尋ねます。
+    > **注:** もう 1 つの考えられるシナリオは "管理されたハンドオフ" です。このケースでは、ボットがユーザーの質問に応じてヒューマン エージェントと通信し、ボットが用意しているどの答えが正しいかを尋ねます。
 
 ## その他の課題
 
