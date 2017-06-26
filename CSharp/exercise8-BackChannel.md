@@ -52,25 +52,18 @@ Web.config で LUIS モデルの値、および Azure Search
 
 2.  [My bots] ボタンをクリックし、編集するボットをクリックします。
 
->   **注:** この演習では、Bot Framework
->   ポータルにボットが既に登録されていることを前提としています。登録していない場合は、[演習
->   5](./exercise5-Deployment.md)
->   の説明を参照してください。
+    > **注:** この演習では、Bot Framework ポータルにボットが既に登録されていることを前提としています。登録していない場合は、[演習 5](./exercise5-Deployment.md) の説明を参照してください。
 
-1.  Web チャット チャネルの [編集] (
-
-    ![](media/aa9a2da6246391b3e1b7334f24ede1c9.png)
-
-    ) リンクをクリックします。開いたウィンドウで [Add new site]
+3.  Web チャット チャネルの [編集] (![](media/aa9a2da6246391b3e1b7334f24ede1c9.png)) リンクをクリックします。開いたウィンドウで [Add new site]
     をクリックします。サイト名 (例: ヘルプ デスク チケット検索) を入力します。
+    
+    ![](./media/8-3.png)
 
->   ![](./media/8-3.png)
-
-1.  [完了] をクリックすると、次のページが表示されます。**秘密鍵**が 2
+4.  [完了] をクリックすると、次のページが表示されます。**秘密鍵**が 2
     つあることに注意してください。後で使用できるように、いずれか 1
     つを保存しておきます。[完了] をクリックします。
-
->   ![](./media/8-4.png)
+    
+    ![](./media/8-4.png)
 
 ## タスク 2: 埋め込み済み Web チャットによる HTML ページの追加
 
@@ -81,112 +74,71 @@ BackChannel 機能を追加します。
 
 1.  前の演習から得られたアプリを開きます。または、[exercise7-HandOffToHuman](./exercise7-HandOffToHuman)
     フォルダーにあるソリューションを使用することもできます。
+    
+    > **注:** あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
+    > - RootDialog.cs 内の **[LuisModel("{LUISAppID}", "{LUISKey}")]** 属性のプレースホルダーを、自分が使用している LUIS アプリ ID とプログラマティック API キーに置き換えます
+    > -   Web.config 内の **TextAnalyticsApiKey** を、自分が使用している Text Analytics キーに置き換えます (演習 6 で説明しています)。
+    > -   Web.config 内の **AzureSearchAccount**、**AzureSearchIndex**、および **AzureSearchKey** を、自分の Search アカウント、インデックス名、キーに置き換えます (演習 4 で説明しています)。
 
->   **注:**
->   あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
-
--   RootDialog.cs 内の **[LuisModel("{LUISAppID}", "{LUISKey}")]**
-    属性のプレースホルダーを、自分が使用している LUIS アプリ ID
-    とプログラマティック API キーに置き換えます
-
--   Web.config 内の **TextAnalyticsApiKey** を、自分が使用している Text
-    Analytics キーに置き換えます (演習 6 で説明しています)。
-
--   Web.config 内の **AzureSearchAccount**、**AzureSearchIndex**、および
-    **AzureSearchKey** を、自分の Search
-    アカウント、インデックス名、キーに置き換えます (演習 4 で説明しています)。
-
-1.  default.htm を
+2.  default.htm を
     [こちらのテンプレート](../assets/exercise8-BackChannel/default.htm)に置き換えます。
 
-2.  [botchat.js script
+3.  [botchat.js script
     element](../assets/exercise8-BackChannel/default.htm#L52)の下に、Web
     Channel Secret で **DirectLine**
     オブジェクトを作成する以下のコードを含む、新しいスクリプト要素を追加します。{DIRECTLINE\_SECRET}
     プレースホルダーを、これまでに取得した秘密鍵で置き換え、{BOT\_ID}
     プレースホルダーをボット処理 ID (例: *help-desk-bot*) で置き換えます。
 
-3.  \<script\>
+    ``` html
+    <script>
+        var botConnection = new BotChat.DirectLine({
+            secret: '{DIRECTLINE_SECRET}'
+        });
+        var resPanel = document.getElementById('results');
 
-4.  var botConnection = new BotChat.DirectLine({
+        BotChat.App({
+            botConnection: botConnection,
+            user: { id: 'WebChatUser' },
+            bot: { id: '{BOT_ID}' },
+            locale: 'en-us',
+        }, document.getElementById('bot'));
+    </script>
+    ```
+    
+    > **注:** [オープンソースの Web Chat コントロール](https://github.com/Microsoft/BotFramework-WebChat)は、[Direct Line API](https://docs.botframework.com/en-us/restapi/directline3/#navtitle) を使用してボットと通信を行います。Direct Line API を使用することで、activities をクライアントとボットの間で送受信できます。最も一般的な型のアクティビティは message ですが、その他の型もあります。たとえば、typing 型のアクティビティは、ユーザーが入力していること、またはボットが応答のコンパイル作業中であることを示します。
 
-5.  secret: '{DIRECTLINE\_SECRET}'
-
-6.  });
-
-7.  var resPanel = document.getElementById('results');
-
-8.  BotChat.App({
-
-9.  botConnection: botConnection,
-
-10. user: { id: 'WebChatUser' },
-
-11. bot: { id: '{BOT\_ID}' },
-
-12. locale: 'en-us',
-
-13. }, document.getElementById('bot'));
-
->   \</script\>
-
->   **注:** [オープンソースの Web Chat
->   コントロール](https://github.com/Microsoft/BotFramework-WebChat)は、[Direct
->   Line API](https://docs.botframework.com/en-us/restapi/directline3/#navtitle)
->   を使用してボットと通信を行います。Direct Line API
->   を使用することで、activities
->   をクライアントとボットの間で送受信できます。最も一般的な型のアクティビティは
->   message ですが、その他の型もあります。たとえば、typing
->   型のアクティビティは、ユーザーが入力していること、またはボットが応答のコンパイル作業中であることを示します。
-
-1.  同じスクリプト要素で、event アクティビティを受信するためのボット
+4.  同じスクリプト要素で、event アクティビティを受信するためのボット
     アクティビティ リスナーを追加し、記事リストを表示します。
+    
+    > **注:** Web Chat コントロールは、type="event" のアクティビティを自動的に無視します。これにより、ページはボットと、ボットはページと直接通信を行うことができます。
 
->   **注:** Web Chat コントロールは、type="event"
->   のアクティビティを自動的に無視します。これにより、ページはボットと、ボットはページと直接通信を行うことができます。
+    ```javascript
+    botConnection.activity$
+        .filter(function (activity) {
+            return activity.type === 'event' && activity.name === 'searchResults';
+        })
+        .subscribe(function (activity) {
+            updateSearchResults(activity.value)
+        });
 
->   botConnection.activity\$
+    function updateSearchResults(results) {
+        resPanel.innerHTML = ''; // clear
+        results.forEach(function (result) {
+            resPanel.appendChild(createSearchResult(result));
+        });
+    }
 
->   .filter(function (activity) {
+    function createSearchResult(result) {
+        var el = document.createElement('div');
+        el.innerHTML = '<h3>' + result.Title + '</h3>' +
+            '<p>' + result.Text.substring(0, 140) + '...</p>';
 
->   return activity.type === 'event' && activity.name === 'searchResults';
-
->   })
-
->   .subscribe(function (activity) {
-
->   updateSearchResults(activity.value)
-
->   });
-
->   function updateSearchResults(results) {
-
->   resPanel.innerHTML = ''; // clear
-
->   results.forEach(function (result) {
-
->   resPanel.appendChild(createSearchResult(result));
-
->   });
-
->   }
-
->   function createSearchResult(result) {
-
->   var el = document.createElement('div');
-
->   el.innerHTML = '\<h3\>' + result.Title + '\</h3\>' +
-
->   '\<p\>' + result.Text.substring(0, 140) + '...\</p\>';
-
->   return el;
-
->   }
-
->   **注:** わかりやすくするため、ユーザーとの会話を含む Web Chat
->   コントロールと検索結果は同じページに表示します。ただし、この 2
->   つはそれぞれ別々に扱うことが理想的です。エージェントが監視と推奨記事の送信ができるように、スーパーバイザー
->   Web サイトには進行中の会話のリストを表示する必要があります。
+        return el;
+    }
+    ```
+    
+    > **注:** わかりやすくするため、ユーザーとの会話を含む Web Chat コントロールと検索結果は同じページに表示します。ただし、この 2 つはそれぞれ別々に扱うことが理想的です。エージェントが監視と推奨記事の送信ができるように、スーパーバイザー Web サイトには進行中の会話のリストを表示する必要があります。
 
 ## タスク 3: ボットを更新して event アクティビティを Web アプリに送信
 
@@ -195,57 +147,44 @@ BackChannel 機能を追加します。
 1.  Dialogs\\RootDialog.cs を開きます。searchResults
     イベントを作成し、送信するSendSearchToBackchannel メソッドを追加します。
 
-2.  private async Task SendSearchToBackchannel(IDialogContext context,
-    IMessageActivity activity, string textSearch)
+    ```CSharp
+    private async Task SendSearchToBackchannel(IDialogContext context, IMessageActivity activity, string textSearch)
+    {
+        var searchService = new AzureSearchService();
+        var searchResult = await searchService.Search(textSearch);
+        if (searchResult != null && searchResult.Value.Length != 0)
+        {
+            var reply = ((Activity)activity).CreateReply();
 
-3.  {
+            reply.Type = ActivityTypes.Event;
+            reply.Name = "searchResults";
+            reply.Value = searchResult.Value;
+            await context.PostAsync(reply);
+        }
+    }
+    ```
 
-4.  var searchService = new AzureSearchService();
+2.  次の using ステートメントを追加します。
 
-5.  var searchResult = await searchService.Search(textSearch);
+    ``` csharp
+    using HelpDeskBot.Services;
+    ```
 
-6.  if (searchResult != null && searchResult.Value.Length != 0)
-
-7.  {
-
-8.  var reply = ((Activity)activity).CreateReply();
-
-9.  reply.Type = ActivityTypes.Event;
-
-10. reply.Name = "searchResults";
-
-11. reply.Value = searchResult.Value;
-
-12. await context.PostAsync(reply);
-
-13. }
-
->   }
-
-1.  次の using ステートメントを追加します。
-
->   using HelpDeskBot.Services;
-
-1.  SubmitTicket メソッドを更新して、ボットはチケットの説明を受信すると新しい
+3.  SubmitTicket メソッドを更新して、ボットはチケットの説明を受信すると新しい
     SendSearchToBackchannel メソッドを呼び出すようにします。messageActivity
     パラメーターを導入する必要があります。
 
-2.  [LuisIntent("SubmitTicket")]
+    ```CSharp
+    [LuisIntent("SubmitTicket")]
+    public async Task SubmitTicket(IDialogContext context, IAwaitable<IMessageActivity> messageActivity, LuisResult result)
+    {
+        ...
+        await this.EnsureTicket(context);
 
-3.  public async Task SubmitTicket(IDialogContext context,
-    IAwaitable\<IMessageActivity\> messageActivity, LuisResult result)
-
-4.  {
-
-5.  ...
-
-6.  await this.EnsureTicket(context);
-
-7.  var activity = await messageActivity;
-
-8.  await this.SendSearchToBackchannel(context, activity, this.description);
-
->   }
+        var activity = await messageActivity;
+        await this.SendSearchToBackchannel(context, activity, this.description);
+    }
+    ```
 
 ## タスク 4: ボットから Web アプリへのバックチャネルのテスト
 
@@ -256,26 +195,24 @@ BackChannel 機能を追加します。
     と入力します。3979
     は、ボットを実行しているポート番号であることに注意してください。別のポート番号を使用している場合は、変更します。次に、転送先の
     **https** URL も保存しておきます。
+    
+    ![](./media/8-5.png)
+    
+    > **注:** IIS Express ではどの開発サイトを表示するかを Host ヘッダーを使用して判別するため、-host-header 修飾子を使用する必要があります。詳細については、[こちら](https://ngrok.com/docs#host-header)を参照してください。
 
->   ![](./media/8-5.png)
+3.  [Bot Framework ポータル](https://dev.botframework.com/)にサインインします。
 
->   **注:** IIS Express ではどの開発サイトを表示するかを Host
->   ヘッダーを使用して判別するため、-host-header
->   修飾子を使用する必要があります。詳細については、[こちら](https://ngrok.com/docs#host-header)を参照してください。
-
-1.  [Bot Framework ポータル](https://dev.botframework.com/)にサインインします。
-
-2.  [My bots] ボタンをクリックし、次に、編集するボットをクリックします。[設定]
+4.  [My bots] ボタンをクリックし、次に、編集するボットをクリックします。[設定]
     タブをクリックして、メッセージのエンドポイント URL を *ngrok*
     から取得した転送先 **https** URL で更新します (/api/messages
     を忘れずに保持してください)。[変更の保存] ボタンをクリックします。
 
-3.  Web ブラウザでボットの URL に移動します (いつもどおり
+5.  Web ブラウザでボットの URL に移動します (いつもどおり
     <http://localhost:3979/> です)。Web Chat コントロールで、「I need to reset
     my password, this is urgent」(急いでパスワードを変更する必要があります)
     と入力します。入力した説明に応じて、右側に記事リストが表示されるのがわかります。
-
->   ![](./media/8-6.png)
+    
+    ![](./media/8-6.png)
 
 ## タスク 5: Web ページを更新して event メッセージをボットに送信
 
@@ -284,146 +221,103 @@ BackChannel 機能を追加します。
     selector](../assets/exercise8-BackChannel/default.htm#L25)
     を次の CSS で置き換えます。
 
-2.  \#results h3 {
+    ``` css
+    #results h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+    ```
 
-3.  margin-top: 0;
-
-4.  margin-bottom: 0;
-
-5.  cursor: pointer;
-
->   }
-
-1.  createSearchResult
+2.  createSearchResult
     関数を次のコードで更新します。このコードは、ユーザーが記事のタイトルをクリックすると、event
     アクティビティをボットにポストします。
 
-2.  function createSearchResult(result) {
+    ```javascript
+    function createSearchResult(result) {
+        var el = document.createElement('div');
+        el.innerHTML = '<h3>' + result.Title + '</h3>' +
+            '<p>' + result.Text.substring(0, 140) + '...</p>';
 
-3.  var el = document.createElement('div');
+        el.getElementsByTagName('h3')[0]
+            .addEventListener('click', function () {
+                botConnection
+                    .postActivity({
+                        type: 'event',
+                        value: this.textContent.trim(),
+                        from: { id: 'user' },
+                        name: 'showDetailsOf'
+                    })
+                    .subscribe(function (id) {
+                        console.log('event sent', id);
+                    });
+            });
 
-4.  el.innerHTML = '\<h3\>' + result.Title + '\</h3\>' +
-
-5.  '\<p\>' + result.Text.substring(0, 140) + '...\</p\>';
-
-6.  el.getElementsByTagName('h3')[0]
-
-7.  .addEventListener('click', function () {
-
-8.  botConnection
-
-9.  .postActivity({
-
-10. type: 'event',
-
-11. value: this.textContent.trim(),
-
-12. from: { id: 'user' },
-
-13. name: 'showDetailsOf'
-
-14. })
-
-15. .subscribe(function (id) {
-
-16. console.log('event sent', id);
-
-17. });
-
-18. });
-
-19. return el;
-
->   }
+        return el;
+    }
+    ```
 
 ## タスク 6: ボットを更新して event アクティビティを受信
 
 1.  Controllers\\MessagesController.cs を開き、次の using
     ステートメントを追加します。
 
-2.  using System;
+    ``` csharp
+    using System;
+    using HelpDeskBot.Services;
+    ```
 
->   using HelpDeskBot.Services;
-
-1.  Post
+2.  Post
     メソッドを以下のコードで更新して、ユーザーが記事のタイトルをクリックすると呼び出される
     event メッセージを処理します。
 
-2.  public async Task\<HttpResponseMessage\> Post([FromBody]Activity activity)
+    ```CSharp
+    public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
+    {
+        if (activity.Type == ActivityTypes.Message)
+        {
+            await Conversation.SendAsync(activity, () => new RootDialog());
+        }
+        else if (activity.Type == ActivityTypes.Event)
+        {
+            await this.HandleEventMessage(activity);
+        }
+        else
+        {
+            this.HandleSystemMessage(activity);
+        }
 
-3.  {
+        var response = Request.CreateResponse(HttpStatusCode.OK);
+        return response;
+    }
+    ```
 
-4.  if (activity.Type == ActivityTypes.Message)
-
-5.  {
-
-6.  await Conversation.SendAsync(activity, () =\> new RootDialog());
-
-7.  }
-
-8.  else if (activity.Type == ActivityTypes.Event)
-
-9.  {
-
-10. await this.HandleEventMessage(activity);
-
-11. }
-
-12. else
-
-13. {
-
-14. this.HandleSystemMessage(activity);
-
-15. }
-
-16. var response = Request.CreateResponse(HttpStatusCode.OK);
-
-17. return response;
-
->   }
-
-1.  次のコードを追加して、showDetailsOf
+3.  次のコードを追加して、showDetailsOf
     イベントを処理します。このメソッドは、サポート技術情報で記事のタイトルを検索し、結果を
     **Web Chat コントロール**でユーザーに送信します。
 
-2.  private async Task HandleEventMessage(Activity message)
+    ```CSharp
+    private async Task HandleEventMessage(Activity message)
+    {
+        if (string.Equals(message.Name, "showDetailsOf", StringComparison.InvariantCultureIgnoreCase))
+        {
+            AzureSearchService searchService = new AzureSearchService();
+            var searchResult = await searchService.SearchByTitle(message.Value.ToString());
+            string reply = "Sorry, I could not find that article.";
 
-3.  {
+            if (searchResult != null && searchResult.Value.Length != 0)
+            {
+                reply = "Maybe you can check this article first: \n\n" + searchResult.Value[0].Text;
+            }
 
-4.  if (string.Equals(message.Name, "showDetailsOf",
-    StringComparison.InvariantCultureIgnoreCase))
+            // return our reply to the user
+            Activity replyActivity = message.CreateReply(reply);
 
-5.  {
-
-6.  AzureSearchService searchService = new AzureSearchService();
-
-7.  var searchResult = await
-    searchService.SearchByTitle(message.Value.ToString());
-
-8.  string reply = "Sorry, I could not find that article.";
-
-9.  if (searchResult != null && searchResult.Value.Length != 0)
-
-10. {
-
-11. reply = "Maybe you can check this article first: \\n\\n" +
-    searchResult.Value[0].Text;
-
-12. }
-
-13. // return our reply to the user
-
-14. Activity replyActivity = message.CreateReply(reply);
-
-15. ConnectorClient connector = new ConnectorClient(new
-    Uri(message.ServiceUrl));
-
-16. await connector.Conversations.ReplyToActivityAsync(replyActivity);
-
-17. }
-
->   }
+            ConnectorClient connector = new ConnectorClient(new Uri(message.ServiceUrl));
+            await connector.Conversations.ReplyToActivityAsync(replyActivity);
+        }
+    }
+    ```
 
 ## タスク 7: アプリからボットへのバックチャネル メッセージのテスト
 
@@ -436,5 +330,5 @@ BackChannel 機能を追加します。
 
 3.  いずれかの記事のタイトルをクリックすると、Web Chat
     コントロールに記事のコンテンツが表示されます。
-
->   ![](./media/8-7.png)
+    
+    ![](./media/8-7.png)
