@@ -42,7 +42,7 @@ for Mac はサポートされていません。
     テンプレートを選択します。次の演習で名前空間の問題が発生するのを回避するために、プロジェクト名には
     HelpDestBot を使用します。
 
->   [./media/image1.png](./media/image1.png)
+>   [./media/1-1.png](./media/1-1.png)
 
 >   ボット アプリケーション
 >   テンプレートを使用することで、単純なボットの作成に必要なすべてのコンポーネントが既に含まれているプロジェクトを作成することになります。これには、Microsoft.Bot.Builder
@@ -179,13 +179,13 @@ for Mac はサポートされていません。
 2.  エミュレーターのインストール後、IIS Express をアプリケーション
     ホストとして使用して、Visual Studio でボットを起動します。
 
->   [./media/image2.png](./media/image2.png)
+>   [./media/1-2.png](./media/1-2.png)
 
 1.  [実行] ボタンをクリックすると、以下のように、Visual Studio
     がアプリケーションを構築して localhost に展開し、Web
     ブラウザーを起動してアプリケーションの default.htm ページを表示します。
 
->   [./media/image3.png](./media/image3.png)
+>   [./media/1-3.png](./media/1-3.png)
 
 >   **注:** Windows ファイアウォールの警告が表示される場合は、[アクセスを許可]
 >   をクリックします。
@@ -204,4 +204,4 @@ for Mac はサポートされていません。
     was \#\# characters" (\#\# はユーザーのメッセージの文字数)
     のテキストを付けて、おうむ返しにボットが応答するのを確認できます。
 
->   [./media/image4.png](./media/image4.png)
+>   [./media/1-4.png](./media/1-4.png)
