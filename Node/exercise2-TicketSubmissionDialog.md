@@ -284,13 +284,13 @@ Framework チャネル)
     ```
 
    次の行で置き換えます。
-
-    ```javascript
-    session.send(new builder.Message(session).addAttachment({
-        contentType: "application/vnd.microsoft.card.adaptive",
-        content: createCard(ticketId, data)
-    }));
-    ```
+   
+   ```javascript
+   session.send(new builder.Message(session).addAttachment({
+       contentType: "application/vnd.microsoft.card.adaptive",
+       content: createCard(ticketId, data)
+   }));
+   ```
 
 5.  ファイルを保存して、エミュレーターの [Start new conversation] ボタンを使用します ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png)。新しい会話をテストします。確認メッセージについては、以下を参照してください。
 
