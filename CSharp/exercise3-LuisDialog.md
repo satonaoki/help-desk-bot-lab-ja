@@ -282,9 +282,8 @@ Studio
     }
     ```
 
-10.  次のように、SeverityMessageReceivedAsync および CategoryMessageReceivedAsync
-    を更新して、EnsureTicket メソッドをコール バックするようにします。
-
+10. 次のように、SeverityMessageReceivedAsync および CategoryMessageReceivedAsync を更新して、EnsureTicket メソッドをコール バックするようにします。
+    
     ```csharp
     private async Task SeverityMessageReceivedAsync(IDialogContext context, IAwaitable<string> argument)
     {
@@ -292,7 +291,7 @@ Studio
         await this.EnsureTicket(context);
     }
     ```
-
+    
     ```csharp
     private async Task CategoryMessageReceivedAsync(IDialogContext context, IAwaitable<string> argument)
     {
