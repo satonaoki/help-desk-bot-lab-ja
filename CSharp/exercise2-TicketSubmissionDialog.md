@@ -185,12 +185,7 @@
     }
     ```
 
-7.  アプリを再実行して、エミュレーターの [Start new conversation] ボタン
-
-    ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png)
-
-    を使用します。すべての会話を再度テストして、API からチケット ID
-    が返されることを確認します。
+7.  アプリを再実行して、エミュレーターの [Start new conversation] ボタン ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png) を使用します。すべての会話を再度テストして、API からチケット ID が返されることを確認します。
     
     ![](./media/2-4.png)
 
@@ -216,7 +211,7 @@
 > 2. 中央のセクションには、ColumnSet と 2 つの列が含まれます。1 列は重要度とカテゴリを含むFactSet、もう 1 列はアイコンが含まれます。
 > 3. 最後のセクションには、チケットについて説明する説明ブロックが含まれます。
 
-    ``` csharp
+    ```csharp
     private AdaptiveCard CreateCard(int ticketId, string category, string severity, string description)
     {
         AdaptiveCard card = new AdaptiveCard();
