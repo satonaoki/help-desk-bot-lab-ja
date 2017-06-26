@@ -196,15 +196,13 @@ Cosmos DB
 2.  前のタスクで作成した Azure Search サービスを使用するには、appSettings
     セクションの Web.config で以下のキーを追加します。AzureSearchAccountName と AzureSearchKey は タスク 2 で作成した値を指定する必要があります。
 
-3.  ...
+```
 
-4.  \<add key="AzureSearchAccount" value="" /\>
+<add key="AzureSearchAccount" value="" />
+<add key="AzureSearchIndex" value="knowledge-base-index" />
+<add key="AzureSearchKey" value="" />
 
-5.  \<add key="AzureSearchIndex" value="knowledge-base-index" /\>
-
-6.  \<add key="AzureSearchKey" value="" /\>
-
->   ...
+```
 
 1.  新しい Model
     フォルダーをプロジェクトに追加します。[assets](../assets)
@@ -217,52 +215,35 @@ Cosmos DB
 2.  プロジェクトで Services フォルダーを作成し、以下のコード内に
     AzureSearchService クラスを追加します。
 
-3.  namespace HelpDeskBot.Services
+```
+namespace HelpDeskBot.Services
+{
+    using Model;
+    using Newtonsoft.Json;
+    using System;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+    using System.Web.Configuration;
 
-4.  {
-
-5.  using Model;
-
-6.  using Newtonsoft.Json;
-
-7.  using System;
-
-8.  using System.Net.Http;
-
-9.  using System.Threading.Tasks;
-
-10. using System.Web.Configuration;
-
-11. [Serializable]
-
-12. public class AzureSearchService
-
-13. {
-
-14. private readonly string QueryString =
+    [Serializable]
+    public class AzureSearchService
+    {
+        private readonly string QueryString =
     \$"https://{WebConfigurationManager.AppSettings["AzureSearchAccount"]}.search.windows.net/indexes/{WebConfigurationManager.AppSettings["AzureSearchIndex"]}/docs?api-key={WebConfigurationManager.AppSettings["AzureSearchKey"]}\&api-version=2015-02-28&";
 
-15. public async Task\<SearchResult\> SearchByCategory(string category)
+        public async Task\<SearchResult\> SearchByCategory(string category)
+        {
+            using (var httpClient = new HttpClient())
+            {
+                string nameQuery = \$"{QueryString}\$filter=category eq '{category}'";
+                string response = await httpClient.GetStringAsync(nameQuery);
+                return JsonConvert.DeserializeObject\<SearchResult\>(response);
+            }
+        }
+    }
+}
 
-16. {
-
-17. using (var httpClient = new HttpClient())
-
-18. {
-
-19. string nameQuery = \$"{QueryString}\$filter=category eq '{category}'";
-
-20. string response = await httpClient.GetStringAsync(nameQuery);
-
-21. return JsonConvert.DeserializeObject\<SearchResult\>(response);
-
-22. }
-
-23. }
-
-24. }
-
->   }
+```
 
 >   **注:** この演習では、単純な Search のクエリしか行わないため、Azure Search
 >   REST API を直接使用します。より複雑な操作を行う場合は、[Azure Search .NET
@@ -272,138 +253,89 @@ Cosmos DB
 1.  Dialogs フォルダー内で、Azure Search とやりとりを行うための新しい
     CategoryExplorerDialog クラスを作成します。
 
-2.  namespace HelpDeskBot.Dialogs
+```
+namespace HelpDeskBot.Dialogs
+{
+    using Microsoft.Bot.Builder.Dialogs;
+    using Model;
+    using Services;
+    using System;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
+    using System.Threading.Tasks;
+    using Util;
+    
+    [Serializable]
+    public class CategoryExplorerDialog : IDialog\<object\>
+    {
+        private readonly AzureSearchService searchService = new AzureSearchService();
+        private string category = null;
+        public CategoryExplorerDialog(string category)
+        {
+            this.category = category;
+        }
+        
+        public async Task StartAsync(IDialogContext context)
+        {
+            if (string.IsNullOrWhiteSpace(this.category))
+            {
+                await context.PostAsync(\$"Try typing something like \_explore hardware\_.");
+                context.Done\<object\>(null);
+            }
+            else
+            {
+                SearchResult searchResult = await
+                this.searchService.SearchByCategory(this.category);
+                string message;
+                
+                if (searchResult.Value.Length != 0)
+                {
+                    message = \$"These are some articles I've found in the knowledge base for
+                        the \_'{this.category}'\_ category:";
+                    
+                    foreach (var item in searchResult.Value)
+                    {
+                        message += \$"\\n \* {item.Title}";
+                    }
+                }
+                else
+                {
+                    message = \$"Sorry, I could not find any results in the knowledge base for
+                        \_'{this.category}'\_";
+                }
+                
+                await context.PostAsync(message);
+                context.Done\<object\>(null);
+            }
+        }
+    }
+}
 
-3.  {
-
-4.  using Microsoft.Bot.Builder.Dialogs;
-
-5.  using Model;
-
-6.  using Services;
-
-7.  using System;
-
-8.  using System.Collections.Generic;
-
-9.  using System.Text.RegularExpressions;
-
-10. using System.Threading.Tasks;
-
-11. using Util;
-
-12. [Serializable]
-
-13. public class CategoryExplorerDialog : IDialog\<object\>
-
-14. {
-
-15. private readonly AzureSearchService searchService = new
-    AzureSearchService();
-
-16. private string category = null;
-
-17. public CategoryExplorerDialog(string category)
-
-18. {
-
-19. this.category = category;
-
-20. }
-
-21. public async Task StartAsync(IDialogContext context)
-
-22. {
-
-23. if (string.IsNullOrWhiteSpace(this.category))
-
-24. {
-
-25. await context.PostAsync(\$"Try typing something like \_explore
-    hardware\_.");
-
-26. context.Done\<object\>(null);
-
-27. }
-
-28. else
-
-29. {
-
-30. SearchResult searchResult = await
-    this.searchService.SearchByCategory(this.category);
-
-31. string message;
-
-32. if (searchResult.Value.Length != 0)
-
-33. {
-
-34. message = \$"These are some articles I've found in the knowledge base for
-    the \_'{this.category}'\_ category:";
-
-35. foreach (var item in searchResult.Value)
-
-36. {
-
-37. message += \$"\\n \* {item.Title}";
-
-38. }
-
-39. }
-
-40. else
-
-41. {
-
-42. message = \$"Sorry, I could not find any results in the knowledge base for
-    \_'{this.category}'\_";
-
-43. }
-
-44. await context.PostAsync(message);
-
-45. context.Done\<object\>(null);
-
-46. }
-
-47. }
-
-48. }
-
->   }
+```
 
 1.  ここで、新しい **ExploreKnowledgeBase**
     インテントに対応し、ユーザーが入力したカテゴリに属する記事の一覧を Azure
     Search から取得するための ExploreCategory メソッドを RootDialog
     クラスに追加します。
 
-2.  [LuisIntent("ExploreKnowledgeBase")]
+```
+    [LuisIntent("ExploreKnowledgeBase")]
+    public async Task ExploreCategory(IDialogContext context, LuisResult result)
+    {
+        EntityRecommendation categoryEntityRecommendation;
+        result.TryFindEntity("category", out categoryEntityRecommendation);
+        var category =
+            ((Newtonsoft.Json.Linq.JArray)categoryEntityRecommendation?.Resolution["values"])?[0]?.ToString();
+        context.Call(new CategoryExplorerDialog(category),
+        this.ResumeAndEndDialogAsync);
+    }
 
-3.  public async Task ExploreCategory(IDialogContext context, LuisResult result)
-
-4.  {
-
-5.  EntityRecommendation categoryEntityRecommendation;
-
-6.  result.TryFindEntity("category", out categoryEntityRecommendation);
-
-7.  var category =
-    ((Newtonsoft.Json.Linq.JArray)categoryEntityRecommendation?.Resolution["values"])?[0]?.ToString();
-
-8.  context.Call(new CategoryExplorerDialog(category),
-    this.ResumeAndEndDialogAsync);
-
-9.  }
-
-10. private async Task ResumeAndEndDialogAsync(IDialogContext context,
-    IAwaitable\<object\> argument)
-
-11. {
-
-12. context.Done\<object\>(null);
-
->   }
+    private async Task ResumeAndEndDialogAsync(IDialogContext context,
+        IAwaitable\<object\> argument)
+        {
+            context.Done\<object\>(null);
+        }
+```    
 
 ## タスク 5: この時点でボットをテストする
 
