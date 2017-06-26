@@ -52,18 +52,16 @@ Web.config で値を設定してください。
     から得られたソリューションを開きます。または、[exercise4-KnowledgeBase](./exercise4-KnowledgeBase)
     フォルダーにあるアプリを使用することもできます。
 
-> **注:** あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
-
-    -   Dialogs\\RootDialog.cs 内の **[LuisModel("{LUISAppID}", "{LUISKey}")]** 属性を自分が使用している LUIS アプリ ID とプログラマティック API キーに置き換えます。
-
-    -   Web.config 内の **AzureSearchAccount**、**AzureSearchIndex**、および **AzureSearchKey** を、自分の Search アカウント、インデックス名、およびキーに置き換えます (演習 4 で説明しています)。
+    > **注:** あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
+    > -   Dialogs\\RootDialog.cs 内の **[LuisModel("{LUISAppID}", "{LUISKey}")]** 属性を自分が使用している LUIS アプリ ID とプログラマティック API キーに置き換えます。
+    > -   Web.config 内の **AzureSearchAccount**、**AzureSearchIndex**、および **AzureSearchKey** を、自分の Search アカウント、インデックス名、およびキーに置き換えます (演習 4 で説明しています)。
 
 2.  プロジェクトの [Services] フォルダー内の
     [TextAnalyticsService.cs](../assets/exercise6-MoodDetection/TextAnalyticsService.cs)
     をコピーします。このファイルには、Text Analytics API を使用する 3
     つのクラスが含まれています。
 
-> **注:** クライアントは /sentiment エンドポイントにアクセスしていますが、Text Analytics API は /keyPhrases エンドポイントと /languages エンドポイントも提供します。また、複数のドキュメントを分析用に送信できます。
+    > **注:** クライアントは /sentiment エンドポイントにアクセスしていますが、Text Analytics API は /keyPhrases エンドポイントと /languages エンドポイントも提供します。また、複数のドキュメントを分析用に送信できます。
 
 3.  プロジェクトのルート フォルダーにある Web.Config ファイルの **appSettings**
     セクションでキー **TextAnalyticsApiKey**
