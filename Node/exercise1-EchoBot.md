@@ -53,7 +53,7 @@ Bot Builder SDK for Node.js は、Node.js
     依存関係をインストールします。これは、アプリケーションをホストし、JavaScript
     に変更が加えられるたびに更新します。
 
-2.  npm install --save-dev nodemon
+2.  npm install -g nodemon
 
 ## タスク 2: ボットを作成する
 
