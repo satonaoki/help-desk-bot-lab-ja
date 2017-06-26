@@ -35,7 +35,7 @@ Intelligent Service) を使用します。
 
 -   LUIS モデルを使用するようにボットを更新すること。
 
-**前提条件**
+## 前提条件
 
 -   前の演習を完了していること、あるいは
     [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise2-TicketSubmissionDialog)
