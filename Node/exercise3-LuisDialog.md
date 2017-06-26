@@ -73,7 +73,7 @@
 
 発話は、ボットに受信/解釈させるためのユーザークエリやコマンドのサンプルを表す文です。ボット内の各インテントに、サンプルの発話を追加する必要があります。LUIS がこれらの発話から学習すると、ボットでは同様のコンテキストの一般化および理解が可能になります。発話を継続的に追加して、ラベル付けすることで、ボットの言語学習エクスペリエンスが向上します。
 
-インテントの詳細については、[こちら](https://docs.microsoft.com/en-us/azure/cognitive-services/LUIS/add-intents)を、発話については[こちら](https://docs.microsoft.com/en-us/azure/cognitive-services/LUIS/add-example-utterances)を参照してください。
+インテントの詳細については、[こちら](https://docs.microsoft.com/en-us/azure/cognitive-services/LUIS/add-intents) を、発話については[こちら](https://docs.microsoft.com/en-us/azure/cognitive-services/LUIS/add-example-utterances) を参照してください。
 
 1.  LUIS ポータルの左パネルで [Intents] をクリックします。既に "None" インテントが存在することがわかります。
 
@@ -136,237 +136,153 @@ LUIS アプリの出力が、HTTP エンドポイント (自然言語の理解�
 1.  ボット初期化後に次の行を追加して、ボットに LuisRecognizer を追加します (`new builder.UniversalBot(...)`)。標準の Bot Builder SDK には、LUISRecognizer クラスが含まれ、LUIS ポータルを使用してトレーニングした機械学習モデルの呼び出しに使用できます。このクラスには、onEnabled
     という名前の関数が存在し、条件に応じて認識エンジンの有効/無効を切り替えることができます。これは、ボットがユーザーに確認を行い、応答を待っている場合など、LUIS 抽出インテントおよびエンティティの必要がないことがわかっている場合に有益です。`onEnabled` 関数の詳細については、[こちら](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.intentrecognizer.html#onenabled) で確認できます。また、[onFilter](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.intentrecognizer.html#onfilter) 関数を使用して、認識エンジンからの出力のフィルタリングをすることもできます。
 
-2.  var luisRecognizer = new
-    builder.LuisRecognizer(process.env.LUIS\_MODEL\_URL).onEnabled(function
-    (context, callback) {
+```javascript
+    var luisRecognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL).onEnabled(function(context, callback) {
+        var enabled = context.dialogStack().length === 0;
+        callback(null, enabled);
+    });
+    bot.recognizer(luisRecognizer);
+```
 
-3.  var enabled = context.dialogStack().length === 0;
-
-4.  callback(null, enabled);
-
-5.  });
-
->   bot.recognizer(luisRecognizer);
-
->   **注:**
->   インテント認識エンジンは、ユーザーの入力に基づいてユーザーのインテントを解釈します。インテントが判別されると、認識エンジンは、名前付きインテントを返し、これを使用してボット内の追加のアクションおよびダイアログを起動できます。認識エンジンは、ユーザーから受け取ったすべてのメッセージに対して実行されることを覚えておいてください。
+>   **注:** インテント認識エンジンは、ユーザーの入力に基づいてユーザーのインテントを解釈します。インテントが判別されると、認識エンジンは、名前付きインテントを返し、これを使用してボット内の追加のアクションおよびダイアログを起動できます。認識エンジンは、ユーザーから受け取ったすべてのメッセージに対して実行されることを覚えておいてください。
 
 ## タスク 5: LUIS を使用するようにボットを更新する
 
-次に、演習 2 のウォーターフォール ステップをリファクタリングして、LUIS
-インテントによって起動される新しいダイアログにします。ダイアログを使用すると、ボットの会話ロジックを管理可能なコンポーネントにカプセル化できます。ダイアログは、別のダイアログで構成して再利用を最大化することができ、ダイアログのコンテキストは、任意の時点の会話でアクティブなダイアログのスタックを維持します。ダイアログで構成される会話はコンピューター間で移植可能であるため、ボットの実装の規模の調整が可能になります。
-
-1.  名前を SubmitTicket
-    として新しい空のダイアログを登録します。ボットの初期化と同様に、ダイアログを既存のウォーターフォールに渡すことができます。ウォーターフォール
-    ステップを進んでいきます。ここでボットは重大度、カテゴリを要求し、入力データを確認し、チケット
-    API
-    をヒットする最後のステップへ移動します。次のようなコードを設定する必要があります。
-
-2.  bot.dialog('SubmitTicket', [
-
-3.  ...
-
-4.  ])
-
-5.  .triggerAction({
-
-6.  matches: 'SubmitTicket'
-
->   });
-
->   **注:** matches 値が LUIS
->   アプリのインテント名と一致していることを確認します。
-
-1.  UniversalBot 初期化からのすべてのウォーターフォール ステップを、新しい
-    SubmitTicket ダイアログに移動します。コードを次のコードに置き換えます。
-
-2.  var bot = new builder.UniversalBot(connector, (session) =\> {
-
-3.  session.endDialog(\`I'm sorry, I did not understand
-    '\${session.message.text}'.\\nType 'help' to know more about me :)\`);
-
->   });
-
-1.  次に LUIS から category と severity のエンティティ値を取得し、dialogData
-    に保存して、後で使用できるようにします。最後に、重大度が既に保存されている場合は次のステップを呼び出し、保存されていない場合はユーザーにいずれかを選択するように要求します。そのためには、最初のウォーターフォール
-    ステップを次のコードに置き換えます。
-
-2.  ...
-
-3.  (session, args, next) =\> {
-
-4.  var category = builder.EntityRecognizer.findEntity(args.intent.entities,
-    'category');
-
-5.  var severity = builder.EntityRecognizer.findEntity(args.intent.entities,
-    'severity');
-
-6.  if (category && category.resolution.values.length \> 0) {
-
-7.  session.dialogData.category = category.resolution.values[0];
-
-8.  }
-
-9.  if (severity && severity.resolution.values.length \> 0) {
-
-10. session.dialogData.severity = severity.resolution.values[0];
-
-11. }
-
-12. session.dialogData.description = session.message.text;
-
-13. if (!session.dialogData.severity) {
-
-14. var choices = ['high', 'normal', 'low'];
-
-15. builder.Prompts.choice(session, 'Which is the severity of this problem?',
-    choices);
-
-16. } else {
-
-17. next();
-
-18. }
-
-19. },
-
->   ...
-
-1.  コードを更新して、チケットの重大度を受け取り、保存します。カテゴリを既に把握している場合は、次のステップが呼び出され、まだ把握していない場合は、ボットからユーザーに入力を求めます。このためには、2
-    番目と 3 番目のウォーターフォール ステップを次のコードに置き換えます。4
-    番目と 5 番目のウォーターフォール ステップは変更しないでおきます。
-
-2.  ...
-
-3.  (session, result, next) =\> {
-
-4.  if (!session.dialogData.severity) {
-
-5.  session.dialogData.severity = result.response.entity;
-
-6.  }
-
-7.  if (!session.dialogData.category) {
-
-8.  builder.Prompts.text(session, 'Which would be the category for this ticket
-    (software, hardware, network, and so on)?');
-
-9.  } else {
-
-10. next();
-
-11. }
-
-12. },
-
->   ...
-
-1.  新しい 3 番目のウォーターフォール (以前は 4 番目) で、if
-    ステートメントを次のように更新します。
-
-2.  ...
-
-3.  (session, result, next) =\> {
-
-4.  if (!session.dialogData.category) {
-
-5.  session.dialogData.category = result.response;
-
-6.  }
-
-7.  var message = \`Great! I'm going to create a
-    \*\*\${session.dialogData.severity}\*\* severity ticket in the
-    \*\*\${session.dialogData.category}\*\* category. \` +
-
-8.  \`The description I will use is \_"\${session.dialogData.description}"\_.
-    Can you please confirm that this information is correct?\`;
-
-9.  builder.Prompts.confirm(session, message);
-
-10. },
-
->   ...
-
-1.  最後に、ユーザーが「help」または「hi」を入力したときに実行される新しいヘルプ
-    ダイアログを作成します。
-
-2.  bot.dialog('Help',
-
-3.  (session, args, next) =\> {
-
-4.  session.endDialog(\`I'm the help desk bot and I can help you create a
-    ticket.\\n\` +
-
-5.  \`You can tell me things like \_I need to reset my password\_ or \_I cannot
-    print\_.\`);
-
-6.  }
-
-7.  ).triggerAction({
-
-8.  matches: 'Help'
-
->   });
+次に、演習 2 のウォーターフォール ステップをリファクタリングして、LUIS インテントによって起動される新しいダイアログにします。ダイアログを使用すると、ボットの会話ロジックを管理可能なコンポーネントにカプセル化できます。ダイアログは、別のダイアログで構成して再利用を最大化することができ、ダイアログのコンテキストは、任意の時点の会話でアクティブなダイアログのスタックを維持します。ダイアログで構成される会話はコンピューター間で移植可能であるため、ボットの実装の規模の調整が可能になります。
+
+1.  名前を `SubmitTicket` として新しい空のダイアログを登録します。ボットの初期化と同様に、ダイアログを既存のウォーターフォールに渡すことができます。ウォーターフォール ステップを進んでいきます。ここでボットは重大度、カテゴリを要求し、入力データを確認し、チケット API をヒットする最後のステップへ移動します。次のようなコードを設定する必要があります。
+
+```javascript
+    bot.dialog('SubmitTicket', [
+        ...
+    ])
+    .triggerAction({
+        matches: 'SubmitTicket'
+    });
+```
+
+>   **注:** matches 値が LUIS アプリのインテント名と一致していることを確認します。
+
+1.  UniversalBot 初期化からのすべてのウォーターフォール ステップを、新しい `SubmitTicket` ダイアログに移動します。コードを次のコードに置き換えます。
+
+```javascript
+    var bot = new builder.UniversalBot(connector, (session) => {
+        session.endDialog(`I'm sorry, I did not understand '${session.message.text}'.\nType 'help' to know more about me :)`);
+    });
+```    
+
+1.  次に LUIS から category と severity のエンティティ値を取得し、dialogData に保存して、後で使用できるようにします。最後に、重大度が既に保存されている場合は次のステップを呼び出し、保存されていない場合はユーザーにいずれかを選択するように要求します。そのためには、最初のウォーターフォール ステップを次のコードに置き換えます。
+
+```javascript
+    ...
+    (session, args, next) => {
+        var category = builder.EntityRecognizer.findEntity(args.intent.entities, 'category');
+        var severity = builder.EntityRecognizer.findEntity(args.intent.entities, 'severity');
+        
+        if (category && category.resolution.values.length > 0) {
+            session.dialogData.category = category.resolution.values[0];
+        }
+        
+        if (severity && severity.resolution.values.length > 0) {
+            session.dialogData.severity = severity.resolution.values[0];
+        }
+        
+        session.dialogData.description = session.message.text;
+        
+        if (!session.dialogData.severity) {
+            var choices = ['high', 'normal', 'low'];
+            builder.Prompts.choice(session, 'Which is the severity of this problem?', choices);
+        } else {
+            next();
+        }
+    },
+    ...
+```
+
+1.  コードを更新して、チケットの重大度を受け取り、保存します。カテゴリを既に把握している場合は、次のステップが呼び出され、まだ把握していない場合は、ボットからユーザーに入力を求めます。このためには、2 番目と 3 番目のウォーターフォール ステップを次のコードに置き換えます。4 番目と 5 番目のウォーターフォール ステップは変更しないでおきます。
+
+```javascript
+    ...
+    (session, result, next) => {
+        if (!session.dialogData.severity) {
+            session.dialogData.severity = result.response.entity;
+        }
+
+        if (!session.dialogData.category) {
+            builder.Prompts.text(session, 'Which would be the category for this ticket (software, hardware, network, and so on)?');
+        } else {
+            next();
+        }
+    },
+    ...
+```
+
+1.  新しい 3 番目のウォーターフォール (以前は 4 番目) で、if ステートメントを次のように更新します。
+
+```javascript
+    ...
+    (session, result, next) => {
+        if (!session.dialogData.category) {
+            session.dialogData.category = result.response;
+        }
+        
+        var message = `Great! I'm going to create a "${session.dialogData.severity}" severity ticket in the "${session.dialogData.category}" category. ` + `The description I will use is "${session.dialogData.description}". Can you please confirm that this information is correct?`;
+
+        builder.Prompts.confirm(session, message);
+    },
+    ...
+```
+
+1.  最後に、ユーザーが「help」または「hi」を入力したときに実行される新しいヘルプ ダイアログを作成します。
+
+```javascript
+    bot.dialog('Help',
+        (session, args, next) => {
+            session.endDialog(`I'm the help desk bot and I can help you create a ticket.\n` + `You can tell me things like _I need to reset my password_ or _I cannot print_.`);
+        }
+    ).triggerAction({
+        matches: 'Help'
+    });
+```
 
 ## タスク 6: エミュレーターからボットをテストする
 
-1.  コンソール (nodemon app.js)
-    からアプリを実行し、エミュレーターを開きます。ボットの URL
-    (http://localhost:3978/api/messages) をいつもどおり入力します。
+1.  コンソール (`nodemon app.js`) からアプリを実行し、エミュレーターを開きます。ボットの URL (`http://localhost:3978/api/messages`) をいつもどおり入力します。
 
-2.  「hi」と入力します。Help
-    インテントがどのように認識され、実行されるかがわかります。
+2.  「hi」と入力します。Help インテントがどのように認識され、実行されるかがわかります。
 
->   ![](./media/3-8.png)
+    ![](./media/3-8.png)
 
-1.  ボットのトレーニングに使用した発話のいずれかを入力します。たとえば「I can't
-    log in, I'm
-    blocked」と入力します。ユーザーのメッセージから、チケットのカテゴリおよび重大度が自動的に把握されます。「yes」と入力して、チケットを保存します。
+1.  ボットのトレーニングに使用した発話のいずれかを入力します。たとえば「I can't log in, I'm blocked」と入力します。ユーザーのメッセージから、チケットのカテゴリおよび重大度が自動的に把握されます。「yes」と入力して、チケットを保存します。
 
->   ![](./media/3-9.png)
+    ![](./media/3-9.png)
 
-1.  次に、ボットのトレーニングに使用されていない発話を入力してみます。例: My
-    computer is making a grinding noise. (コンピューターが摩擦音を立てています)
-    重大度は把握されていませんが、エンティティ computer
-    が存在するためカテゴリは把握されています。
+1.  次に、ボットのトレーニングに使用されていない発話を入力してみます。例: My computer is making a grinding noise. (コンピューターが摩擦音を立てています) 重大度は把握されていませんが、エンティティ computer が存在するためカテゴリは把握されています。
 
->   ![](./media/3-10.png)
+    ![](./media/3-10.png)
 
-1.  LUIS が認識できない発話を入力すると、LUIS は None インテントを返し、ボット
-    フレームワークは既定のダイアログ ハンドラーを実行します。
+1.  LUIS が認識できない発話を入力すると、LUIS は None インテントを返し、ボット フレームワークは既定のダイアログ ハンドラーを実行します。
 
->   ![](./media/3-11.png)
+   ![](./media/3-11.png)
 
->   アプリケーションを展開し、システムにトラフィックの流入が開始すると、LUIS
->   はアクティブ ラーニングを使用して、自己改善します。アクティブ ラーニング
->   プロセスで、LUIS
->   はあまり確信できない発話を特定して、インテントまたはエンティティに従ってその発話にラベル付けすることを求めます。LUIS
->   ポータルのインテント内には [Suggested Utterances]
->   セクションが存在し、そこではラベル付けを実行できます。
+   アプリケーションを展開し、システムにトラフィックの流入が開始すると、LUIS はアクティブ ラーニングを使用して、自己改善します。アクティブ ラーニングプロセスで、LUIS はあまり確信できない発話を特定して、インテントまたはエンティティに従ってその発話にラベル付けすることを求めます。LUIS ポータルのインテント内には [Suggested Utterances] セクションが存在し、そこではラベル付けを実行できます。
 
->   ![](./media/3-12.png)
+    ![](./media/3-12.png)
 
 ## その他の課題
 
 自主的に学習を続ける場合は、次のタスクを利用できます。
 
--   cancelAction を使用して SubmitTicket ダイアログにキャンセル イベント
-    ハンドラーを追加する。
+-   `cancelAction` を使用して `SubmitTicket` ダイアログにキャンセル イベント ハンドラーを追加する。
 
--   beginDialogAction を使用して SubmitTicket
-    内でユーザーにヘルプを提供するためのカスタム ダイアログを追加する。
+-   `beginDialogAction` を使用して `SubmitTicket` 内でユーザーにヘルプを提供するためのカスタム ダイアログを追加する。
 
--   onEnabled イベントを使用して、cancel が呼び出されない限り、開始された
-    SubmitDialog が完了することを保証する。
+-   `onEnabled` イベントを使用して、cancel が呼び出されない限り、開始された `SubmitDialog` が完了することを保証する。
 
--   チケットのステータスをボットに要求する機能を追加する。チケットにステータス
-    プロパティを追加し、新しいダイアログを起動する LUIS
-    アプリの新しいインテントを追加する必要があります。
+-   チケットのステータスをボットに要求する機能を追加する。チケットにステータス プロパティを追加し、新しいダイアログを起動する LUIS アプリの新しいインテントを追加する必要があります。
 
 ## 追加参考資料
 
--   [Manage conversation
-    flow](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-dialog-manage-conversation)
+-   [Manage conversation flow](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-dialog-manage-conversation)
 
--   [Managing conversations and dialogs in Microsoft Bot Framework using
-    Node.JS](http://blog.geektrainer.com/2017/02/21/Managing-conversations-and-dialogs-in-Microsoft-Bot-Framework-using-Node-JS/)
+-   [Managing conversations and dialogs in Microsoft Bot Framework using Node.JS](http://blog.geektrainer.com/2017/02/21/Managing-conversations-and-dialogs-in-Microsoft-Bot-Framework-using-Node-JS/)
