@@ -1,4 +1,4 @@
-**演習 6: ユーザーのメッセージの背後にあるセンチメントの判別**
+# 演習 6: ユーザーのメッセージの背後にあるセンチメントの判別
 
 ユーザーとボットとの対話はほとんどの場合自由形式で行われるため、ボットは言語を自然に、かつ文脈に応じて理解する必要があります。この演習では、Azure
 Text Analytics API を使用してユーザーの感情や気分を検出する方法を学習します。
@@ -17,7 +17,7 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 [Node.js](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/Node/exercise6-MoodDetection)
 のフォルダー内には、この演習のステップで作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。
 
-**目標**
+## 目標
 
 この演習を完了するためには、ボットが以下の操作を実行できなければなりません。
 
@@ -32,7 +32,7 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 
 ![](media/ab14ca08b5087ffb6c7ed534766d29f8.png)
 
-**前提条件**
+## 前提条件
 
 -   前の演習を完了していること、あるいは
     [C\#](https://github.com/GeekTrainer/help-desk-bot-lab/blob/develop/CSharp/exercise4-KnowledgeBase)
@@ -43,7 +43,7 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 -   [Azure](https://azureinfo.microsoft.com/us-freetrial.html?cr_cc=200744395&wt.mc_id=usdx_evan_events_reg_dev_0_iottour_0_0)
     サブスクリプション。
 
-**Text Analytics Service の作成**
+## Text Analytics Service の作成
 
 [Cognitive Services
 ポータル](https://azure.microsoft.com/ja-jp/try/cognitive-services/)の [言語]
@@ -53,7 +53,7 @@ Service** を使用する Text Analytics REST API
 <https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment>
 に対する POST 呼び出しを実行します。
 
-**フィードバックを要求してユーザーのセンチメントを分析できるようにするためのボットの変更**
+## フィードバックを要求してユーザーのセンチメントを分析できるようにするためのボットの変更
 
 ユーザー
 エクスペリエンスに関するフィードバックを要求する新しいダイアログを作成して、チケット送信作成の完了後にそのダイアログを呼び出すことができます。そして、作成した
@@ -65,14 +65,14 @@ API クライアントを使用して **Text Analytics Service**
 では、否定的なフィードバックを受け取ったときに、会話を人間の担当者に引き渡し
 (ハンドオフ)、担当者を通じてユーザーを支援する方法について学習します。
 
-**その他の課題**
+## その他の課題
 
 -   Microsoft Cognitive Services
     内の別のサービスを使用して、ボットに音声認識機能を追加できます。[Bing Speech
     API](https://azure.microsoft.com/ja-jp/services/cognitive-services/speech/)
     を試してみてください。
 
-**参考資料**
+## 参考資料
 
 -   [Text Analytics API Overview (Text Analytics API
     の概要)](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview)
