@@ -72,49 +72,30 @@ for Mac はサポートされていません。
 >   を実装する C\#
 >   クラスで自らの状態をカプセル化するアブストラクションです。ダイアログは、別のダイアログで構成して再利用を最大化することができ、ダイアログのコンテキストは、任意の時点の会話でアクティブなダイアログのスタックを維持します。また、ダイアログで構成される会話はコンピューター間で移植可能なため、ボットの実装の規模の調整が可能になります。
 
->   [BotAuthentication]
-
->   public class MessagesController : ApiController
-
->   {
-
->   /// \<summary\>
-
->   /// POST: api/Messages
-
->   /// Receive a message from a user and reply to it
-
->   /// \</summary\>
-
->   public async Task\<HttpResponseMessage\> Post([FromBody]Activity activity)
-
->   {
-
->   if (activity.Type == ActivityTypes.Message)
-
->   {
-
->   await Conversation.SendAsync(activity, () =\> new Dialogs.RootDialog());
-
->   }
-
->   else
-
->   {
-
->   HandleSystemMessage(activity);
-
->   }
-
->   var response = Request.CreateResponse(HttpStatusCode.OK);
-
->   return response;
-
->   }
-
->   ...
-
->   }
+    ```csharp
+    [BotAuthentication]
+    public class MessagesController : ApiController
+    {
+        /// <summary>
+        /// POST: api/Messages
+        /// Receive a message from a user and reply to it
+        /// </summary>
+        public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
+        {
+            if (activity.Type == ActivityTypes.Message)
+            {
+                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+            }
+            else
+            {
+                HandleSystemMessage(activity);
+            }
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            return response;
+        }
+        ...
+    }
+    ```
 
 1.  ルート
     ダイアログはメッセージを処理し、応答を生成します。Dialogs\\RootDialog.cs
@@ -125,43 +106,30 @@ for Mac はサポートされていません。
 
 >   ダイアログは、ボットのロジックを整理し、会話のフローを管理するのに役立ちます。ダイアログはスタック化して配置され、スタックの最上位のダイアログは、ダイアログが閉じるか別のダイアログが呼び出されるまで、すべての受信メッセージを処理します。
 
->   [Serializable]
+    ```csharp
+    [Serializable]
+    public class RootDialog : IDialog<object>
+    {
+        public Task StartAsync(IDialogContext context)
+        {
+            context.Wait(MessageReceivedAsync);
+            return Task.CompletedTask;
+        }
 
->   public class RootDialog : IDialog\<object\>
+        private async Task MessageReceivedAsync(IDialogContext context, IAwaitable<object> result)
+        {
+            var activity = await result as Activity;
 
->   {
+            // calculate something for us to return
+            int length = (activity.Text ?? string.Empty).Length;
 
->   public Task StartAsync(IDialogContext context)
+            // return our reply to the user
+            await context.PostAsync($"You sent {activity.Text} which was {length} characters");
 
->   {
-
->   context.Wait(MessageReceivedAsync);
-
->   return Task.CompletedTask;
-
->   }
-
->   private async Task MessageReceivedAsync(IDialogContext context,
->   IAwaitable\<object\> result)
-
->   {
-
->   var activity = await result as Activity;
-
->   // calculate something for us to return
-
->   int length = (activity.Text ?? string.Empty).Length;
-
->   // return our reply to the user
-
->   await context.PostAsync(\$"You sent {activity.Text} which was {length}
->   characters");
-
->   context.Wait(MessageReceivedAsync);
-
->   }
-
->   }
+            context.Wait(MessageReceivedAsync);
+        }
+    }
+    ```
 
 ## タスク 3: ボットをテストする
 
