@@ -54,14 +54,14 @@ npm install を実行して、.env ファイルに LUIS
     を入力します。まだ選択されていない場合は、[Culture] で [English]
     を選択します。
 
->   ![](./media/3-1.png)
+   ![](./media/3-1.png)
 
-1.  [Key to use] を選択します。まだ何も選択していない場合は、既定として
+3.  [Key to use] を選択します。まだ何も選択していない場合は、既定として
     BoostrapKey が作成されます。
 
-2.  [Create] をクリックします。空の LUIS アプリ ダッシュボードが表示されます。
+4.  [Create] をクリックします。空の LUIS アプリ ダッシュボードが表示されます。
 
->   ![](./media/3-2.png)
+   ![](./media/3-2.png)
 
 ## タスク 2: LUIS に新しいエンティティを追加する
 
@@ -80,25 +80,25 @@ npm install を実行して、.env ファイルに LUIS
 3.  表示されたダイアログで [Entity name] に「category」と入力します。[Entity
     type] には "List" を選択します。[Save] をクリックします。
 
->   ![](./media/3-3.png)
+   ![](./media/3-3.png)
 
-1.  新しいページが表示され、そのページで使用可能な値を追加できます。この処理をスピードアップするには、[Import
+4.  新しいページが表示され、そのページで使用可能な値を追加できます。この処理をスピードアップするには、[Import
     Lists] リンクをクリックします。
 
-2.  このハンズオンラボのルートにある
+5.  このハンズオンラボのルートにある
     [assets](../assets)
     フォルダーで categories.json ファイルを探します。有効化したら、[Import]
     をクリックします。
 
-3.  "severity"
+6.  "severity"
     という名前の新しいエンティティでもこの処理を繰り返します、同じ場所にある
     severities.json という名前のファイルを使用して読み込みます。
 
->   ![](./media/3-4.png)
+   ![](./media/3-4.png)
 
-1.  次に、左パネルの [Train & Test] をクリックします。
+7.  次に、左パネルの [Train & Test] をクリックします。
 
-2.  [Train Application]
+8.  [Train Application]
     をクリックして、完了するまで数秒間待ちます。現在のモデルを更新する際はいつでも、アプリをトレーニングしてからテスト/発行する必要があります。
 
 ## タスク 3: インテントおよび発話を追加する
@@ -138,50 +138,36 @@ npm install を実行して、.env ファイルに LUIS
     -   I cannot open a web page and my deadline is at risk. (Web
         ページが開けません、期限が迫っています。)
 
->   **注:**
->   発話は必要なだけ追加できます。追加する発話が多いほど、アプリがユーザーのインテントを認識する能力が高まります。ここで使用する例の場合、非常に多様な発話
->   (ハードウェアの問題もあれば、ソフトウェアの問題もあります) が SubmitTicket
->   を起動する可能性があるため、ボットを実稼働に向けてリリースする前に大量の発話でボットをトレーニングすることが理想です。
+> **注:** 発話は必要なだけ追加できます。追加する発話が多いほど、アプリがユーザーのインテントを認識する能力が高まります。ここで使用する例の場合、非常に多様な発話 (ハードウェアの問題もあれば、ソフトウェアの問題もあります) が SubmitTicket を起動する可能性があるため、ボットを実稼働に向けてリリースする前に大量の発話でボットをトレーニングすることが理想です。
 
-1.  [Save] (
+4.  [Save] (![](media/6cd1cf34af3a6a2d4b03803c9e94a8cf.png)) をクリックします。
 
-    ![](media/6cd1cf34af3a6a2d4b03803c9e94a8cf.png)
-
-    ) をクリックします。
-
-2.  前述の手順を使用して、発話を "help"、"hi"、"hello" として新しい Help
+5.  前述の手順を使用して、発話を "help"、"hi"、"hello" として新しい Help
     インテントを追加します。
 
->   ![](./media/3-6.png)
+   ![](./media/3-6.png)
 
->   **注:** 他のインテントと異なる場合でも、"None"
->   インテントに発話をいくつか追加することをお勧めします。トレーニング
->   サンプルを指定しても、"None"
->   インテントを起動するテキストに制約はかかりませんが、他のインテントの起動精度の向上に役立ちます。
+> **注:** 他のインテントと異なる場合でも、"None" インテントに発話をいくつか追加することをお勧めします。トレーニング サンプルを指定しても、"None" インテントを起動するテキストに制約はかかりませんが、他のインテントの起動精度の向上に役立ちます。
 
-1.  前述の説明に従って、アプリを再度トレーニングします。
+6.  前述の説明に従って、アプリを再度トレーニングします。
 
-2.  [Intents] メニューを開き、[SubmitTicket]
+7.  [Intents] メニューを開き、[SubmitTicket]
     インテントをクリックします。発話がエンティティ値によって認識されることを確認します。
 
->   ![](./media/3-7.png)
+   ![](./media/3-7.png)
 
-1.  次に、LUIS
+8.  次に、LUIS
     アプリを発行してボットから使用できるようにします。左側のメニューの [Publish
     App] をクリックします。
 
-2.  [Endpoint key] が選択されていることを確認します。既定の [Production]
+9.  [Endpoint key] が選択されていることを確認します。既定の [Production]
     スロットはそのままにします。
 
-3.  [Publish] ボタンをクリックします。新しい確認メッセージの表示後に LUIS
-    アプリが発行されます。後で使用できるように、生成された Endpoint url
-    をコピーして保存します。
+10. [Publish] ボタンをクリックします。新しい確認メッセージの表示後に LUIS アプリが発行されます。後で使用できるように、生成された Endpoint url をコピーして保存します。
 
->   LUIS アプリの出力が、HTTP エンドポイント
->   (自然言語の理解を追加する際にボットから参照する) が設定された Web
->   サービスであることがわかります。
-
->   **注:** BoostrapKey は 1 か月あたり 1000 のトランザクションが存在します。
+    LUIS アプリの出力が、HTTP エンドポイント (自然言語の理解を追加する際にボットから参照する) が設定された Web サービスであることがわかります。
+    
+> **注:** BoostrapKey は 1 か月あたり 1000 のトランザクションが存在します。
 
 ## タスク 4: LUIS を使用するようにボットを構成する
 
@@ -195,9 +181,11 @@ npm install を実行して、.env ファイルに LUIS
 2.  次の行を追加して .env ファイルを更新し、LUIS\_MODEL\_URL
     キーに前のタスクから得られた値を設定します。
 
->   LUIS\_MODEL\_URL=
+    ```javascript
+    LUIS_MODEL_URL=
+    ```
 
-1.  ボット初期化後に次の行を追加して、ボットに LuisRecognizer を追加します (new
+3.  ボット初期化後に次の行を追加して、ボットに LuisRecognizer を追加します (new
     builder.UniversalBot(...))。標準の Bot Builder SDK には、LUISRecognizer
     クラスが含まれ、LUIS
     ポータルを使用してトレーニングした機械学習モデルの呼び出しに使用できます。このクラスには、onEnabled
@@ -206,20 +194,15 @@ npm install を実行して、.env ファイルに LUIS
     関数の詳細については、[こちら](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.intentrecognizer.html#onenabled)で確認できます。また、[onFilter](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.intentrecognizer.html#onfilter)
     関数を使用して、認識エンジンからの出力のフィルタリングをすることもできます。
 
-2.  var luisRecognizer = new
-    builder.LuisRecognizer(process.env.LUIS\_MODEL\_URL).onEnabled(function
-    (context, callback) {
+    ```javascript
+    var luisRecognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL).onEnabled(function (context, callback) {
+        var enabled = context.dialogStack().length === 0;
+        callback(null, enabled);
+    });
+    bot.recognizer(luisRecognizer);
+    ```
 
-3.  var enabled = context.dialogStack().length === 0;
-
-4.  callback(null, enabled);
-
-5.  });
-
->   bot.recognizer(luisRecognizer);
-
->   **注:**
->   インテント認識エンジンは、ユーザーの入力に基づいてユーザーのインテントを解釈します。インテントが判別されると、認識エンジンは、名前付きインテントを返し、これを使用してボット内の追加のアクションおよびダイアログを起動できます。認識エンジンは、ユーザーから受け取ったすべてのメッセージに対して実行されることを覚えておいてください。
+> **注:** インテント認識エンジンは、ユーザーの入力に基づいてユーザーのインテントを解釈します。インテントが判別されると、認識エンジンは、名前付きインテントを返し、これを使用してボット内の追加のアクションおよびダイアログを起動できます。認識エンジンは、ユーザーから受け取ったすべてのメッセージに対して実行されることを覚えておいてください。
 
 ## タスク 5: LUIS を使用するようにボットを更新する
 
@@ -232,189 +215,140 @@ npm install を実行して、.env ファイルに LUIS
     API
     をヒットする最後のステップへ移動します。次のようなコードを設定する必要があります。
 
-2.  bot.dialog('SubmitTicket', [
+    ```javascript
+    bot.dialog('SubmitTicket', [
+       ...
+    ])
+    .triggerAction({
+        matches: 'SubmitTicket'
+    });
+    ```
 
-3.  ...
+> **注:** matches 値が LUIS アプリのインテント名と一致していることを確認します。
 
-4.  ])
-
-5.  .triggerAction({
-
-6.  matches: 'SubmitTicket'
-
->   });
-
->   **注:** matches 値が LUIS
->   アプリのインテント名と一致していることを確認します。
-
-1.  UniversalBot 初期化からのすべてのウォーターフォール ステップを、新しい
+2.  UniversalBot 初期化からのすべてのウォーターフォール ステップを、新しい
     SubmitTicket ダイアログに移動します。コードを次のコードに置き換えます。
 
-2.  var bot = new builder.UniversalBot(connector, (session) =\> {
+    ```javascript
+    var bot = new builder.UniversalBot(connector, (session) => {
+        session.endDialog(`I'm sorry, I did not understand '${session.message.text}'.\nType 'help' to know more about me :)`);
+    });
+    ```
 
-3.  session.endDialog(\`I'm sorry, I did not understand
-    '\${session.message.text}'.\\nType 'help' to know more about me :)\`);
-
->   });
-
-1.  次に LUIS から category と severity のエンティティ値を取得し、dialogData
+3.  次に LUIS から category と severity のエンティティ値を取得し、dialogData
     に保存して、後で使用できるようにします。最後に、重大度が既に保存されている場合は次のステップを呼び出し、保存されていない場合はユーザーにいずれかを選択するように要求します。そのためには、最初のウォーターフォール
     ステップを次のコードに置き換えます。
 
-2.  ...
+    ```javascript
+    ...
+    (session, args, next) => {
+        var category = builder.EntityRecognizer.findEntity(args.intent.entities, 'category');
+        var severity = builder.EntityRecognizer.findEntity(args.intent.entities, 'severity');
 
-3.  (session, args, next) =\> {
+        if (category && category.resolution.values.length > 0) {
+            session.dialogData.category = category.resolution.values[0];
+        }
 
-4.  var category = builder.EntityRecognizer.findEntity(args.intent.entities,
-    'category');
+        if (severity && severity.resolution.values.length > 0) {
+            session.dialogData.severity = severity.resolution.values[0];
+        }
 
-5.  var severity = builder.EntityRecognizer.findEntity(args.intent.entities,
-    'severity');
+        session.dialogData.description = session.message.text;
 
-6.  if (category && category.resolution.values.length \> 0) {
+        if (!session.dialogData.severity) {
+            var choices = ['high', 'normal', 'low'];
+            builder.Prompts.choice(session, 'Which is the severity of this problem?', choices, { listStyle: builder.ListStyle.button });
+        } else {
+            next();
+        }
+    },
+    ...
+    ```
 
-7.  session.dialogData.category = category.resolution.values[0];
-
-8.  }
-
-9.  if (severity && severity.resolution.values.length \> 0) {
-
-10. session.dialogData.severity = severity.resolution.values[0];
-
-11. }
-
-12. session.dialogData.description = session.message.text;
-
-13. if (!session.dialogData.severity) {
-
-14. var choices = ['high', 'normal', 'low'];
-
-15. builder.Prompts.choice(session, 'Which is the severity of this problem?',
-    choices);
-
-16. } else {
-
-17. next();
-
-18. }
-
-19. },
-
->   ...
-
-1.  コードを更新して、チケットの重大度を受け取り、保存します。カテゴリを既に把握している場合は、次のステップが呼び出され、まだ把握していない場合は、ボットからユーザーに入力を求めます。このためには、2
+4.  コードを更新して、チケットの重大度を受け取り、保存します。カテゴリを既に把握している場合は、次のステップが呼び出され、まだ把握していない場合は、ボットからユーザーに入力を求めます。このためには、2
     番目と 3 番目のウォーターフォール ステップを次のコードに置き換えます。4
     番目と 5 番目のウォーターフォール ステップは変更しないでおきます。
 
-2.  ...
+    ```javascript
+    ...
+    (session, result, next) => {
+        if (!session.dialogData.severity) {
+            session.dialogData.severity = result.response.entity;
+        }
 
-3.  (session, result, next) =\> {
+        if (!session.dialogData.category) {
+            builder.Prompts.text(session, 'Which would be the category for this ticket (software, hardware, network, and so on)?');
+        } else {
+            next();
+        }
+    },
+    ...
+    ```
 
-4.  if (!session.dialogData.severity) {
-
-5.  session.dialogData.severity = result.response.entity;
-
-6.  }
-
-7.  if (!session.dialogData.category) {
-
-8.  builder.Prompts.text(session, 'Which would be the category for this ticket
-    (software, hardware, network, and so on)?');
-
-9.  } else {
-
-10. next();
-
-11. }
-
-12. },
-
->   ...
-
-1.  新しい 3 番目のウォーターフォール (以前は 4 番目) で、if
+5.  新しい 3 番目のウォーターフォール (以前は 4 番目) で、if
     ステートメントを次のように更新します。
 
-2.  ...
+    ```javascript
+    ...
+    (session, result, next) => {
+        if (!session.dialogData.category) {
+            session.dialogData.category = result.response;
+        }
 
-3.  (session, result, next) =\> {
+        var message = `Great! I'm going to create a "${session.dialogData.severity}" severity ticket in the "${session.dialogData.category}" category. ` +
+                      `The description I will use is "${session.dialogData.description}". Can you please confirm that this information is correct?`;
 
-4.  if (!session.dialogData.category) {
+        builder.Prompts.confirm(session, message, { listStyle: builder.ListStyle.button });
+    },
+    ...
+    ```
 
-5.  session.dialogData.category = result.response;
-
-6.  }
-
-7.  var message = \`Great! I'm going to create a
-    \*\*\${session.dialogData.severity}\*\* severity ticket in the
-    \*\*\${session.dialogData.category}\*\* category. \` +
-
-8.  \`The description I will use is \_"\${session.dialogData.description}"\_.
-    Can you please confirm that this information is correct?\`;
-
-9.  builder.Prompts.confirm(session, message);
-
-10. },
-
->   ...
-
-1.  最後に、ユーザーが「help」または「hi」を入力したときに実行される新しいヘルプ
+6.  最後に、ユーザーが「help」または「hi」を入力したときに実行される新しいヘルプ
     ダイアログを作成します。
 
-2.  bot.dialog('Help',
-
-3.  (session, args, next) =\> {
-
-4.  session.endDialog(\`I'm the help desk bot and I can help you create a
-    ticket.\\n\` +
-
-5.  \`You can tell me things like \_I need to reset my password\_ or \_I cannot
-    print\_.\`);
-
-6.  }
-
-7.  ).triggerAction({
-
-8.  matches: 'Help'
-
->   });
+    ```javascript
+    bot.dialog('Help',
+        (session, args, next) => {
+            session.endDialog(`I'm the help desk bot and I can help you create a ticket.\n` +
+                `You can tell me things like _I need to reset my password_ or _I cannot print_.`);
+        }
+    ).triggerAction({
+        matches: 'Help'
+    });
+    ```
 
 ## タスク 6: エミュレーターからボットをテストする
 
 1.  コンソール (nodemon app.js)
     からアプリを実行し、エミュレーターを開きます。ボットの URL
-    (http://localhost:3978/api/messages) をいつもどおり入力します。
+    (http://localhost:3978/api/messages ) をいつもどおり入力します。
 
 2.  「hi」と入力します。Help
     インテントがどのように認識され、実行されるかがわかります。
 
->   ![](./media/3-8.png)
+   ![](./media/3-8.png)
 
-1.  ボットのトレーニングに使用した発話のいずれかを入力します。たとえば「I can't
+3.  ボットのトレーニングに使用した発話のいずれかを入力します。たとえば「I can't
     log in, I'm
     blocked」と入力します。ユーザーのメッセージから、チケットのカテゴリおよび重大度が自動的に把握されます。「yes」と入力して、チケットを保存します。
 
->   ![](./media/3-9.png)
+   ![](./media/3-9.png)
 
-1.  次に、ボットのトレーニングに使用されていない発話を入力してみます。例: My
+4.  次に、ボットのトレーニングに使用されていない発話を入力してみます。例: My
     computer is making a grinding noise. (コンピューターが摩擦音を立てています)
     重大度は把握されていませんが、エンティティ computer
     が存在するためカテゴリは把握されています。
 
->   ![](./media/3-10.png)
+   ![](./media/3-10.png)
 
-1.  LUIS が認識できない発話を入力すると、LUIS は None インテントを返し、ボット
+5.  LUIS が認識できない発話を入力すると、LUIS は None インテントを返し、ボット
     フレームワークは既定のダイアログ ハンドラーを実行します。
 
->   ![](./media/3-11.png)
+   ![](./media/3-11.png)
+   
+   アプリケーションを展開し、システムにトラフィックの流入が開始すると、LUIS はアクティブ ラーニングを使用して、自己改善します。アクティブ ラーニング プロセスで、LUIS はあまり確信できない発話を特定して、インテントまたはエンティティに従ってその発話にラベル付けすることを求めます。LUIS ポータルのインテント内には [Suggested Utterances] セクションが存在し、そこではラベル付けを実行できます。
 
->   アプリケーションを展開し、システムにトラフィックの流入が開始すると、LUIS
->   はアクティブ ラーニングを使用して、自己改善します。アクティブ ラーニング
->   プロセスで、LUIS
->   はあまり確信できない発話を特定して、インテントまたはエンティティに従ってその発話にラベル付けすることを求めます。LUIS
->   ポータルのインテント内には [Suggested Utterances]
->   セクションが存在し、そこではラベル付けを実行できます。
-
->   ![](./media/3-12.png)
+   ![](./media/3-12.png)
 
 ## その他の課題
 

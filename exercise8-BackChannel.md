@@ -70,116 +70,80 @@ API を使用して実装します。この API
     フォルダー内に用意されている[こちら](https://github.com/GeekTrainer/help-desk-bot-lab/blob/assets/exercise8-BackChannel/default.htm)を使用できます。
 
 -   [Bot Framework ポータル](https://dev.botframework.com/)を使用して、ボットの
-    Web チャット
-    チャネルに新しいアプリを追加して、秘密鍵を取得します。次に、その秘密鍵を使用して、Web
-    ページで [Direct
-    Line](https://docs.botframework.com/en-us/restapi/directline3/) を開きます。
+    Web チャット チャネルに新しいアプリを追加して、秘密鍵を取得します。次に、その秘密鍵を使用して、Web ページで [Direct Line](https://docs.botframework.com/en-us/restapi/directline3/) を開きます。
 
--   var botConnection = new BotChat.DirectLine({
+    ```javascript
+    var botConnection = new BotChat.DirectLine({
+        secret: '{DIRECTLINE_SECRET}'
+    });
+    ```
 
--   secret: '{DIRECTLINE\_SECRET}'
+-   Web ページに Web Chat コントロールを埋め込む必要があります。詳細については、[こちら](https://github.com/Microsoft/BotFramework-WebChat) を参照してください。
 
->   });
+-   type="event" と name="searchResults" でアクティビティのボット アクティビティ リスナーを追加します。ボットがバックチャネルを通じて送信した検索結果を表示します。
 
--   Web ページに Web Chat
-    コントロールを埋め込む必要があります。詳細については、[こちら](https://github.com/Microsoft/BotFramework-WebChat)を参照してください。
+    ```javascript
+    botConnection.activity$
+        .filter(function (activity) {
+            return activity.type === 'event' && activity.name === 'searchResults';
+        })
+        .subscribe(function (activity) {
+            // show the search results
+        });
+    ```
 
--   type="event" と name="searchResults" でアクティビティのボット アクティビティ
-    リスナーを追加します。ボットがバックチャネルを通じて送信した検索結果を表示します。
+-   エージェントがタイトルをクリックすると、バックチャネルを通じてアクティビティがポストされ、ボット イベントが呼び出されます。
 
--   botConnection.activity\$
+    ```javascript
+     botConnection
+        .postActivity({
+            type: 'event',
+            value: this.textContent.trim(),
+            from: { id: 'user' },
+            name: 'showDetailsOf'
+        });
+    ```
 
--   .filter(function (activity) {
-
--   return activity.type === 'event' && activity.name === 'searchResults';
-
--   })
-
--   .subscribe(function (activity) {
-
--   // show the search results
-
->   });
-
--   エージェントがタイトルをクリックすると、バックチャネルを通じてアクティビティがポストされ、ボット
-    イベントが呼び出されます。
-
--   botConnection
-
--   .postActivity({
-
--   type: 'event',
-
--   value: this.textContent.trim(),
-
--   from: { id: 'user' },
-
--   name: 'showDetailsOf'
-
->   });
-
-> **注:** わかりやすくするため、ユーザーとの会話を含む Web Chat
-コントロールと検索結果は同じページに表示します。ただし、この 2
-つはそれぞれ別々に扱うことが理想的です。エージェントが監視と推奨記事の送信ができるように、スーパーバイザー
-Web サイトには進行中の会話のリストを表示する必要があります。
+> **注:** わかりやすくするため、ユーザーとの会話を含む Web Chat コントロールと検索結果は同じページに表示します。ただし、この 2 つはそれぞれ別々に扱うことが理想的です。エージェントが監視と推奨記事の送信ができるように、スーパーバイザー Web サイトには進行中の会話のリストを表示する必要があります。
 
 ### サーバー側のコード
 
--   ボットの SubmitTicket ダイアログを更新して、Azure Search
-    でチケットの説明についての検索を実行し、ActivityTypes.Event
-    型のメッセージを結果とともに送信します。
+-   ボットの SubmitTicket ダイアログを更新して、Azure Search でチケットの説明についての検索を実行し、ActivityTypes.Event 型のメッセージを結果とともに送信します。
 
--   Node.js では bot.on() イベント リスナーを使用し、C\# では MessagesController
-    の Post メソッドを使用して、Web ページから送信される ActivityTypes.Event
-    型のメッセージをリッスンし、メッセージに応じて応答します。
+-   Node.js では bot.on() イベント リスナーを使用し、C\# では MessagesController の Post メソッドを使用して、Web ページから送信される ActivityTypes.Event 型のメッセージをリッスンし、メッセージに応じて応答します。
 
--   bot.on(\`event\`, function (event) {
+    ```javascript
+    bot.on(`event`, function (event) {
+        var msg = new builder.Message().address(event.address);
+        msg.data.textLocale = 'en-us';
+        if (event.name === 'showDetailsOf') {
+            // search for article and display it
+        }
+    });
+    ```
 
--   var msg = new builder.Message().address(event.address);
+    ```csharp
+    public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
+    {
+        if (activity.Type == ActivityTypes.Message)
+        {
+            await Conversation.SendAsync(activity, () => new RootDialog());
+        }
+        else if (activity.Type == ActivityTypes.Event)
+        {
+            // search for article and display it
+        }
 
--   msg.data.textLocale = 'en-us';
-
--   if (event.name === 'showDetailsOf') {
-
--   // search for article and display it
-
--   }
-
->   });
-
->   public async Task\<HttpResponseMessage\> Post([FromBody]Activity activity)
-
->   {
-
->   if (activity.Type == ActivityTypes.Message)
-
->   {
-
->   await Conversation.SendAsync(activity, () =\> new RootDialog());
-
->   }
-
->   else if (activity.Type == ActivityTypes.Event)
-
->   {
-
->   // search for article and display it
-
->   }
-
->   ...
-
->   }
+        ...
+    }
+    ```
 
 ## 参考資料
 
--   [Microsoft Bot Framework WebChat
-    コントロール](https://github.com/Microsoft/BotFramework-WebChat)
+-   [Microsoft Bot Framework WebChat コントロール](https://github.com/Microsoft/BotFramework-WebChat)
 
--   [Direct Line
-    API](https://docs.botframework.com/en-us/restapi/directline3/#navtitle)
+-   [Direct Line API](https://docs.botframework.com/en-us/restapi/directline3/#navtitle)
 
--   [BackChannel
-    サンプル](https://github.com/Microsoft/BotFramework-WebChat/blob/master/samples/backchannel/index.html)
+-   [BackChannel サンプル](https://github.com/Microsoft/BotFramework-WebChat/blob/master/samples/backchannel/index.html)
 
 -   [Backchannel ボット](https://github.com/ryanvolum/backChannelBot)

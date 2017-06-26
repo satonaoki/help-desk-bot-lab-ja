@@ -39,49 +39,35 @@ f
     を使用して、まず、問題について説明することを求めます。SDK
     では、ユーザーからの入力の収集を簡単にするためのビルトイン
     プロンプトのセットを提供しています。
+    
+    ユーザーの応答が、ウォーターフォールの 2 番目の関数に渡されます。この関数では、説明の内容を確認します。このカスケード形式の質問/応答シーケンスから、ウォーターフォールという名前が付いています。
+    
+    また、応答はダイアログ データに保持されます。ダイアログ データは、1 つのダイアログ インスタンスの情報の保持に使用されます。これは、ダイアログのウォーターフォールのステップ間で一時情報を保存するために重要です。
 
->   ユーザーの応答が、ウォーターフォールの 2
->   番目の関数に渡されます。この関数では、説明の内容を確認します。このカスケード形式の質問/応答シーケンスから、ウォーターフォールという名前が付いています。
+    ``` javascript
+    var bot = new builder.UniversalBot(connector, [
+        (session, args, next) => {
+            session.send('Hi! I\'m the help desk bot and I can help you create a ticket.');
+            builder.Prompts.text(session, 'First, please briefly describe your problem to me.');
+        },
+        (session, result, next) => {
+            session.dialogData.description = result.response;
+            session.send(`Got it. Your problem is "${session.dialogData.description}"`);
+            session.endDialog();
+        }
+    ]);
+    ```
 
->   また、応答はダイアログ データに保持されます。ダイアログ データは、1
->   つのダイアログ
->   インスタンスの情報の保持に使用されます。これは、ダイアログのウォーターフォールのステップ間で一時情報を保存するために重要です。
-
->   var bot = new builder.UniversalBot(connector, [
-
->   (session, args, next) =\> {
-
->   session.send('Hi! I\\'m the help desk bot and I can help you create a
->   ticket.');
-
->   builder.Prompts.text(session, 'First, please briefly describe your problem
->   to me.');
-
->   },
-
->   (session, result, next) =\> {
-
->   session.dialogData.description = result.response;
-
->   session.send(\`Got it. Your problem is
->   "\${session.dialogData.description}"\`);
-
->   session.endDialog();
-
->   }
-
->   ]);
-
-1.  コンソール (nodemon app.js)
+3.  コンソール (nodemon app.js)
     からアプリを実行し、エミュレーターを開きます。いつもどおりにボットの URL
-    を入力し (http://localhost:3978/api/messages)、ボットをテストします。
+    を入力し (http://localhost:3978/api/messages )、ボットをテストします。
 
->   ![](./media/2-1.png)
+   ![](./media/2-1.png)
 
-1.  コンソール ウィンドウでも、メッセージ ハンドラーが 1
+4.  コンソール ウィンドウでも、メッセージ ハンドラーが 1
     つずつ実行される様子を確認できます。
 
->   ![](./media/2-2.png)
+   ![](./media/2-2.png)
 
 ## タスク 2: チケット詳細のプロンプト
 
@@ -93,88 +79,51 @@ f
     種類のプロンプトが導入されます。
 
     -   Prompts.choice(): チケットの重要度について尋ねます。
-
     -   Prompts.confirm(): チケットの情報が正しいことを確認します。
 
-2.  var bot = new builder.UniversalBot(connector, [
+    ```javascript
+    var bot = new builder.UniversalBot(connector, [
+        (session, args, next) => {
+            session.send('Hi! I\'m the help desk bot and I can help you create a ticket.');
+            builder.Prompts.text(session, 'First, please briefly describe your problem to me.');
+        },
+        (session, result, next) => {
+            session.dialogData.description = result.response;
 
-3.  (session, args, next) =\> {
+            var choices = ['high', 'normal', 'low'];
+            builder.Prompts.choice(session, 'Which is the severity of this problem?', choices, { listStyle: builder.ListStyle.button });
+        },
+        (session, result, next) => {
+            session.dialogData.severity = result.response.entity;
 
-4.  session.send('Hi! I\\'m the help desk bot and I can help you create a
-    ticket.');
+            builder.Prompts.text(session, 'Which would be the category for this ticket (software, hardware, networking, security or other)?');
+        },
+        (session, result, next) => {
+            session.dialogData.category = result.response;
 
-5.  builder.Prompts.text(session, 'First, please briefly describe your problem
-    to me.');
+            var message = `Great! I'm going to create a "${session.dialogData.severity}" severity ticket in the "${session.dialogData.category}" category. ` +
+                      `The description I will use is "${session.dialogData.description}". Can you please confirm that this information is correct?`;
 
-6.  },
+            builder.Prompts.confirm(session, message, { listStyle: builder.ListStyle.button });
+        },
+        (session, result, next) => {
+            if (result.response) {
+                session.send('Awesome! Your ticked has been created.');
+                session.endDialog();
+            } else {
+                session.endDialog('Ok. The ticket was not created. You can start again if you want.');
+            }
+        }
+    ]);
+    ```
 
-7.  (session, result, next) =\> {
+>   **注:** Markdown 構文を使用して、よりリッチなテキスト メッセージを作成できることに注意してください。ただし、すべてのチャネルで Markdown がサポートされるわけではないので、注意することが重要です。
 
-8.  session.dialogData.description = result.response;
+2.  アプリを再実行して、エミュレーターの [Start new conversation] ボタン ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png) を使用します。新しい会話をテストします。
 
-9.  var choices = ['high', 'normal', 'low'];
+   ![](./media/2-4.png)
 
-10. builder.Prompts.choice(session, 'Which is the severity of this problem?',
-    choices);
-
-11. },
-
-12. (session, result, next) =\> {
-
-13. session.dialogData.severity = result.response.entity;
-
-14. builder.Prompts.text(session, 'Which would be the category for this ticket
-    (software, hardware, networking, security or other)?');
-
-15. },
-
-16. (session, result, next) =\> {
-
-17. session.dialogData.category = result.response;
-
-18. var message = \`Great! I'm going to create a
-    \*\*\${session.dialogData.severity}\*\* severity ticket in the
-    \*\*\${session.dialogData.category}\*\* category. \` +
-
-19. \`The description I will use is \_"\${session.dialogData.description}"\_.
-    Can you please confirm that this information is correct?\`;
-
-20. builder.Prompts.confirm(session, message);
-
-21. },
-
-22. (session, result, next) =\> {
-
-23. if (result.response) {
-
-24. session.send('Awesome! Your ticked has been created.');
-
-25. session.endDialog();
-
-26. } else {
-
-27. session.endDialog('Ok. The ticket was not created. You can start again if
-    you want.');
-
-28. }
-
-29. }
-
->   ]);
-
->   **注:** Markdown 構文を使用して、よりリッチなテキスト
->   メッセージを作成できることに注意してください。ただし、すべてのチャネルで
->   Markdown がサポートされるわけではないので、注意することが重要です。
-
-1.  アプリを再実行して、エミュレーターの [Start new conversation] ボタン
-
-    ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png)
-
-    を使用します。新しい会話をテストします。
-
->   ![](./media/2-4.png)
-
->   この時点で再度ボットに話しかけると、ウォーターフォールが最初から開始されます。
+   この時点で再度ボットに話しかけると、ウォーターフォールが最初から開始されます。
 
 ## タスク 3: 外部 API を呼び出してチケットを保存
 
@@ -184,33 +133,25 @@ API
 アレイに保存する単純なエンドポイントを使用します。実稼働環境では、ボットのコードからアクセスできる任意の
 API を使用できます。
 
-**注:** ボットについての重要事項として、構築するほとんどのボットが既存の API
-のフロント
-エンドとなるということに留意してください。単純に言えば、ボットはアプリであり、人工知能
-(AI)、機械学習 (ML)、または自然言語処理 (NLP) がなくてもボットとみなされます。
+> **注:** ボットについての重要事項として、構築するほとんどのボットが既存の API のフロント エンドとなるということに留意してください。単純に言えば、ボットはアプリであり、人工知能 (AI)、機械学習 (ML)、または自然言語処理 (NLP) がなくてもボットとみなされます。
 
 1.  アプリのルート フォルダーで新しい **ticketsApi.js**
     ファイルを作成し、以下のコードを追加します。
 
-2.  var tickets = [];
+    ``` javascript
+    var tickets = [];
+    var lastTicketId = 1;
 
-3.  var lastTicketId = 1;
+    module.exports = (req, res) => {
+        console.log('Ticket received: ', req.body);
+        let ticketId = lastTicketId++;
+        var ticket = req.body;
+        ticket.id = ticketId;
+        tickets.push(ticket);
 
-4.  module.exports = (req, res) =\> {
-
-5.  console.log('Ticket received: ', req.body);
-
-6.  let ticketId = lastTicketId++;
-
-7.  var ticket = req.body;
-
-8.  ticket.id = ticketId;
-
-9.  tickets.push(ticket);
-
-10. res.send(ticketId.toString());
-
->   };
+        res.send(ticketId.toString());
+    };
+    ```
 
 ## タスク 4: サーバーを更新して API をホスト
 
@@ -220,91 +161,73 @@ API を使用できます。
 
 1.  app.js ファイルの冒頭に、以下の require ステートメントを追加します。
 
->   const ticketsApi = require('./ticketsApi');
+    ```javascript
+    const ticketsApi = require('./ticketsApi');
+    ```
 
-1.  listenPort 定数を追加します。
+2.  listenPort 定数を追加します。
 
->   const listenPort = process.env.port \|\| process.env.PORT \|\| 3978;
+    ```javascript
+    const listenPort = process.env.port || process.env.PORT || 3978;
+    ```
+    
+3.  ticketSubmissionUrl 定数を追加します。
 
-1.  ticketSubmissionUrl 定数を追加します。
+    ```javascript
+    const ticketSubmissionUrl = process.env.TICKET_SUBMISSION_URL || `http://localhost:${listenPort}`;
+    ```
 
->   const ticketSubmissionUrl = process.env.TICKET\_SUBMISSION\_URL \|\|
->   \`http://localhost:\${listenPort}\`;
+4.  以下に示すように、server.listen() を更新します。
 
-1.  以下に示すように、server.listen() を更新します。
+    ```javascript
+    server.listen(listenPort, '::', () => {
+        console.log('Server Up');
+    });
+    ```
 
-2.  server.listen(listenPort, '::', () =\> {
-
-3.  console.log('Server Up');
-
->   });
-
-1.  bodyParser を追加します。これにより、以下に示すように、API
+5.  bodyParser を追加します。これにより、以下に示すように、API
     でメッセージ本文とチケット API を読み取れるようになります。
 
-2.  // Setup body parser and tickets api
+    ```javascript
+    // Setup body parser and tickets api
+    server.use(restify.bodyParser());
+    server.post('/api/tickets', ticketsApi);
+    ```
 
-3.  server.use(restify.bodyParser());
-
->   server.post('/api/tickets', ticketsApi);
-
-1.  **最後のメッセージ
+6.  **最後のメッセージ
     ハンドラー**のコードを、以下のコードに置き換えます。このコードでは、dialogData
     をチケット API に送信します。
 
-2.  // --- existing code here ---
+    ```javascript
+    // --- existing code here ---
+    (session, result, next) => {
+        if (result.response) {
+            var data = {
+                category: session.dialogData.category,
+                severity: session.dialogData.severity,
+                description: session.dialogData.description,
+            }
 
-3.  (session, result, next) =\> {
+            const client = restify.createJsonClient({ url: ticketSubmissionUrl });
 
-4.  if (result.response) {
+            client.post('/api/tickets', data, (err, request, response, ticketId) => {
+                if (err || ticketId == -1) {
+                    session.send('Something went wrong while I was saving your ticket. Please try again later.')
+                } else {
+                    session.send(`Awesome! Your ticked has been created with the number ${ticketId}.`);
+                }
 
-5.  var data = {
+                session.endDialog();
+            });
+        } else {
+            session.endDialog('Ok. The ticket was not created. You can start again if you want.');
+        }
+    }
+    ```
 
-6.  category: session.dialogData.category,
+7.  ファイルを保存して、エミュレーターの [Start new conversation] ボタン ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png) をクリックします。すべての会話を再度テストして、API からチケット ID が返されることを確認します。
 
-7.  severity: session.dialogData.severity,
-
-8.  description: session.dialogData.description,
-
-9.  }
-
-10. const client = restify.createJsonClient({ url: ticketSubmissionUrl });
-
-11. client.post('/api/tickets', data, (err, request, response, ticketId) =\> {
-
-12. if (err \|\| ticketId == -1) {
-
-13. session.send('Something went wrong while I was saving your ticket. Please
-    try again later.')
-
-14. } else {
-
-15. session.send(\`Awesome! Your ticked has been created with the number
-    \${ticketId}.\`);
-
-16. }
-
-17. session.endDialog();
-
-18. });
-
-19. } else {
-
-20. session.endDialog('Ok. The ticket was not created. You can start again if
-    you want.');
-
-21. }
-
->   }
-
-1.  ファイルを保存して、エミュレーターの [Start new conversation] ボタン
-
-    ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png)
-
-    をクリックします。すべての会話を再度テストして、API からチケット ID
-    が返されることを確認します。
-
->   ![](./media/2-5.png)
+   ![](./media/2-5.png)
 
 ## タスク 5: 通知メッセージを変更してアダプティブ カードを表示
 
@@ -333,50 +256,45 @@ Framework チャネル)
     セクションで、読み取りを行う fs
     モジュールを以下のようにファイルに追加します。
 
->   const fs = require('fs');
+    ```javascript
+    const fs = require('fs');
+    ```
 
-1.  ファイルの末尾に createCard 関数を追加します。この関数は、JSON
+3.  ファイルの末尾に createCard 関数を追加します。この関数は、JSON
     ファイルのコンテンツを返し、プレースホルダーをパラメーターで置き換えます。
 
-2.  const createCard = (ticketId, data) =\> {
 
-3.  var cardTxt = fs.readFileSync('./cards/ticket.json', 'UTF-8');
+    ```javascript
+    const createCard = (ticketId, data) => {
+        var cardTxt = fs.readFileSync('./cards/ticket.json', 'UTF-8');
 
-4.  cardTxt = cardTxt.replace(/{ticketId}/g, ticketId)
+        cardTxt = cardTxt.replace(/{ticketId}/g, ticketId)
+                        .replace(/{severity}/g, data.severity)
+                        .replace(/{category}/g, data.category)
+                        .replace(/{description}/g, data.description);
 
-5.  .replace(/{severity}/g, data.severity)
+        return JSON.parse(cardTxt);
+    };
+    ```
 
-6.  .replace(/{category}/g, data.category)
+4.  ウォーターフォールの最後のステップを探し、次の行を置き換えます。
 
-7.  .replace(/{description}/g, data.description);
+    ```javascript
+    session.send(`Awesome! Your ticked has been created with the number ${ticketId}.`);
+    ```
 
-8.  return JSON.parse(cardTxt);
+   次の行で置き換えます。
+   
+   ```javascript
+   session.send(new builder.Message(session).addAttachment({
+       contentType: "application/vnd.microsoft.card.adaptive",
+       content: createCard(ticketId, data)
+   }));
+   ```
 
->   };
+5.  ファイルを保存して、エミュレーターの [Start new conversation] ボタンを使用します ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png)。新しい会話をテストします。確認メッセージについては、以下を参照してください。
 
-1.  ウォーターフォールの最後のステップを探し、次の行を置き換えます。
-
->   session.send(\`Awesome! Your ticked has been created with the number
->   \${ticketId}.\`);
-
->   次の行で置き換えます。
-
->   session.send(new builder.Message(session).addAttachment({
-
->   contentType: "application/vnd.microsoft.card.adaptive",
-
->   content: createCard(ticketId, data)
-
->   }));
-
-1.  ファイルを保存して、エミュレーターの [Start new conversation]
-    ボタンを使用します
-
-    ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png)
-
-    。新しい会話をテストします。確認メッセージについては、以下を参照してください。
-
->   ![](./media/2-6.png)
+   ![](./media/2-6.png)
 
 ## その他の課題
 

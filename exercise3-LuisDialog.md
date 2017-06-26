@@ -53,26 +53,17 @@ Intelligent Service) を使用します。
 
 ![](media/7bb849ebbeeae5464880cf4211bad3d4.png)
 
-Node.js ではボットに対して LuisRecognizer
-を使用する必要があり、このコードによって、ボットがユーザーに確認を求めるときに認識エンジンが制御を取得しないようにします。
+> **注:** Node.js ではボットに対して LuisRecognizer を使用する必要があり、このコードによって、ボットがユーザーに確認を求めるときに認識エンジンが制御を取得しないようにします。
 
-var luisRecognizer = new
-builder.LuisRecognizer(process.env.LUIS\_MODEL\_URL).onEnabled((context,
-callback) =\> {
-
-var enabled = context.dialogStack().length === 0;
-
-callback(null, enabled);
-
+```javascript
+var luisRecognizer = new builder.LuisRecognizer(process.env.LUIS_MODEL_URL).onEnabled((context, callback) => {
+  var enabled = context.dialogStack().length === 0;
+  callback(null, enabled);
 });
-
 bot.recognizer(luisRecognizer);
+```
 
-**注:** 既に LUIS に習熟している場合は、この演習の
-[assets](./assets/exercise3-LuisDialog)
-フォルダーにあるファイル luis\_model.json
-を各自のアカウントにインポートして、モデルをトレーニングおよび発行できます。しかし、LUIS
-の初心者である場合は、学習のためにモデルを最初から作成することをお勧めします。
+> **注:** 既に LUIS に習熟している場合は、この演習の[assets](./assets/exercise3-LuisDialog)フォルダーにあるファイル luis\_model.json を各自のアカウントにインポートして、モデルをトレーニングおよび発行できます。しかし、LUIS の初心者である場合は、学習のためにモデルを最初から作成することをお勧めします。
 
 ## その他の課題
 
