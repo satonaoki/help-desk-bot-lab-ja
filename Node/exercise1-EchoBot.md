@@ -62,8 +62,8 @@ npm WARN helpbot@1.0.0 No repository field.
 
 ```
     PORT=3978
-    MICROSOFT\_APP\_ID=
-    MICROSOFT\_APP\_PASSWORD=
+    MICROSOFT_APP_ID=
+    MICROSOFT_APP_PASSWORD=
 ```
 
 2.  ルート ディレクトリに `app.js` という名前のファイルを作成します。ルートディレクトリはアプリケーションおよびボットのルートとなります。ボットは Restify フレームワークを使用して、既定でポート 3978 をリッスンします。Restify フレームワークは、ボットを開発する際の標準となっています。
@@ -75,7 +75,7 @@ npm WARN helpbot@1.0.0 No repository field.
 
 Bot Builder SDK for Node.js は、Bot Framework Connector を使用してボットでのメッセージの送受信を構成するための UniversalBot クラスおよび ChatConnector クラスを提供します。UniversalBot クラスはボットの頭脳を形成し、ボットとユーザーのすべての会話の管理を担います。ChatConnector はボットを Bot Framework Connector サービスに接続します。Bot Framework Connector はさらに、ボットがチャネルに送信するメッセージを正規化し、プラットフォームを指定せずにボットを開発できるようにします。これにより開発者は、ユーザーが使用するかもしれない最終的なチャネルよりも、ビジネス ロジックに注意を集中できます。
 
-以下のコードを app.js に追加します。
+以下のコードを `app.js` に追加します。
 
 ``` javascript
     require('dotenv').config();
@@ -116,14 +116,14 @@ Bot Builder SDK for Node.js は、Bot Framework Connector を使用してボッ�
     nodemon app.js
 ```
 
-> **注:** Windows ファイアウォールの警告が表示される場合は、**[アクセスを許可]**をクリックします。また `EADDRINUSE` エラーが発生する場合は、既定のポートを 3979 または同様のポートに変更します。
+> **注:** Windows ファイアウォールの警告が表示される場合は、 **[アクセスを許可]** をクリックします。また `EADDRINUSE` エラーが発生する場合は、既定のポートを 3979 または同様のポートに変更します。
 
 2.  次に、Bot Framework Emulator を起動し、ボットに接続します。アドレス バーに
     `http://localhost:3978/api/messages`
     と入力します。これは、ボットがローカルにホストされたときにリッスンする既定のエンドポイントです。
 
 2.  **[ロケール]** を `en-US` に設定し、**[接続]**
-    をクリックします。ボットをローカルに実行しているので、**[Microsoft App ID]** と** [Microsoft App Password]** を指定する必要はありません。これらのフィールドは、今のところ空白のままにしてかまいません。この情報は、演習5 で Bot Framework Portal にボットを登録する際に取得します。
+    をクリックします。ボットをローカルに実行しているので、**[Microsoft App ID]** と **[Microsoft App Password]** を指定する必要はありません。これらのフィールドは、今のところ空白のままにしてかまいません。この情報は、演習5 で Bot Framework Portal にボットを登録する際に取得します。
 
 3.  送信した各メッセージに対して、メッセージの先頭に "You said"、末尾に "which was \#\# characters" (\#\# はユーザーのメッセージの文字数) のテキストを付けて、おうむ返しにボットが応答するのを確認します。
 
