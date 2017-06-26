@@ -53,7 +53,7 @@ Bot Builder SDK for Node.js は、Node.js
     依存関係をインストールします。これは、アプリケーションをホストし、JavaScript
     に変更が加えられるたびに更新します。
 
-2.  npm install --save-dev nodemon
+2.  npm install -g nodemon
 
 ## タスク 2: ボットを作成する
 
@@ -91,49 +91,33 @@ Bot Builder SDK for Node.js は、Node.js
 
 >   以下のコードを app.js に追加します。
 
->   require('dotenv').config();
+``` javascript
+    require('dotenv').config();
+    const restify = require('restify');
+    const builder = require('botbuilder');
 
->   const restify = require('restify');
+    // Setup Restify Server
+    var server = restify.createServer();
+    server.listen(process.env.port \|\| process.env.PORT \|\| 3978, () =\> {
+        console.log('%s listening to %s', server.name, server.url);
+    });
 
->   const builder = require('botbuilder');
+    // Create chat connector for communicating with the Bot Framework Service
+    var connector = new builder.ChatConnector({
+        appId: process.env.MICROSOFT\_APP\_ID,
+        appPassword: process.env.MICROSOFT\_APP\_PASSWORD
+    });
 
->   // Setup Restify Server
+    // Listen for messages from users
+    server.post('/api/messages', connector.listen());
 
->   var server = restify.createServer();
-
->   server.listen(process.env.port \|\| process.env.PORT \|\| 3978, () =\> {
-
->   console.log('%s listening to %s', server.name, server.url);
-
->   });
-
->   // Create chat connector for communicating with the Bot Framework Service
-
->   var connector = new builder.ChatConnector({
-
->   appId: process.env.MICROSOFT\_APP\_ID,
-
->   appPassword: process.env.MICROSOFT\_APP\_PASSWORD
-
->   });
-
->   // Listen for messages from users
-
->   server.post('/api/messages', connector.listen());
-
->   // Receive messages from the user and respond by echoing each message back
->   (prefixed with 'You said:')
-
->   var bot = new builder.UniversalBot(connector, [
-
->   (session, args, next) =\> {
-
->   session.send('You said: ' + session.message.text + ' which was ' +
->   session.message.text.length + ' characters');
-
->   }
-
->   ]);
+    // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
+    var bot = new builder.UniversalBot(connector, [
+        (session, args, next) =\> {
+            session.send('You said: ' + session.message.text + ' which was ' + session.message.text.length + ' characters');
+        }
+    ]);
+```
 
 ## タスク 3: ボットをテストする
 
