@@ -41,7 +41,7 @@ Web.config で値を設定してください。
     の無料要求が可能な評価キーを含む次のようなページが表示されます。後で使用できるように、キーの
     1 つを保存しておきます。
 
->   ![](./media/6-1.png)
+   ![](./media/6-1.png)
 
 ## タスク 2: Text Analytics API クライアントの追加
 
@@ -52,175 +52,119 @@ Web.config で値を設定してください。
     から得られたソリューションを開きます。または、[exercise4-KnowledgeBase](./exercise4-KnowledgeBase)
     フォルダーにあるアプリを使用することもできます。
 
->   **注:**
->   あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
+> **注:** あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
 
--   Dialogs\\RootDialog.cs 内の **[LuisModel("{LUISAppID}", "{LUISKey}")]**
-    属性を自分が使用している LUIS アプリ ID とプログラマティック API
-    キーに置き換えます。
+    -   Dialogs\\RootDialog.cs 内の **[LuisModel("{LUISAppID}", "{LUISKey}")]** 属性を自分が使用している LUIS アプリ ID とプログラマティック API キーに置き換えます。
 
--   Web.config 内の **AzureSearchAccount**、**AzureSearchIndex**、および
-    **AzureSearchKey** を、自分の Search
-    アカウント、インデックス名、およびキーに置き換えます (演習 4
-    で説明しています)。
+    -   Web.config 内の **AzureSearchAccount**、**AzureSearchIndex**、および **AzureSearchKey** を、自分の Search アカウント、インデックス名、およびキーに置き換えます (演習 4 で説明しています)。
 
-1.  プロジェクトの [Services] フォルダー内の
+2.  プロジェクトの [Services] フォルダー内の
     [TextAnalyticsService.cs](../assets/exercise6-MoodDetection/TextAnalyticsService.cs)
     をコピーします。このファイルには、Text Analytics API を使用する 3
     つのクラスが含まれています。
 
->   **注:** クライアントは /sentiment エンドポイントにアクセスしていますが、Text
->   Analytics API は /keyPhrases エンドポイントと /languages
->   エンドポイントも提供します。また、複数のドキュメントを分析用に送信できます。
+> **注:** クライアントは /sentiment エンドポイントにアクセスしていますが、Text Analytics API は /keyPhrases エンドポイントと /languages エンドポイントも提供します。また、複数のドキュメントを分析用に送信できます。
 
-1.  プロジェクトのルート フォルダーにある Web.Config ファイルの **appSettings**
+3.  プロジェクトのルート フォルダーにある Web.Config ファイルの **appSettings**
     セクションでキー **TextAnalyticsApiKey**
     を追加することによって、このファイルを更新します。TextAnalyticsApiKey
     の値として、前のタスクで得られた **Text Analytics キー**を設定します。
 
->   \<add key="TextAnalyticsApiKey" value="" /\>
+    ``` xml
+    <add key="TextAnalyticsApiKey" value="" />
+    ```
 
-1.  次のボイラープレート コードを使用して、[Dialogs] フォルダーに新しいクラス
+4.  次のボイラープレート コードを使用して、[Dialogs] フォルダーに新しいクラス
     UserFeedbackRequestDialog.cs
     を作成します。このダイアログは、サービスとの対話を処理する役割を担います。
 
-2.  namespace HelpDeskBot.Dialogs
+    ```CSharp
+    namespace HelpDeskBot.Dialogs
+    {
+        using System;
+        using System.Collections.Generic;
+        using System.Threading.Tasks;
+        using Microsoft.Bot.Builder.Dialogs;
+        using Microsoft.Bot.Connector;
+        using Services;
 
-3.  {
+        [Serializable]
+        public class UserFeedbackRequestDialog : IDialog<object>
+        {
+            private readonly TextAnalyticsService textAnalyticsService = new TextAnalyticsService();
 
-4.  using System;
+            public async Task StartAsync(IDialogContext context)
+            {
 
-5.  using System.Collections.Generic;
+            }
+        }
+    }
+    ```
 
-6.  using System.Threading.Tasks;
-
-7.  using Microsoft.Bot.Builder.Dialogs;
-
-8.  using Microsoft.Bot.Connector;
-
-9.  using Services;
-
-10. [Serializable]
-
-11. public class UserFeedbackRequestDialog : IDialog\<object\>
-
-12. {
-
-13. private readonly TextAnalyticsService textAnalyticsService = new
-    TextAnalyticsService();
-
-14. public async Task StartAsync(IDialogContext context)
-
-15. {
-
-16. }
-
-17. }
-
->   }
-
-1.  StartAsync
+5.  StartAsync
     メソッドの実装を、そのボットに関するフィードバックの提供をユーザーに求めるものに置き換えます。
 
-2.  public async Task StartAsync(IDialogContext context)
 
-3.  {
+    ```CSharp
+    public async Task StartAsync(IDialogContext context)
+    {
+        PromptDialog.Text(context, this.MessageReceivedAsync, "Can you please give me feedback about this experience?");
+    }
+    ```
 
-4.  PromptDialog.Text(context, this.MessageReciveAsync, "Can you please give me
-    feedback about this experience?");
-
->   }
-
-1.  MessageReciveAsync
+6.  MessageReciveAsync
     という新しいメソッドを追加します。このメソッドは、ユーザーの応答を受け取って
     Text Analytics API に送ります。それにより、この API
     でユーザーのセンチメントを評価できるようにします。応答内容 (スコアが 0.5
     より高いか、低いか) に応じて異なるメッセージがユーザーに表示されます。
 
-2.  public async Task MessageReciveAsync(IDialogContext context,
-    IAwaitable\<string\> result)
+    ```CSharp
+    public async Task MessageReceivedAsync(IDialogContext context, IAwaitable<string> result)
+    {
+        var response = await result;
 
-3.  {
+        double score = await this.textAnalyticsService.Sentiment(response);
 
-4.  var response = await result;
+        if (score == double.NaN)
+        {
+            await context.PostAsync("Ooops! Something went wrong while analyzing your answer. An IT representative agent will get in touch with you to follow up soon.");
+        }
+        else
+        {
+            string cardText = string.Empty;
+            string cardImageUrl = string.Empty;
 
-5.  double score = await this.textAnalyticsService.Sentiment(response);
+            if (score < 0.5)
+            {
+                cardText = "I understand that you might be dissatisfied with my assistance. An IT representative will get in touch with you soon to help you.";
+                cardImageUrl = "https://raw.githubusercontent.com/GeekTrainer/help-desk-bot-lab/master/assets/botimages/head-sad-small.png";
+            }
+            else
+            {
+                cardText = "Thanks for sharing your experience.";
+                cardImageUrl = "https://raw.githubusercontent.com/GeekTrainer/help-desk-bot-lab/master/assets/botimages/head-smiling-small.png";
+            }
 
-6.  if (score == double.NaN)
+            var msg = context.MakeMessage();
+            msg.Attachments = new List<Attachment>
+            {
+                new HeroCard
+                {
+                    Text = cardText,
+                    Images = new List<CardImage>
+                    {
+                        new CardImage(cardImageUrl)
+                    }
+                }.ToAttachment()
+            };
+            await context.PostAsync(msg);
+        }
 
-7.  {
+        context.Done<object>(null);
+    }
+    ```
 
-8.  await context.PostAsync("Ooops! Something went wrong while analyzing your
-    answer. An IT representative agent will get in touch with you to follow up
-    soon.");
-
-9.  }
-
-10. else
-
-11. {
-
-12. string cardText = string.Empty;
-
-13. string cardImageUrl = string.Empty;
-
-14. if (score \< 0.5)
-
-15. {
-
-16. cardText = "I understand that you might be dissatisfied with my assistance.
-    An IT representative will get in touch with you soon to help you.";
-
-17. cardImageUrl =
-    "https://raw.githubusercontent.com/GeekTrainer/help-desk-bot-lab/develop/assets/botimages/head-sad-small.png";
-
-18. }
-
-19. else
-
-20. {
-
-21. cardText = "Thanks for sharing your experience.";
-
-22. cardImageUrl =
-    "https://raw.githubusercontent.com/GeekTrainer/help-desk-bot-lab/develop/assets/botimages/head-smiling-small.png";
-
-23. }
-
-24. var msg = context.MakeMessage();
-
-25. msg.Attachments = new List\<Attachment\>
-
-26. {
-
-27. new HeroCard
-
-28. {
-
-29. Text = cardText,
-
-30. Images = new List\<CardImage\>
-
-31. {
-
-32. new CardImage(cardImageUrl)
-
-33. }
-
-34. }.ToAttachment()
-
-35. };
-
-36. await context.PostAsync(msg);
-
-37. }
-
-38. context.Done\<object\>(null);
-
->   }
-
->   **注:**
->   センチメント分析では、テキストを文に分割することをお勧めします。一般に、この分割によって、センチメント予測の精度が向上します。
+> **注:** センチメント分析では、テキストを文に分割することをお勧めします。一般に、この分割によって、センチメント予測の精度が向上します。
 
 ## タスク 3: フィードバックを要求してユーザーのセンチメントを分析できるようにするためのボットの変更
 
@@ -233,77 +177,57 @@ Web.config で値を設定してください。
     else 内にある context.Done\<object\>(null);
     を移動します。その結果、次のようなコードになります。
 
-2.  private async Task IssueConfirmedMessageReceivedAsync(IDialogContext
-    context, IAwaitable\<bool\> argument)
+    ``` csharp
+    private async Task IssueConfirmedMessageReceivedAsync(IDialogContext context, IAwaitable<bool> argument)
+    {
+        var confirmed = await argument;
 
-3.  {
+        if (confirmed)
+        {
+            ...
 
-4.  var confirmed = await argument;
+            if (ticketId != -1)
+            {
+                ...
+            }
+            else
+            {
+                await context.PostAsync("Ooops! Something went wrong while I was saving your ticket. Please try again later.");
+            }
 
-5.  if (confirmed)
-
-6.  {
-
-7.  ...
-
-8.  if (ticketId != -1)
-
-9.  {
-
-10. ...
-
-11. }
-
-12. else
-
-13. {
-
-14. await context.PostAsync("Ooops! Something went wrong while I was saving your
-    ticket. Please try again later.");
-
-15. }
-
-16. context.Call(new UserFeedbackRequestDialog(), this.ResumeAndEndDialogAsync);
-
-17. }
-
-18. else
-
-19. {
-
-20. await context.PostAsync("Ok. The ticket was not created. You can start again
-    if you want.");
-
-21. context.Done\<object\>(null);
-
-22. }
-
->   }
+            context.Call(new UserFeedbackRequestDialog(), this.ResumeAndEndDialogAsync);
+        }
+        else
+        {
+            await context.PostAsync("Ok. The ticket was not created. You can start again if you want.");
+            context.Done<object>(null);
+        }
+    }
+    ```
 
 ## タスク 4: エミュレーターからのボットのテスト
 
 1.  [実行]
     ボタンをクリックしてアプリを実行し、エミュレーターを開きます。ボットの URL
-    (http://localhost:3979/api/messages) をいつもどおり入力します。
+    (http://localhost:3979/api/messages ) をいつもどおり入力します。
 
 2.  「I need to reset my
     password.」と入力し、次に重大度を選択します。チケットの送信を確認し、フィードバックについての新たな要求をチェックします。
 
->   ![](./media/6-2.png)
+   ![](./media/6-2.png)
 
-1.  「It was very useful and
+3.  「It was very useful and
     quick.」と入力します。肯定的なフィードバックだったことを意味する次のような応答が表示されます。
 
->   ![](./media/6-3.png)
+   ![](./media/6-3.png)
 
-1.  チケットの送信をもう一度行い、ボットからフィードバックを求められたら、「It
+4.  チケットの送信をもう一度行い、ボットからフィードバックを求められたら、「It
     was useless and time
     wasting.」と入力します。否定的なフィードバックだったことを意味する次のような応答が表示されます。
 
->   ![](./media/6-4.png)
-
->   この後の演習 (7) では、会話を人間の担当者に引き渡し
->   (ハンドオフ)、担当者を通じてユーザーを支援する方法について学習します。
+   ![](./media/6-4.png)
+   
+   この後の演習 (7) では、会話を人間の担当者に引き渡し (ハンドオフ)、担当者を通じてユーザーを支援する方法について学習します。
 
 ## その他の課題
 
