@@ -81,11 +81,9 @@ npm WARN helpbot@1.0.0 No repository field.
 -   Restify ルートでこのコネクターを使用して、メッセージをリッスンする。
 -   UniversalBot クラスを使用してコードを追加して、ユーザーに返信する。
 
-    Bot Builder SDK for Node.js は、Bot Framework Connector を使用してボットでのメッセージの送受信を構成するための UniversalBot クラスおよび ChatConnector クラスを提供します。UniversalBot
-クラスはボットの頭脳を形成し、ボットとユーザーのすべての会話の管理を担います。ChatConnector はボットを Bot Framework Connector サービスに接続します。Bot Framework Connector はさらに、ボットがチャネルに送信するメッセージを正規化し、プラットフォームを指定せずにボットを開発できるようにします。これにより開発者は、ユーザーが使用するかもしれない最終的なチャネルよりも、ビジネス
-ロジックに注意を集中できます。
+Bot Builder SDK for Node.js は、Bot Framework Connector を使用してボットでのメッセージの送受信を構成するための UniversalBot クラスおよび ChatConnector クラスを提供します。UniversalBot クラスはボットの頭脳を形成し、ボットとユーザーのすべての会話の管理を担います。ChatConnector はボットを Bot Framework Connector サービスに接続します。Bot Framework Connector はさらに、ボットがチャネルに送信するメッセージを正規化し、プラットフォームを指定せずにボットを開発できるようにします。これにより開発者は、ユーザーが使用するかもしれない最終的なチャネルよりも、ビジネス ロジックに注意を集中できます。
 
-    以下のコードを `app.js` に追加します。
+以下のコードを app.js に追加します。
 
 ``` javascript
     require('dotenv').config();
@@ -94,14 +92,14 @@ npm WARN helpbot@1.0.0 No repository field.
 
     // Setup Restify Server
     var server = restify.createServer();
-    server.listen(process.env.port || process.env.PORT || 3978, () => {
+    server.listen(process.env.port \|\| process.env.PORT \|\| 3978, () =\> {
         console.log('%s listening to %s', server.name, server.url);
     });
 
     // Create chat connector for communicating with the Bot Framework Service
     var connector = new builder.ChatConnector({
-        appId: process.env.MICROSOFT_APP_ID,
-        appPassword: process.env.MICROSOFT_APP_PASSWORD
+        appId: process.env.MICROSOFT\_APP\_ID,
+        appPassword: process.env.MICROSOFT\_APP\_PASSWORD
     });
 
     // Listen for messages from users
@@ -109,15 +107,15 @@ npm WARN helpbot@1.0.0 No repository field.
 
     // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
     var bot = new builder.UniversalBot(connector, [
-        (session, args, next) => {
+        (session, args, next) =\> {
             session.send('You said: ' + session.message.text + ' which was ' + session.message.text.length + ' characters');
         }
     ]);
 ```
 
-##タスク 3: ボットをテストする
-次に、Bot Framework Emulator を使用してボットをテストし、動作の様子を見てみましょう。このエミュレーターは、localhost 上のボット、またはトンネルを通じてリモートで実行しているボットをテストおよびデバッグできる、デスクトップアプリケーションです。エミュレーターは、Web チャットの UI に表示されるとおりにメッセージを表示し、JSON
-要求をログに記録し、ユーザーがボットとメッセージをやり取りするとおりに応答します。
+## タスク 3: ボットをテストする
+
+次に、Bot Framework Emulator を使用してボットをテストし、動作の様子を見てみましょう。このエミュレーターは、localhost 上のボット、またはトンネルを通じてリモートで実行しているボットをテストおよびデバッグできる、デスクトップ アプリケーションです。エミュレーターは、Web チャットの UI に表示されるとおりにメッセージを表示し、JSON 要求をログに記録し、ユーザーがボットとメッセージをやり取りするとおりに応答します。
 
 1.  以下のコマンドを使用して、コンソール
     ウィンドウでボットを起動します。この時点で、ボットはローカルに実行されています。
@@ -126,7 +124,7 @@ npm WARN helpbot@1.0.0 No repository field.
     nodemon app.js
 ```
 
-**注:** Windows ファイアウォールの警告が表示される場合は、**[アクセスを許可]**をクリックします。また `EADDRINUSE` エラーが発生する場合は、既定のポートを 3979 または同様のポートに変更します。
+> **注:** Windows ファイアウォールの警告が表示される場合は、**[アクセスを許可]**をクリックします。また `EADDRINUSE` エラーが発生する場合は、既定のポートを 3979 または同様のポートに変更します。
 
 2.  次に、Bot Framework Emulator を起動し、ボットに接続します。アドレス バーに
     `http://localhost:3978/api/messages`
