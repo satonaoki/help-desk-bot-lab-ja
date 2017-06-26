@@ -1,6 +1,6 @@
-**演習 1: Bot Builder SDK for Node.js による初めての "おうむ返し" ボットの作成**
+#演習 1: Bot Builder SDK for Node.js による初めての "おうむ返し" ボットの作成**
 
-**概要**
+##概要
 
 この演習では、Bot Builder SDK for Node.js を使用してボットを構築し、それを Bot
 Framework Emulator でテストする方法を示します。
@@ -8,19 +8,19 @@ Framework Emulator でテストする方法を示します。
 [このフォルダー](./exercise1-EchoBot)の中には、ソリューションと、この演習のステップで作成するコードが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。ソリューションを使用する前に必ず、npm
 install を実行してください。
 
-**前提条件**
+##前提条件
 
 この演習を完了するには、以下のソフトウェアが必要です。
 
--   [最新の Node.js と npm](https://nodejs.org/en/download)
+*   [最新の Node.js と npm](https://nodejs.org/en/download)
 
--   [Visual Studio Code](https://code.visualstudio.com/download) (推奨) や
+*   [Visual Studio Code](https://code.visualstudio.com/download) (推奨) や
     Visual Studio 2017 Community 以上などのコード エディター
 
--   [Bot Framework Emulator](https://emulator.botframework.com/)
+*   [Bot Framework Emulator](https://emulator.botframework.com/)
     (ボットのテストに使用するクライアント)
 
-**タスク 1: アプリを初期化し Bot Builder SDK をインストールする**
+##タスク 1: アプリを初期化し Bot Builder SDK をインストールする
 
 Bot Builder SDK for Node.js は、Node.js
 開発者にとってなじみのある方法でボットを記述する手段を提供する、強力で使いやすいフレームワークです。Express
@@ -64,7 +64,7 @@ npm WARN helpbot@1.0.0 No repository field.
     npm install -g nodemon
 ```
 
-**タスク 2: ボットを作成する**
+##タスク 2: ボットを作成する
 
 1.  プロジェクトのルート ディレクトリ(に、以下の内容を含む .envという名前のファイルを作成します。このファイルを使用して、ボットを構成します。
 
@@ -115,7 +115,7 @@ npm WARN helpbot@1.0.0 No repository field.
     ]);
 ```
 
-**タスク 3: ボットをテストする**
+##タスク 3: ボットをテストする
 次に、Bot Framework Emulator を使用してボットをテストし、動作の様子を見てみましょう。このエミュレーターは、localhost 上のボット、またはトンネルを通じてリモートで実行しているボットをテストおよびデバッグできる、デスクトップアプリケーションです。エミュレーターは、Web チャットの UI に表示されるとおりにメッセージを表示し、JSON
 要求をログに記録し、ユーザーがボットとメッセージをやり取りするとおりに応答します。
 
@@ -126,14 +126,14 @@ npm WARN helpbot@1.0.0 No repository field.
     nodemon app.js
 ```
 
-**注:** Windows ファイアウォールの警告が表示される場合は、[アクセスを許可]をクリックします。また EADDRINUSE エラーが発生する場合は、既定のポートを 3979 または同様のポートに変更します。
+**注:** Windows ファイアウォールの警告が表示される場合は、**[アクセスを許可]**をクリックします。また `EADDRINUSE` エラーが発生する場合は、既定のポートを 3979 または同様のポートに変更します。
 
 2.  次に、Bot Framework Emulator を起動し、ボットに接続します。アドレス バーに
     `http://localhost:3978/api/messages`
     と入力します。これは、ボットがローカルにホストされたときにリッスンする既定のエンドポイントです。
 
-2.  [ロケール] を `en-US` に設定し、[接続]
-    をクリックします。ボットをローカルに実行しているので、[Microsoft App ID] と [Microsoft App Password] を指定する必要はありません。これらのフィールドは、今のところ空白のままにしてかまいません。この情報は、演習5 で Bot Framework Portal にボットを登録する際に取得します。
+2.  **[ロケール]** を `en-US` に設定し、**[接続]**
+    をクリックします。ボットをローカルに実行しているので、**[Microsoft App ID]** と** [Microsoft App Password]** を指定する必要はありません。これらのフィールドは、今のところ空白のままにしてかまいません。この情報は、演習5 で Bot Framework Portal にボットを登録する際に取得します。
 
 3.  送信した各メッセージに対して、メッセージの先頭に "You said"、末尾に "which was \#\# characters" (\#\# はユーザーのメッセージの文字数) のテキストを付けて、おうむ返しにボットが応答するのを確認します。
 
