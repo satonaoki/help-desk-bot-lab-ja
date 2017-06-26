@@ -21,19 +21,17 @@
 このタスクでは、ボット
 コードを変更して、いくつかアクションを実行する前に、ユーザーに一連の質問をします。
 
-1.  前の演習から得られたソリューションを開きます。または、[exercise1-EchoBot](./exercise1-EchoBot)
-    フォルダーからソリューションを開くこともできます。
+1.  前の演習から得られたソリューションを開きます。または、[exercise1-EchoBot](./exercise1-EchoBot) フォルダーからソリューションを開くこともできます。
 
 2.  **Dialogs\\RootDialog.cs** ファイルを開きます。
 
-3.  以下の変数を、RootDialog
-    クラスの先頭に追加します。この変数は、のちほどユーザーの回答を保存するために使用します。
-    
+3.  以下の変数を、RootDialog クラスの先頭に追加します。この変数は、のちほどユーザーの回答を保存するために使用します。
+
     ```csharp
     private string category;
     private string severity;
     private string description;
-    ```
+    ```
 
 4.  MessageReceivedAsync メソッドを次のコードで置き換えます。
 
