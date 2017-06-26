@@ -31,8 +31,8 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
 1.  [Bot Framework ポータル](https://dev.botframework.com/) にサインインします。
 
 2.  [My bots] ボタンをクリックし、編集するボットをクリックします。
-
->   **注:** この演習では、Bot Framework ポータルにボットが既に登録されていることを前提としています。登録していない場合は、[演習 5](./exercise5-Deployment.md) の説明を参照してください。
+    
+    > **注:** この演習では、Bot Framework ポータルにボットが既に登録されていることを前提としています。登録していない場合は、[演習 5](./exercise5-Deployment.md) の説明を参照してください。
 
 3.  Web チャット チャネルの [編集] ( ![](media/aa9a2da6246391b3e1b7334f24ede1c9.png) ) リンクをクリックします。開いたウィンドウで [Add new site] をクリックします。サイト名 (例: ヘルプ デスク チケット検索) を入力します。
 
@@ -48,17 +48,17 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
 
 1.  前の演習から得られたアプリを開きます。または、[exercise7-HandOffToHuman](./exercise7-HandOffToHuman) フォルダーにあるアプリを使用することもできます。
 
->   **注:** あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
->   **{LuisModelEndpointUrl}** プレースホルダーを、使用しているモデル URL に置き換えます
->   **{textAnalyticsKey}** を、自分が使用している Text Analytics キーに置き換えます (演習 6 で説明しています)。
->   **{searchIndexName}** と **{searchIndexKey}** を、自分の Search インデックス名とキーに置き換えます (演習 4 で説明しています)。
->   **MICROSOFT\_APP\_ID** と **MICROSOFT\_APP\_PASSWORD** を、Bot Framework ポータルからのボットの値に置き換えます
+    > **注:** あらかじめ提供しているソリューションを使用する場合は、必ず以下の値を置き換えてください。
+    >   - **{LuisModelEndpointUrl}** プレースホルダーを、使用しているモデル URL に置き換えます
+    >   - **{textAnalyticsKey}** を、自分が使用している Text Analytics キーに置き換えます (演習 6 で説明しています)。
+    >   - **{searchIndexName}** と **{searchIndexKey}** を、自分の Search インデックス名とキーに置き換えます (演習 4 で説明しています)。
+    >   - **MICROSOFT\_APP\_ID** と **MICROSOFT\_APP\_PASSWORD** を、Bot Framework ポータルからのボットの値に置き換えます
 
 2.  ソリューションのルート フォルダーに web-ui という名前の新規フォルダーを作成します。そのフォルダーに、[assets](../assets) フォルダーの[default.htm](../assets/exercise8-BackChannel/default.htm) ファイルをコピーします。
 
 3.  [botchat.js script element](../assets/exercise8-BackChannel/default.htm#L52) の下に、以下のコードを含む新しいスクリプト要素を追加します。このコードでは、Web Channel Secret で **DirectLine** オブジェクトを作成し、WebChat コントロールをそのページに登録します。{DIRECTLINE\_SECRET} プレースホルダーを、これまでに取得した秘密鍵で置き換え、{BOT\_ID} プレースホルダーをボット処理 ID (例: *help-desk-bot*) で置き換えます。
 
-    ``` html
+    ```html
     <script>
         var botConnection = new BotChat.DirectLine({
             secret: '{DIRECTLINE_SECRET}'
@@ -74,13 +74,13 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
     </script>
     ```
 
->   **注:** [オープンソースの Web Chat コントロール](https://github.com/Microsoft/BotFramework-WebChat)は、[Direct Line API](https://docs.botframework.com/en-us/restapi/directline3/#navtitle) を使用してボットと通信を行います。Direct Line API を使用することで、`activities` をクライアントとボットの間で送受信できます。最も一般的な型のアクティビティは `message` ですが、その他の型もあります。たとえば、`typing` 型のアクティビティは、ユーザーが入力していること、またはボットが応答のコンパイル作業中であることを示します。
+    > **注:** [オープンソースの Web Chat コントロール](https://github.com/Microsoft/BotFramework-WebChat)は、[Direct Line API](https://docs.botframework.com/en-us/restapi/directline3/#navtitle) を使用してボットと通信を行います。Direct Line API を使用することで、`activities` をクライアントとボットの間で送受信できます。最も一般的な型のアクティビティは `message` ですが、その他の型もあります。たとえば、`typing` 型のアクティビティは、ユーザーが入力していること、またはボットが応答のコンパイル作業中であることを示します。
 
 4.  同じスクリプト要素で、`event` アクティビティを受信するためのボット アクティビティ リスナーを追加し、記事リストを表示します。
 
->   **注:** Web Chat コントロールは、`type="event"` のアクティビティを自動的に無視します。これにより、ページはボットと、ボットはページと直接通信を行うことができます。
+    > **注:** Web Chat コントロールは、`type="event"` のアクティビティを自動的に無視します。これにより、ページはボットと、ボットはページと直接通信を行うことができます。
 
-    ``` javascript
+    ```javascript
     botConnection.activity$
         .filter(function (activity) {
             return activity.type === 'event' && activity.name === 'searchResults';
@@ -105,7 +105,7 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
     }
     ```
 
->   **注:** わかりやすくするため、ユーザーとの会話を含む Web Chat コントロールと検索結果は同じページに表示します。ただし、この 2 つはそれぞれ別々に扱うことが理想的です。エージェントが監視と推奨記事の送信ができるように、スーパーバイザー Web サイトには進行中の会話のリストを表示する必要があります。
+    > **注:** わかりやすくするため、ユーザーとの会話を含む Web Chat コントロールと検索結果は同じページに表示します。ただし、この 2 つはそれぞれ別々に扱うことが理想的です。エージェントが監視と推奨記事の送信ができるように、スーパーバイザー Web サイトには進行中の会話のリストを表示する必要があります。
 
 ## タスク 3: ボットを更新して `event` アクティビティを Web アプリに送信
 
@@ -113,13 +113,13 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
 
 1.  **app.js** を開きます。次の `require` ステートメントをファイルの冒頭に追加します。
 
-    ``` javascript
+    ```javascript
     const path = require('path');
     ```
 
 2.  `var bot = new builder.UniversalBot(...);` の行の上に、次のコードを追加します。このコードでは、*Restify* で `web-ui/default.htm` ファイルを既定の Web ページとして使用するように指定します。
 
-    ``` javascript
+    ```javascript
     server.get(/\/?.*/, restify.serveStatic({
         directory: path.join(__dirname, 'web-ui'),
         default: 'default.htm'
@@ -128,7 +128,7 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
 
 3.  **SubmitTicket** ダイアログのウォーターフォールの最初のステップで、`session.dialogData.description` でメッセージを保存した場所のすぐ下に、次のコードを追加します。このコードでは、**サポート技術情報**を検索して `event` アクティビティと検索結果を Web ページに送信します。
 
-    ``` javascript
+    ```javascript
     azureSearchQuery(`search=${encodeURIComponent(session.message.text)}`, (err, result) => {
         if (err || !result.value) return;
         var event = createEvent('searchResults', result.value, session.message.address);
@@ -136,8 +136,8 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
     });
  
 4.  `createEvent` 関数を追加します。この関数は、`event` 型のバックチャネル メッセージを作成し、値としてクエリを実行します。
-
-    ``` javascript
+    
+    ```javascript
     const createEvent = (eventName, value, address) => {
         var msg = new builder.Message().address(address);
         msg.data.type = 'event';
@@ -155,7 +155,7 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
 
     ![](./media/8-5.png)
 
->   **注:** ngrok を使用することで、ローカル コンピューター上で実行している Web サーバーをインターネットに公開できます。ngrok で、Web サーバーがリッスンしているポートを指定します。開始すると、ターミナルの UI と、トンネルのパブリック URL およびトンネルを通じて行われる接続についてのその他のステータスとメトリック情報が表示されます。
+    > **注:** ngrok を使用することで、ローカル コンピューター上で実行している Web サーバーをインターネットに公開できます。ngrok で、Web サーバーがリッスンしているポートを指定します。開始すると、ターミナルの UI と、トンネルのパブリック URL およびトンネルを通じて行われる接続についてのその他のステータスとメトリック情報が表示されます。
 
 3.  [Bot Framework ポータル](https://dev.botframework.com/) にサインインします。
 
@@ -226,7 +226,7 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
     });
     ```
 
->   **注:** [`on` イベント リスナー](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.universalbot.html#on) の詳細については、Bot Framework のドキュメントを参照してください。
+    > **注:** [`on` イベント リスナー](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.universalbot.html#on) の詳細については、Bot Framework のドキュメントを参照してください。
 
 ## タスク 7: アプリからボットへのバックチャネル メッセージのテスト
 
@@ -238,6 +238,6 @@ Bot Framework のドキュメントでは、[バックチャネルの仕組み](
 
     ![](./media/8-7.png)
 
-## Further Challenges
+## その他の課題
 
-* Integrate bot to human handoff with backchannel to allow an agent to see all current users talking with the bot, and then allow the agent to connect to a specific user.
+* エージェントが、ボットと話している現在のすべてのユーザーを確認できるようにするために、ボットを、バックチャネルを備えたヒューマン ハンドオフに統合し、それから、エージェントが特定のユーザーと接続できるようにします。
