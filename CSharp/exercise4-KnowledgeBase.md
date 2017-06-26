@@ -194,8 +194,7 @@ Cosmos DB
     とプログラマティック API キーに置き換えてください。
 
 2.  前のタスクで作成した Azure Search サービスを使用するには、appSettings
-    セクションの Web.config で以下のキーを追加し、AzureSearchAccountName と
-    AzureSearchKey の値を指定する必要があります。
+    セクションの Web.config で以下のキーを追加します。AzureSearchAccountName と AzureSearchKey は タスク 2 で作成した値を指定する必要があります。
 
 3.  ...
 
