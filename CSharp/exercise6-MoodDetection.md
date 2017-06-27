@@ -79,7 +79,7 @@ Web.config で値を設定してください。
     <add key="TextAnalyticsApiKey" value="" />
     ```
 
-4.  次のボイラープレート コードを使用して、[Dialogs] フォルダーに新しいクラス
+4.  次のコード例を使用して、[Dialogs] フォルダーに新しいクラス
     UserFeedbackRequestDialog.cs
     を作成します。このダイアログは、サービスとの対話を処理する役割を担います。
 
