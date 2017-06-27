@@ -37,11 +37,11 @@ Intelligent Service) を使用します。
 
 ## 前提条件
 
--   前の演習を完了していること、あるいは
+-   前の演習を完了していること、あるいはこの
     [C\#](./CSharp/exercise2-TicketSubmissionDialog)
     または
     [Node.js](./Node/exercise2-TicketSubmissionDialog)
-    用の開始点を使用できること
+    を開始点として使用する。
 
 -   [LUIS ポータル](https://www.luis.ai/)のアカウント
 

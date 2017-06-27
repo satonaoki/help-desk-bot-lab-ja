@@ -25,11 +25,11 @@
 
 ## 前提条件
 
--   前の演習を完了していること、あるいは
+-   前の演習を完了していること、あるいはこの
     [C\#](./CSharp/exercise1-EchoBot)
     または
     [Node.js](./Node/exercise1-EchoBot)
-    用の開始点を使用できること。
+    を開始点として使用する。
 
 -   [Visual Studio Code](https://code.visualstudio.com/download) (推奨) や
     Visual Studio 2017 Community 以上などのコード エディター

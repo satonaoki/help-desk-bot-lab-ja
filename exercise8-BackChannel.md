@@ -50,12 +50,12 @@ API を使用して実装します。この API
 
 ## 前提条件
 
--   前の演習を完了していること、あるいは
+-   前の演習を完了していること、あるいはこの
     [C\#](./CSharp/exercise7-HandOffToHuman)
     または
     [Node.js](./Node/exercise7-HandOffToHuman)
-    用の開始点を使用できることが必要です。
-
+    を開始点として使用する。
+    
 -   [LUIS ポータル](https://www.luis.ai/)のアカウント
 
 -   [Azure](https://azureinfo.microsoft.com/us-freetrial.html?cr_cc=200744395&wt.mc_id=usdx_evan_events_reg_dev_0_iottour_0_0)
