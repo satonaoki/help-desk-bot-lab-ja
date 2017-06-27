@@ -2,11 +2,12 @@
 
 ## 概要
 
-この演習では、ボットに会話機能を追加して、ヘルプ デスク
-チケットの作成をユーザーに案内する方法を学習します。
+この演習では、ボットに会話機能を追加して、ヘルプ デスクチケットの作成をユーザーに案内する方法を学習します。
 
 [こちらのフォルダー](./exercise2-TicketSubmissionDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。ソリューションを使用するには、まず必ず
-npm install を実行してください。
+`npm install` を実行してください。
+
+**前の演習** [演習1 Bot Builder SDK による初めての "おうむ返し" ボットの作成](./exercise1-EchoBot.md)
 
 ## 前提条件
 
@@ -264,3 +265,5 @@ npm install を実行してください。
 * conversationUpdate イベントを使用してボットにウェルカムメッセージを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-handle-conversation-events#greet-a-user-on-conversation-join)を参照してください。
 
 * ボットがチケット API を呼び出す間、ボットにタイピングインジケーターを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-send-typing-indicator)を参照してください。
+
+**次の演習** [演習3 言語理解の機能 (LUIS) によるボットのスマート化](./exercise3-LuisDialog.md)

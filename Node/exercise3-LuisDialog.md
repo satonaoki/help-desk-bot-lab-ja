@@ -10,6 +10,8 @@ Cognitive Services の一部である LUIS (Language Understanding Intelligent S
 
 [こちらのフォルダー](./exercise3-LuisDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。これを使用するには、まず `npm install` を実行して、`.env` ファイルに LUIS モデルの値を入力しておく必要があることを忘れないでください。
 
+**前の演習** [演習２ボットによるヘルプ デスク チケットの送信](./exercise2-TicketSubmissionDialog.md)
+
 ## 前提条件
 
 この演習を完了するには、以下のソフトウェアが必要です。
@@ -295,3 +297,5 @@ LUIS アプリの出力が、HTTP エンドポイント (自然言語の理解�
 
 * [Manage conversation flow](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-dialog-manage-conversation)
 *  [Managing conversations and dialogs in Microsoft Bot Framework using Node.JS](http://blog.geektrainer.com/2017/02/21/Managing-conversations-and-dialogs-in-Microsoft-Bot-Framework-using-Node-JS/)
+
+**次の演習** [演習4 Azure Search と Cosmos DB によるヘルプ デスク KB の実装](./exercise4-KnowledgeBase.md)

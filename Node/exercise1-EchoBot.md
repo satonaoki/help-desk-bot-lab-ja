@@ -123,3 +123,5 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 4.  送信した各メッセージに対して、メッセージの先頭に "You said"、末尾に "which was \#\# characters" (\#\# はユーザーのメッセージの文字数) のテキストを付けて、おうむ返しにボットが応答するのを確認します。
 
    ![](./media/1-1.png)
+
+**次の演習** [演習２ボットによるヘルプ デスク チケットの送信](./exercise2-TicketSubmissionDialog.md)
