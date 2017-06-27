@@ -100,31 +100,30 @@
 
 ## タスク 3: ExploreKnowledgeBase インテントが含まれるように LUIS モデルを更新する
 
-このタスクでは、ナレッジ ベースを検索するために LUISに新しいインテントを追加します。
+このタスクでは、ナレッジ ベースを検索するために LUIS に新しいインテントを追加します。
 
 1.  [LUIS ポータル](https://www.luis.ai/) にサインインします。演習 3 で作成したアプリを編集します。
 
-2.  左側のメニューで [Intents] をクリックし、次に [Add Intent] ボタンをクリックします。インテント名として「ExploreKnowledgeBase」と入力してから、以下の発話を追加します。
+2.  左側のメニューで **Intents** をクリックし、次に **Add Intent** ボタンをクリックします。インテント名として _ExploreKnowledgeBase_ と入力してから、以下の発話を追加します。
 
-* *「explore knowledge base」*
-* *「explore hardware articles」*
-* *「find me articles about hardware」*
+* _explore knowledge base_
+* _explore hardware articles_
+* _find me articles about hardware_
 
-   ![](./media/4-12.png)
+   ![exercise4-new-intent](./media/4-12.png)
 
-3.  [Save] をクリックします。
+3.  **Save** をクリックします。
 
-4.  左側にある [Publish App] リンクをクリックします。[Train] ボタンをクリックし、完了したら [Publish] ボタンをクリックします。
+4.  左側にある **Publish App** リンクをクリックします。**Train** ボタンをクリックし、完了したら **Publish** ボタンをクリックします。
 
 ## タスク 4: Azure Search API を呼び出せるようにボットを更新する 
 
-このタスクでは、先ほど作成したインテントに対応し、Azure Search サービスを呼び出すためのダイアログを追加します。
+このタスクでは、先ほど作成したインテントに対応し、*Azure Search* サービスを呼び出すためのダイアログを追加します。
 
 1.  前の演習から得られたアプリを開きます。または、[exercise3-LuisDialog](./exercise3-LuisDialog)
-    フォルダーのアプリを使用することもできます。その場合は、.env ファイルを編集し、**LUIS\_MODEL\_URL** キーをご使用のモデル URL に置き換えます。
+    フォルダーのアプリを使用することもできます。その場合は、`.env` ファイルを編集し、**LUIS\_MODEL\_URL** キーをご使用のモデル URL に置き換えます。
 
-2.  **azureSearchApiClient.js** という名前の新しい空のファイルを追加し、REST API
-を介して Azure Search からデータを取得する以下のコードを追加します。
+2.  **azureSearchApiClient.js** という名前の新しい空のファイルを追加し、REST API を介して Azure Search からデータを取得する以下のコードを追加します。
 
 ```javascript
     const restify = require('restify');
@@ -145,8 +144,8 @@
     };
 ```
 
-3.  以下の行を追加し、.env ファイルを更新します。AZURE\_SEARCH\_ACCOUNT の値に
- Azure Search のアカウント名 (例: help-desk-bot-search) を指定し、AZURE\_SEARCH\_KEY にキー値を指定します。
+3.  以下の行を追加し、`.env` ファイルを更新します。*AZURE\_SEARCH\_ACCOUNT* の値に
+ Azure Search のアカウント名 (例: _help-desk-bot-search_ ) を指定し、*AZURE\_SEARCH\_KEY* にキー値を指定します。
 
 ```javascript
     AZURE_SEARCH_ACCOUNT=
@@ -165,8 +164,7 @@
         searchKey: process.env.AZURE_SEARCH_KEY
     });
 ```
-5.  SubmitTicket ダイアログの直後に、カテゴリの記事を取得するための
- ExploreKnowledgeBase ダイアログ ハンドラーを追加します。
+5.  *SubmitTicket* ダイアログの直後に、カテゴリの記事を取得するための *ExploreKnowledgeBase* ダイアログ ハンドラーを追加します。
 
 ```javascript
     bot.dialog('ExploreKnowledgeBase', [
@@ -196,19 +194,17 @@
 
 ## タスク 5: この時点でボットをテストする
 
-1.  コンソール (nodemon app.js) からアプリを実行し、エミュレーターを開きます。ボットの URL (http://localhost:3978/api/messages ) をいつもどおり入力します。
+1.  コンソール (`nodemon app.js`) からアプリを実行し、エミュレーターを開きます。ボットの URL (`http://localhost:3978/api/messages` ) をいつもどおり入力します。
 
-2.  「explore hardware」と入力します。そのカテゴリに属する記事がボットにより一覧表示されることを確認します。他のカテゴリ値 (例: ネットワーキング、ソフトウェア) で試してもかまいません。
+2.  *explore hardware* と入力します。そのカテゴリに属する記事がボットにより一覧表示されることを確認します。他の *category* 値 (例: networking、software ) で試してもかまいません。
 
-   ![](./media/4-13.png)
+   ![exercise4-testbit-explorehardware](./media/4-13.png)
 
 ## タスク 6: カテゴリと記事を表示できるようにボットを更新する
 
 このタスクでは、ナレッジベースをカテゴリで検索できるようにボットのコードを更新します。
 
-1.  ユーザーが入力したテキストを使用して単純な検索を行うための以下のダイアログを
-**app.js** に追加します。この場合、ダイアログは、ユーザーの入力テキスト内で「search
- about」というフレーズを検出する正規表現によって起動されます。matches メソッドが正規表現やレコグナイザーの名前を取ることができるのを確認します。
+1.  ユーザーが入力したテキストを使用して単純な検索を行うための以下のダイアログを **app.js** に追加します。この場合、ダイアログは、ユーザーの入力テキスト内で _'search about'_ というフレーズを検出する正規表現によって起動されます。`matches` メソッドが正規表現やレコグナイザーの名前を取ることができるのを確認します。
 
 ```javascript
     bot.dialog('SearchKB', [
@@ -227,9 +223,10 @@
         matches: /^search about (.*)/i
     });
 ```
- **注:** Azure Search では、search=... クエリは、インデックス内のすべての検索可能フィールドの用語を 1 つ以上検索し、Google や Bing などの検索エンジンと同様に機能します。filter=... クエリは、インデックス内のすべてのフィルター可能フィールドでブール式を評価します。検索クエリとは異なり、フィルター クエリは、フィールドの正確なコンテンツのマッチングを行います。つまり、文字列フィールドの大文字と小文字が区別されます。
 
-2.  カテゴリを取得し、それらを一覧表示できるように **ExploreKnowledgeBase** ダイアログを置き換えます。facet=category クエリを使用し、インデックスのクエリを行って、これが行われることを確認します。これは、すべての記事に適用できるすべての「カテゴリフィルター」をインデックスから取得します (この場合は、ソフトウェア、ハードウェア、ネットワーキングなど)。また、Azure Search は、各ファセットの記事の数を返します。
+> **注:** Azure Search では、`search=...` クエリは、インデックス内のすべての検索可能フィールドの用語を 1 つ以上検索し、Google や Bing などの検索エンジンと同様に機能します。`filter=...` クエリは、インデックス内のすべてのフィルター可能フィールドでブール式を評価します。検索クエリとは異なり、フィルター クエリは、フィールドの正確なコンテンツのマッチングを行います。つまり、文字列フィールドの大文字と小文字が区別されます。
+
+2.  カテゴリを取得し、それらを一覧表示できるように **ExploreKnowledgeBase** ダイアログを置き換えます。`facet=category` クエリを使用し、インデックスのクエリを行って、これが行われることを確認します。これは、すべての記事に適用できるすべての "category filters" をインデックスから取得します (この場合は、software、hardware、networking など)。また、Azure Search は、各ファセットの記事の数を返します。
 
 ```javascript
     bot.dialog('ExploreKnowledgeBase', [
@@ -259,7 +256,7 @@
     });
 ```
 
-3.  \$filter=... クエリを使用して記事カテゴリで検索を行うための 2 つ目のウォーターフォール手順を追加します。
+3.  `$filter=...` クエリを使用して記事カテゴリで検索を行うための 2 つ目のウォーターフォール手順を追加します。
 
 ```javascript
     (session, args) => {
@@ -282,9 +279,9 @@
     }
 ```
 
-> **注:** session.replaceDialog() メソッドにより、呼び出し元に返さずに、現在のダイアログを終了し、これを新しいものに置き換えることができます。
+> **注:** `session.replaceDialog()` メソッドにより、呼び出し元に返さずに、現在のダイアログを終了し、これを新しいものに置き換えることができます。
 
-4.  **DetailsOf** ダイアログを追加するために、**app.js** ファイルの最後に以下のコードを追加します。このダイアログは、タイトルに基づいて特定の記事を取得します(\$filter='title eq ...' クエリ フィルターを確認します)。
+4.  **DetailsOf** ダイアログを追加するために、**app.js** ファイルの最後に以下のコードを追加します。このダイアログは、タイトルに基づいて特定の記事を取得します(`$filter='title eq ...'` クエリ フィルターを確認します)。
 
 ```javascript
     bot.dialog('DetailsOf', [
@@ -303,7 +300,7 @@
     });
 ```
 
- **注:** わかりやすくするために、記事のコンテンツは Azure Search から直接取得されます。しかしながら、本番のシナリオでは、Azure Search はインデックスとしてのみ機能し、記事の全文は Cosmos DB から取得されます。
+> **注:** わかりやすくするために、記事のコンテンツは Azure Search から直接取得されます。しかしながら、本番のシナリオでは、Azure Search はインデックスとしてのみ機能し、記事の全文は Cosmos DB から取得されます。
 
 5.  **ShowKBResults** ダイアログに対応するための以下のダイアログを追加します。このダイアログは、ThumbnailCard のカルーセルを使用して、記事の結果の一覧をユーザーに示します。通常、カードには、1 つの大きな画像、1つ以上のボタン、およびテキストが含まれています。ユーザーに対してリッチなカードを示す方法の詳細については、[こちらの記事](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-send-rich-cards)を参照してください。
 
@@ -331,9 +328,9 @@
     ]);
 ```
 
- **注:** ポストバックのアクション タイプは、ボットにメッセージをプライベートでポストするため、そのメッセージがポストされたことは会話内の他の参加者にはわかりません。
+ >**注:** ポストバックのアクション タイプは、ボットにメッセージをプライベートでポストするため、そのメッセージがポストされたことは会話内の他の参加者にはわかりません。
 
-6.  最後に、ナレッジ ベースの機能が含まれるように Help ダイアログのテキストを更新します。
+6.  最後に、ナレッジ ベースの機能が含まれるように `Help` ダイアログのテキストを更新します。
 
 ```javascript
     bot.dialog('Help',
@@ -348,40 +345,37 @@
 
 ## タスク 7: エミュレーターからボットをテストする
 
-1.  コンソール (nodemon app.js)からアプリを実行し、エミュレーターを開きます。ボットの URL (http://localhost:3978/api/messages ) をいつもどおり入力します。
+1.  コンソール (`nodemon app.js`)からアプリを実行し、エミュレーターを開きます。ボットの URL (`http://localhost:3978/api/messages` ) をいつもどおり入力します。
 
-2.  「explore knowledge base」と入力します。Cosmos DB にアップロードした記事カテゴリの一覧、および各カテゴリの記事の数が表示されます。
+2.  `explore knowledge base`と入力します。Cosmos DB にアップロードした記事カテゴリの一覧、および各カテゴリの記事の数が表示されます。
 
-   ![](./media/4-14.png)
+   ![exercise4-emulator-explorekb2](./media/4-14.png)
 
 3.  一覧表示されたカテゴリのいずれかをクリックすると、そのカテゴリの記事が表示されます。
 
-   ![](./media/4-15.png)
+   ![exercise4-emulator-showkbresults](./media/4-15.png)
 
-4.  記事の [More Details] ボタンをクリックすると、記事の全文が表示されます。
+4.  記事の **More Details** ボタンをクリックすると、記事の全文が表示されます。
 
-   ![](./media/4-16.png)
+   ![exercise4-emulator-detailsofarticle](./media/4-16.png)
 
-5.  特定のカテゴリを検索してみてもかまいません。「explore software articles」と入力すると、そのカテゴリに属する記事がいくつか表示されます。
+5.  特定のカテゴリを検索してみてもかまいません。`explore software articles`と入力すると、そのカテゴリに属する記事がいくつか表示されます。
 
-   ![](./media/4-17.png)
+   ![exercise4-emulator-explorecategory2](./media/4-17.png)
 
-6.  同様に、特定のトピックに関する記事を検索してみてもかまいません。たとえば、「search
- about OneDrive」と入力します。
+6.  同様に、特定のトピックに関する記事を検索してみてもかまいません。たとえば、`search about OneDrive` と入力します。
 
-   ![](./media/4-18.png)
+   ![exercise4-emulator-search](./media/4-18.png)
 
- **注:** 検索によって返されるドキュメントごとにスコアが返されることを確認してください。
+ > **注:** 検索によって返されるドキュメントごとにスコアが返されることを確認してください。
 
 ## その他の課題
 
 自主的に学習を続ける場合は、次のタスクを利用できます。
 
-* カルーセルで使用される記事 ThumbnailCard をアダプティブカードで変更できます。例として[こちら](../assets/exercise4-KnowledgeBase/FurtherChallenge/articlesCard.js)で提供されているコードを使用できます。
-
-* 記事 ThumbnailCard で既定の画像を表示する代わりに、[Bing Image Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/)
-    を使用して、記事のカテゴリに関連する画像を表示できます。ハンズオン ラボの
-    [assets](../assets)
-    フォルダーの[こちらのモジュール](../assets/exercise4-KnowledgeBase/FurtherChallenge/imageSearchApiClient.js)を使用できます。
+* カルーセルで使用される記事 `ThumbnailCard` をアダプティブカードで変更できます。例として[こちら](../assets/exercise4-KnowledgeBase/FurtherChallenge/articlesCard.js)で提供されているコードを使用できます。
+* 記事 `ThumbnailCard` で既定の画像を表示する代わりに、[Bing Image Search API](https://azure.microsoft.com/en-us/services/cognitive-services/bing-image-search-api/)
+を使用して、記事のカテゴリに関連する画像を表示できます。ハンズオン ラボの[assets](../assets)
+フォルダーの[こちらのモジュール](../assets/exercise4-KnowledgeBase/FurtherChallenge/imageSearchApiClient.js)を使用できます。
 
 **次の演習** [演習5 クラウドへのボットの展開](./exercise5-Deployment.md)
