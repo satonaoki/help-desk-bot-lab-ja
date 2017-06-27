@@ -12,39 +12,29 @@ npm install を実行してください。
 
 この演習を完了するには、以下のソフトウェアが必要です。
 
--   [最新の Node.js と NPM](https://nodejs.org/en/download)
+* [最新の Node.js と NPM](https://nodejs.org/en/download)
 
--   [Visual Studio Code](https://code.visualstudio.com/download) (推奨) や
-    Visual Studio 2017 Community 以上などのコード エディター
+* [Visual Studio Code](https://code.visualstudio.com/download) (推奨) や Visual Studio 2017 Community 以上などのコード エディター
 
--   [Bot Framework Emulator](https://emulator.botframework.com/) (en-US
-    ロケールで構成されていることを確認してください)
+* [Bot Framework Emulator](https://emulator.botframework.com/) (en-US ロケールで構成されていることを確認してください)
 
 ## ラボ ノート
 
-サーバーとボットのコードが混在することで、app.js
-が多少長くなることに気づくかもしれません。これは、わかりやすくラボを進めるためのものです。より複雑なボットでは、通常、複数のファイルにボットを分割することになります。
-f
+サーバーとボットのコードが混在することで、`app.js` が多少長くなることに気づくかもしれません。これは、わかりやすくラボを進めるためのものです。より複雑なボットでは、通常、複数のファイルにボットを分割することになります。
+
 ## タスク 1: ボットへの会話の追加
 
 このタスクでは、ボットを変更して、いくつかアクションを実行する前に、ユーザーに一連の質問をします。
 
-1.  前の演習から得られた app.js
-    ファイルを開きます。または、[exercise1-EchoBot](./exercise1-EchoBot)
-    フォルダーからこのファイルを開くこともできます。
+1.  前の演習から得られた `app.js`ファイルを開きます。または、[exercise1-EchoBot](./exercise1-EchoBot) フォルダーからこのファイルを開くこともできます。
 
-2.  以下のように、UniversalBot
-    コネクターを作成するコードを更新します。ボットのメッセージ
-    ハンドラーが、単一の関数ではなく、ウォーターフォールと呼ばれる関数の配列となっていることに気づくでしょう。ユーザーがこのボットにメッセージを送信すると、ウォーターフォールの最初の関数が呼び出されます。これはユーザーへのあいさつで、text()
-    を使用して、まず、問題について説明することを求めます。SDK
-    では、ユーザーからの入力の収集を簡単にするためのビルトイン
-    プロンプトのセットを提供しています。
-    
-    ユーザーの応答が、ウォーターフォールの 2 番目の関数に渡されます。この関数では、説明の内容を確認します。このカスケード形式の質問/応答シーケンスから、ウォーターフォールという名前が付いています。
-    
+2.  以下のように、UniversalBot コネクターを作成するコードを更新します。ボットのメッセージハンドラーが、単一の関数ではなく、ウォーターフォールと呼ばれる関数の配列となっていることに気づくでしょう。ユーザーがこのボットにメッセージを送信すると、ウォーターフォールの最初の関数が呼び出されます。これはユーザーへのあいさつで、`text()` を使用して、まず、問題について説明することを求めます。SDK では、ユーザーからの入力の収集を簡単にするためのビルトインプロンプトのセットを提供しています。
+
+    ユーザーの応答が、ウォーターフォールの 2 番目の関数に渡されます。この関数では、説明の内容を確認します。このカスケード形式の質問/応答シーケンスから、ウォータフォールという名前が付いています。
+
     また、応答はダイアログ データに保持されます。ダイアログ データは、1 つのダイアログ インスタンスの情報の保持に使用されます。これは、ダイアログのウォーターフォールのステップ間で一時情報を保存するために重要です。
 
-    ``` javascript
+``` javascript
     var bot = new builder.UniversalBot(connector, [
         (session, args, next) => {
             session.send('Hi! I\'m the help desk bot and I can help you create a ticket.');
@@ -56,16 +46,13 @@ f
             session.endDialog();
         }
     ]);
-    ```
+```
 
-3.  コンソール (nodemon app.js)
-    からアプリを実行し、エミュレーターを開きます。いつもどおりにボットの URL
-    を入力し (http://localhost:3978/api/messages )、ボットをテストします。
+3.  コンソール (`nodemon app.js`) からアプリを実行し、エミュレーターを開きます。いつもどおりにボットの URL を入力し (http://localhost:3978/api/messages )、ボットをテストします。
 
    ![](./media/2-1.png)
 
-4.  コンソール ウィンドウでも、メッセージ ハンドラーが 1
-    つずつ実行される様子を確認できます。
+4.  コンソール ウィンドウでも、メッセージ ハンドラーが 1 つずつ実行される様子を確認できます。
 
    ![](./media/2-2.png)
 
@@ -74,14 +61,12 @@ f
 このタスクでは、さらに多くのメッセージ ハンドラーをボット
 ウォーターフォールに追加して、チケットのすべての詳細について尋ねます。
 
-1.  以下のように、UniversalBot
-    コネクターを作成するコードを更新します。これにより、2
-    種類のプロンプトが導入されます。
+1.  以下のように、UniversalBot コネクターを作成するコードを更新します。これにより、2 種類のプロンプトが導入されます。
 
-    -   Prompts.choice(): チケットの重要度について尋ねます。
-    -   Prompts.confirm(): チケットの情報が正しいことを確認します。
+* `Prompts.choice()`: チケットの重要度について尋ねます。
+* `Prompts.confirm()`: チケットの情報が正しいことを確認します。
 
-    ```javascript
+```javascript
     var bot = new builder.UniversalBot(connector, [
         (session, args, next) => {
             session.send('Hi! I\'m the help desk bot and I can help you create a ticket.');
@@ -115,9 +100,9 @@ f
             }
         }
     ]);
-    ```
+```
 
->   **注:** Markdown 構文を使用して、よりリッチなテキスト メッセージを作成できることに注意してください。ただし、すべてのチャネルで Markdown がサポートされるわけではないので、注意することが重要です。
+   **注:** Markdown 構文を使用して、よりリッチなテキスト メッセージを作成できることに注意してください。ただし、すべてのチャネルで Markdown がサポートされるわけではないので、注意することが重要です。
 
 2.  アプリを再実行して、エミュレーターの [Start new conversation] ボタン ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png) を使用します。新しい会話をテストします。
 
@@ -127,13 +112,9 @@ f
 
 ## タスク 3: 外部 API を呼び出してチケットを保存
 
-この時点で、チケットのすべての情報が取得されましたが、この情報はウォーターフォールが終了すると破棄されます。今度は、外部
-API
-を使用して、チケットを作成するコードを追加します。わかりやすくするため、チケットをインメモリ
-アレイに保存する単純なエンドポイントを使用します。実稼働環境では、ボットのコードからアクセスできる任意の
-API を使用できます。
+この時点で、チケットのすべての情報が取得されましたが、この情報はウォーターフォールが終了すると破棄されます。今度は、外部 API を使用して、チケットを作成するコードを追加します。わかりやすくするため、チケットをインメモリアレイに保存する単純なエンドポイントを使用します。実稼働環境では、ボットのコードからアクセスできる任意の API を使用できます。
 
-> **注:** ボットについての重要事項として、構築するほとんどのボットが既存の API のフロント エンドとなるということに留意してください。単純に言えば、ボットはアプリであり、人工知能 (AI)、機械学習 (ML)、または自然言語処理 (NLP) がなくてもボットとみなされます。
+ **注:** ボットについての重要事項として、構築するほとんどのボットが既存の API のフロント エンドとなるということに留意してください。単純に言えば、ボットはアプリであり、人工知能 (AI)、機械学習 (ML)、または自然言語処理 (NLP) がなくてもボットとみなされます。
 
 1.  アプリのルート フォルダーで新しい **ticketsApi.js**
     ファイルを作成し、以下のコードを追加します。
@@ -155,50 +136,45 @@ API を使用できます。
 
 ## タスク 4: サーバーを更新して API をホスト
 
-以下のステップでは、app.js
-のコードをクリーンアップして、サービスの追加のサポートを向上させます。さらに、Restify
-を更新して API と併用できるようにします。
+以下のステップでは、`app.js` のコードをクリーンアップして、サービスの追加のサポートを向上させます。さらに、Restify を更新して API と併用できるようにします。
 
-1.  app.js ファイルの冒頭に、以下の require ステートメントを追加します。
+1.  `app.js` ファイルの冒頭に、以下の require ステートメントを追加します。
 
-    ```javascript
-    const ticketsApi = require('./ticketsApi');
-    ```
+```javascript
+        const ticketsApi = require('./ticketsApi');
+```
 
-2.  listenPort 定数を追加します。
+2.  `listenPort` 定数を追加します。
 
-    ```javascript
+```javascript
     const listenPort = process.env.port || process.env.PORT || 3978;
-    ```
+```
     
-3.  ticketSubmissionUrl 定数を追加します。
+3.  `ticketSubmissionUrl` 定数を追加します。
 
-    ```javascript
+```javascript
     const ticketSubmissionUrl = process.env.TICKET_SUBMISSION_URL || `http://localhost:${listenPort}`;
-    ```
+```
 
-4.  以下に示すように、server.listen() を更新します。
+4.  以下に示すように、`server.listen()` を更新します。
 
-    ```javascript
-    server.listen(listenPort, '::', () => {
+```javascript
+        server.listen(listenPort, '::', () => {
         console.log('Server Up');
     });
-    ```
+```
 
-5.  bodyParser を追加します。これにより、以下に示すように、API
-    でメッセージ本文とチケット API を読み取れるようになります。
+5.  `bodyParser` を追加します。これにより、以下に示すように、API でメッセージ本文とチケット API を読み取れるようになります。
 
-    ```javascript
+```javascript
     // Setup body parser and tickets api
     server.use(restify.bodyParser());
     server.post('/api/tickets', ticketsApi);
-    ```
+```
 
-6.  **最後のメッセージ
-    ハンドラー**のコードを、以下のコードに置き換えます。このコードでは、dialogData
-    をチケット API に送信します。
+6.  **最後のメッセージハンドラー** のコードを、以下のコードに置き換えます。このコードでは、dialogData をチケット API に送信します。
 
-    ```javascript
+```javascript
     // --- existing code here ---
     (session, result, next) => {
         if (result.response) {
@@ -223,7 +199,7 @@ API を使用できます。
             session.endDialog('Ok. The ticket was not created. You can start again if you want.');
         }
     }
-    ```
+```
 
 7.  ファイルを保存して、エミュレーターの [Start new conversation] ボタン ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png) をクリックします。すべての会話を再度テストして、API からチケット ID が返されることを確認します。
 
@@ -231,40 +207,25 @@ API を使用できます。
 
 ## タスク 5: 通知メッセージを変更してアダプティブ カードを表示
 
-このタスクでは、チケットで[アダプティブ
-カード](http://adaptivecards.io/)を使用した後、ユーザーに表示される確認メッセージを向上させます。アダプティブ
-カードとは、開発者が一定の共通方式で UI
-コンテンツをやり取りできるようにするための、オープン
-ソースのカード交換フォーマットです。アダプティブ カードのコンテンツは、JSON
-オブジェクトとして指定できます。コンテンツはホスト アプリケーション (Bot
-Framework チャネル)
-内でネイティブにレンダリングでき、ホストの外観に自動的に適合します。
+このタスクでは、チケットで[アダプティブカード](http://adaptivecards.io/)を使用した後、ユーザーに表示される確認メッセージを向上させます。アダプティブ
+カードとは、開発者が一定の共通方式で UI コンテンツをやり取りできるようにするための、オープンソースのカード交換フォーマットです。アダプティブ カードのコンテンツは、JSON オブジェクトとして指定できます。コンテンツはホスト アプリケーション (Bot Framework チャネル)内でネイティブにレンダリングでき、ホストの外観に自動的に適合します。
 
-カードを簡単に作成するため、カードの JSON は
-[ticket.json](../assets/exercise2-TicketSubmissionDialog/ticket.json)
-ファイルに既に用意されています。通常は、コンテンツに対して構造が既に作成されており、ランタイムに動的に追加します。ticket.json
-を探す際は、{ticketId}、{severity}、{category}、および {description}
-のプレースホルダーに注意します。オブジェクト内でこれらの文字列を探し、適切な値を指定して更新します。
+カードを簡単に作成するため、カードの JSON は [ticket.json](../assets/exercise2-TicketSubmissionDialog/ticket.json)ファイルに既に用意されています。通常は、コンテンツに対して構造が既に作成されており、ランタイムに動的に追加します。`ticket.json` を探す際は、`{ticketId}`、`{severity}`、`{category}`、および`{description}` のプレースホルダーに注意します。オブジェクト内でこれらの文字列を探し、適切な値を指定して更新します。
 
-1.  アプリのルート フォルダーで、**cards**
-    という名前のフォルダーを作成します。この新しいフォルダーで、このハンズオン
-    ラボのルートにある
+1.  アプリのルート フォルダーで、**cards** という名前のフォルダーを作成します。この新しいフォルダーで、このハンズオンラボのルートにある
     [assets/exercise2](../assets/exercise2-TicketSubmissionDialog)
     フォルダーから **ticket.json** ファイルをコピーします。
 
-2.  前のタスクで得られた app.js ファイルを開きます。require
-    セクションで、読み取りを行う fs
-    モジュールを以下のようにファイルに追加します。
+2.  前のタスクで得られた `app.js` ファイルを開きます。require セクションで、読み取りを行う `fs` モジュールを以下のようにファイルに追加します。
 
-    ```javascript
+```javascript
     const fs = require('fs');
-    ```
+```
 
-3.  ファイルの末尾に createCard 関数を追加します。この関数は、JSON
-    ファイルのコンテンツを返し、プレースホルダーをパラメーターで置き換えます。
+3.  ファイルの末尾に `createCard` 関数を追加します。この関数は、JSON ファイルのコンテンツを返し、プレースホルダーをパラメーターで置き換えます。
 
 
-    ```javascript
+```javascript
     const createCard = (ticketId, data) => {
         var cardTxt = fs.readFileSync('./cards/ticket.json', 'UTF-8');
 
@@ -275,22 +236,22 @@ Framework チャネル)
 
         return JSON.parse(cardTxt);
     };
-    ```
+```
 
 4.  ウォーターフォールの最後のステップを探し、次の行を置き換えます。
 
-    ```javascript
+```javascript
     session.send(`Awesome! Your ticked has been created with the number ${ticketId}.`);
-    ```
+```
 
    次の行で置き換えます。
    
-   ```javascript
+```javascript
    session.send(new builder.Message(session).addAttachment({
        contentType: "application/vnd.microsoft.card.adaptive",
        content: createCard(ticketId, data)
    }));
-   ```
+```
 
 5.  ファイルを保存して、エミュレーターの [Start new conversation] ボタンを使用します ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png)。新しい会話をテストします。確認メッセージについては、以下を参照してください。
 
@@ -300,8 +261,6 @@ Framework チャネル)
 
 自主的に学習を続ける場合は、次のタスクを利用できます。
 
--   conversationUpdate イベントを使用してボットにウェルカム
-    メッセージを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-handle-conversation-events#greet-a-user-on-conversation-join)を参照してください。
+* conversationUpdate イベントを使用してボットにウェルカムメッセージを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-handle-conversation-events#greet-a-user-on-conversation-join)を参照してください。
 
--   ボットがチケット API を呼び出す間、ボットにタイピング
-    インジケーターを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-send-typing-indicator)を参照してください。
+* ボットがチケット API を呼び出す間、ボットにタイピングインジケーターを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-send-typing-indicator)を参照してください。
