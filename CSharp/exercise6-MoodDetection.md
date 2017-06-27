@@ -15,6 +15,13 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 
 [こちらのフォルダー](./exercise6-MoodDetection)内には、この演習のステップで作成するコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。このソリューションを使用する場合は、必ず事前に
 Web.config で値を設定してください。
+>演習 5 から引き続いて行う場合は、web.config にある appSettings の値を初期値に戻す必要があります。
+>``` xml
+>    <add key="BotId" value="YourBotID" />
+>    <add key="MicrosoftAppId" value="" />
+>    <add key="MicrosoftAppPassword" value="" />
+>    <add key="TicketsAPIBaseUrl" value="http://localhost:3979/" />
+>    ```
 
 ## 前提条件
 
