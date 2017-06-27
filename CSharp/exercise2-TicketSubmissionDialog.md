@@ -139,7 +139,7 @@
 
 1.  アプリを停止します。**Controllers** フォルダーで、このハンズオン ラボの [assets フォルダーの TicketsController.cs](../assets/exercise2-TicketSubmissionDialog/TicketsController.cs) をコピーします。これは、/api/tickets エンドポイントへの **POST** 要求を処理し、チケットをアレイに追加して、作成されたチケット ID を使用して応答します。
 
-2.  新しい Util フォルダーをプロジェクトに追加します。新しいフォルダーで、ボットからチケット API を呼び出す TicketAPIClient.cs ファイルをコピーします。
+2.  新しい Util フォルダーをプロジェクトに追加します。新しいフォルダーで、ボットからチケット API を呼び出す [TicketAPIClient.cs](../assets/exercise2-TicketSubmissionDialog/TicketAPIClient.cs) ファイルをコピーします。
 
 3.  **appSettings** セクションで **TicketsAPIBaseUrl** キーを追加して、Web.Config ファイルを更新します。このキーには、チケット API を実行するベース URL が含まれます。この演習では、ボットを実行する URL と同じになりますが、実稼働環境のシナリオでは別の URL になることがあります。
 
@@ -193,7 +193,7 @@
 
 このタスクでは、チケットで[アダプティブ カード](http://adaptivecards.io/)を使用した後、ユーザーに表示される確認メッセージを向上させます。アダプティブ カードとは、開発者が一定の共通方式で UI コンテンツをやり取りできるようにするための、オープン ソースのカード交換フォーマットです。アダプティブ カードのコンテンツは、JSON オブジェクトとして指定できます。コンテンツはホスト アプリケーション (Bot Framework チャネル) 内でネイティブにレンダリングでき、ホストの外観に自動的に適合します。
 
-1.  Microsoft.AdaptiveCards NuGet パッケージを追加する必要があります。[ソリューション エクスプローラー] でプロジェクトの [References] フォルダーを右クリックして、[NuGet パッケージの管理] をクリックします。Microsoft.AdaptiveCards を探し、[インストール] ボタンをクリックします。または、[パッケージ マネージャー コンソール] で Install-Package Microsoft.AdaptiveCards と入力します。
+1.  Microsoft.AdaptiveCards NuGet パッケージを追加する必要があります。[ソリューション エクスプローラー] でプロジェクトの [参照] フォルダーを右クリックして、[NuGet パッケージの管理] をクリックします。Microsoft.AdaptiveCards を探し、[インストール] ボタンをクリックします。または、[パッケージ マネージャー コンソール] で Install-Package Microsoft.AdaptiveCards と入力します。
 
 2.  **Dialogs\\RootDialog.cs** ファイルを開きます。
 
