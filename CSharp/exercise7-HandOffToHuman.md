@@ -118,34 +118,24 @@ IScorable に渡されて処理されますScorable
     PrepareAsync メソッドは受信メッセージを受け取り、他のメソッドをいくつか呼び出して解決をトリガーします。
 
     ```CSharp
-    namespace HelpDeskBot.HandOff
+    protected override async Task<ConversationReference> PrepareAsync(IActivity activity, CancellationToken token)
     {
-        using System;
-        using System.Threading;
-        using System.Threading.Tasks;
-        using Microsoft.Bot.Builder.Dialogs.Internals;
-        using Microsoft.Bot.Builder.Internals.Fibers;
-        using Microsoft.Bot.Builder.Scorables.Internals;
-        using Microsoft.Bot.Connector;
+        var message = activity as Activity;
 
-        public class RouterScorable : ScorableBase<IActivity, ConversationReference, double>
+        if (message != null && !string.IsNullOrWhiteSpace(message.Text))
         {
-            private readonly ConversationReference conversationReference;
-            private readonly Provider provider;
-            private readonly IBotData botData;
-
-            public RouterScorable(IBotData botData, ConversationReference conversationReference, Provider provider)
+            // determine if the message comes from an agent or user
+            if (this.botData.IsAgent())
             {
-                SetField.NotNull(out this.botData, nameof(botData), botData);
-                SetField.NotNull(out this.conversationReference, nameof(conversationReference), conversationReference);
-                SetField.NotNull(out this.provider, nameof(provider), provider);
+                return this.PrepareRouteableAgentActivity(message.Conversation.Id);
             }
-
-            protected override Task DoneAsync(IActivity item, ConversationReference state, CancellationToken token)
+            else
             {
-                return Task.CompletedTask;
+                return this.PrepareRouteableUserActivity(message.Conversation.Id);
             }
         }
+
+        return null;
     }
     ```
     
