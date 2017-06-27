@@ -37,9 +37,12 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
     Bot Builder は Bot Framework の一部で、ボットの作成に使用しますが、Restify は、ボットをホストする Web アプリケーションへのサービス提供に使用されます。Bot Builder SDK は、ご使用の Web フレームワークからは独立していることに注意してください。このハンズオンラボでは Restify を使用しますが、Express や Koaなど別のものも使用できます。Dotenv は、独立したファイルですべての構成設定を簡単に維持するために使用されます。
 
 <!--- ドライラン時に補足追加 -->
-> 補足: npm init 時にパラメータを入力しなかった場合は下記のワーニングが出力されます。
-> npm WARN helpbot@1.0.0 No description
-> npm WARN helpbot@1.0.0 No repository field.
+ 補足: npm init 時にパラメータを入力しなかった場合は下記のワーニングが出力されます。
+
+```
+    npm WARN helpbot@1.0.0 No description
+    npm WARN helpbot@1.0.0 No repository field.
+```
 
 3. [Nodemon](https://nodemon.io/) の dev 依存関係をインストールします。これは、アプリケーションをホストし、JavaScript に変更が加えられるたびに更新します。
 
@@ -51,11 +54,11 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 
 1. プロジェクトのルート ディレクトリ(に、以下の内容を含む .envという名前のファイルを作成します。このファイルを使用して、ボットを構成します。
 
-    ```
+```
     PORT=3978
     MICROSOFT_APP_ID=
     MICROSOFT_APP_PASSWORD=
-    ```
+```
 
 2. ルート ディレクトリに `app.js` という名前のファイルを作成します。ルートディレクトリはアプリケーションおよびボットのルートとなります。ボットは Restify フレームワークを使用して、既定でポート 3978 をリッスンします。Restify フレームワークは、ボットを開発する際の標準となっています。
 
@@ -69,7 +72,7 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 
     以下のコードを `app.js` に追加します。
 
-    ``` javascript
+``` javascript
     require('dotenv').config();
     const restify = require('restify');
     const builder = require('botbuilder');
@@ -95,7 +98,7 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
             session.send('You said: ' + session.message.text + ' which was ' + session.message.text.length + ' characters');
         }
     ]);
-    ```
+```
 
 ## タスク 3: ボットをテストする
 
@@ -104,11 +107,11 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 1.  以下のコマンドを使用して、コンソール
     ウィンドウでボットを起動します。この時点で、ボットはローカルに実行されています。
 
-    ```
+```
     nodemon app.js
-    ```
+```
 
-    > **注:** Windows ファイアウォールの警告が表示される場合は、 **[アクセスを許可]** をクリックします。また `EADDRINUSE` エラーが発生する場合は、既定のポートを 3979 または同様のポートに変更します。
+ **注:** Windows ファイアウォールの警告が表示される場合は、 **[アクセスを許可]** をクリックします。また `EADDRINUSE` エラーが発生する場合は、既定のポートを 3979 または同様のポートに変更します。
 
 2.  次に、Bot Framework Emulator を起動し、ボットに接続します。アドレス バーに
     `http://localhost:3978/api/messages`
@@ -119,4 +122,4 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 
 4.  送信した各メッセージに対して、メッセージの先頭に "You said"、末尾に "which was \#\# characters" (\#\# はユーザーのメッセージの文字数) のテキストを付けて、おうむ返しにボットが応答するのを確認します。
 
-    >   ![](./media/1-1.png)
+   ![](./media/1-1.png)
