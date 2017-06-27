@@ -34,11 +34,11 @@ API](https://azure.microsoft.com/ja-jp/services/cognitive-services/text-analytic
 
 ## 前提条件
 
--   前の演習を完了していること、あるいは
+-   前の演習を完了していること、あるいはこの
     [C\#](./CSharp/exercise4-KnowledgeBase)
     または
     [Node.js](./Node/exercise4-KnowledgeBase)
-    用の開始点を使用できることが必要です。
+    を開始点として使用する。
 
 -   [Azure](https://azureinfo.microsoft.com/us-freetrial.html?cr_cc=200744395&wt.mc_id=usdx_evan_events_reg_dev_0_iottour_0_0)
     サブスクリプション。

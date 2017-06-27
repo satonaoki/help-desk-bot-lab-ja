@@ -38,7 +38,7 @@
 
 ## 前提条件
 
--   前の演習を完了していること、あるいは [C\#](./CSharp/exercise6-MoodDetection) または [Node.js](./Node/exercise6-MoodDetection) 用の開始点を使用できることが必要です。
+-   前の演習を完了していること、あるいはこの [C\#](./CSharp/exercise6-MoodDetection) または [Node.js](./Node/exercise6-MoodDetection) を開始点として使用する。
 
 -   [LUIS ポータル](https://www.luis.ai/)のアカウント
 

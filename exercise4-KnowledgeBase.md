@@ -63,11 +63,11 @@ Search は、さまざまなソース (Azure SQL DB、Cosmos DB、BLOB ストレ
 
 ## 前提条件
 
--   前の演習を完了している必要があります。あるいは
+-   前の演習を完了している必要があります。あるいはこの
     [C\#](./CSharp/exercise3-LuisDialog)
     または
     [Node.js](./Node/exercise3-LuisDialog)
-    用の開始点を使用できます。
+    を開始点として使用する。
 
 -   [LUIS ポータル](https://www.luis.ai/)のアカウント
 
