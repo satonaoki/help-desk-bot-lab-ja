@@ -34,7 +34,7 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 <!-- ドライラン時に補足追加 -->
 > 補足: init 時にプロンプト画面でいくつかパラメータの確認が出ますが、ハンズオンの内容とは特に関係ないため、今回は任意のパラメータをセットしてください。
 
-2. 次に、以下の npm コマンドを実行して、[Bot Builder SDK](https://dev.botframework.com/)、[Restify](http://restify.com/)、および[Dotenv](https://github.com/motdotla/dotenv)モジュールをインストールします。
+2. 次に、以下の npm コマンドを実行して、[Bot Builder SDK](https://dev.botframework.com/)、[Restify](http://restify.com/)、および[Dotenv](https://github.com/motdotla/dotenv)モジュールをバージョン指定でインストールします。
 
 <!--- ドライラン時に変更 -->
 ```
@@ -43,7 +43,7 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 <!--- ドライラン時に変更 -->
 
 
-    Bot Builder は Bot Framework の一部で、ボットの作成に使用しますが、Restify は、ボットをホストする Web アプリケーションへのサービス提供に使用されます。Bot Builder SDK は、ご使用の Web フレームワークからは独立していることに注意してください。このハンズオンラボでは Restify を使用しますが、Express や Koaなど別のものも使用できます。Dotenv は、独立したファイルですべての構成設定を簡単に維持するために使用されます。
+Bot Builder は Bot Framework の一部で、ボットの作成に使用しますが、Restify は、ボットをホストする Web アプリケーションへのサービス提供に使用されます。Bot Builder SDK は、ご使用の Web フレームワークからは独立していることに注意してください。このハンズオンラボでは Restify を使用しますが、Express や Koa など別のものも使用できます。Dotenv は、独立したファイルですべての構成設定を簡単に維持するために使用されます。
 
 <!--- ドライラン時に補足追加 -->
 > **補足** : npm init 時にパラメータを入力しなかった場合は下記のワーニングが出力されます。
@@ -51,8 +51,6 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
     npm WARN botbuilder@1.0.0 No description
     npm WARN botbuilder@1.0.0 No repository field.
 ```
-
-　バージョン指定で "Restify" , "dotenv" のインストールを行います。
 
 <!--　コメントアウト
 ```
