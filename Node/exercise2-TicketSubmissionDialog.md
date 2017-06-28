@@ -31,6 +31,13 @@
     "restify": "^4.3.0"
   };
 ```
+
+もし、なっていない場合は 下記のコマンドでコンポーネントの再インストールを行います。
+```
+    npm install --save botbuilder@3.8.4 restify@4.3.0 dotenv@4.0.0 
+    npm install -g nodemon
+```
+
 <!-- ドライラン時に補足追加 -->
 
 ## ラボ ノート
