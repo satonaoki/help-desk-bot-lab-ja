@@ -22,6 +22,15 @@
 >* node-v6.11.0-x64
 >* botframework-emulator-Setup-3.5.29
 >* Windows 10 Version 1703 (Build 15063.413)
+> package.json ファイルのバージョンが下記になっていることを確認してください。
+
+```json
+ "dependencies": {
+    "botbuilder": "^3.8.4",
+    "dotenv": "^4.0.0",
+    "restify": "^4.3.0"
+  };
+```
 <!-- ドライラン時に補足追加 -->
 
 ## ラボ ノート
@@ -57,6 +66,22 @@
 3.  コンソール (`nodemon app.js`) からアプリを実行し、エミュレーターを開きます。いつもどおりにボットの URL を入力し (`http://localhost:3978/api/messages` )、ボットをテストします。
 
    ![exercise2-dialog](./media/2-1.png)
+
+<!-- ドライラン時に補足追加 -->
+> **補足** 
+> `nodemon app.js` で実行した場合に、node のバージョン依存により
+> *server.use(restify.bodyParser());* に関するエラーが発生することがあります。
+> その場合は、package.json のバージョン指定の箇所を修正してください。
+
+```json
+ "dependencies": {
+    "botbuilder": "^3.8.4",
+    "dotenv": "^4.0.0",
+    "restify": "^4.3.0"
+  };
+```
+<!-- ドライラン時に補足追加 -->
+
 
 4.  コンソール ウィンドウでも、メッセージ ハンドラーが 1 つずつ実行される様子を確認できます。
 

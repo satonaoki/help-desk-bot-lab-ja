@@ -36,19 +36,30 @@ Bot Builder SDK for Node.js は、Node.js 開発者にとってなじみのあ�
 
 2. 次に、以下の npm コマンドを実行して、[Bot Builder SDK](https://dev.botframework.com/)、[Restify](http://restify.com/)、および[Dotenv](https://github.com/motdotla/dotenv)モジュールをインストールします。
 
+<!--- ドライラン時に変更 -->
 ```
-    npm install --save botbuilder restify dotenv
+    npm install --save botbuilder@3.8.4 restify@4.3.0 dotenv@4.0.0 
 ```
+<!--- ドライラン時に変更 -->
+
 
     Bot Builder は Bot Framework の一部で、ボットの作成に使用しますが、Restify は、ボットをホストする Web アプリケーションへのサービス提供に使用されます。Bot Builder SDK は、ご使用の Web フレームワークからは独立していることに注意してください。このハンズオンラボでは Restify を使用しますが、Express や Koaなど別のものも使用できます。Dotenv は、独立したファイルですべての構成設定を簡単に維持するために使用されます。
 
 <!--- ドライラン時に補足追加 -->
- 補足: npm init 時にパラメータを入力しなかった場合は下記のワーニングが出力されます。
+> **補足** : npm init 時にパラメータを入力しなかった場合は下記のワーニングが出力されます。
+```
+    npm WARN botbuilder@1.0.0 No description
+    npm WARN botbuilder@1.0.0 No repository field.
+```
 
+　バージョン指定で "Restify" , "dotenv" のインストールを行います。
+
+<!--　コメントアウト
 ```
-    npm WARN helpbot@1.0.0 No description
-    npm WARN helpbot@1.0.0 No repository field.
-```
+    npm install --save botbuilder restify dotenv
+```-->
+<!-- ドライラン時に補足追加 -->
+
 
 3. [Nodemon](https://nodemon.io/) の dev 依存関係をインストールします。これは、アプリケーションをホストし、JavaScript に変更が加えられるたびに更新します。
 
