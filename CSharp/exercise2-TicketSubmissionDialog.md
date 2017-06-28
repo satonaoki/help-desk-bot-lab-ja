@@ -322,7 +322,7 @@
 自主的に学習を続ける場合は、次のタスクを利用できます。
 
 -   conversationUpdate イベントを使用してボットにウェルカム
-    メッセージを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-handle-conversation-events#greet-a-user-on-conversation-join)を参照してください。
+    メッセージを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-activities#conversationupdate)を参照してください。
 
 -   ボットがチケット API を呼び出す間、ボットにタイピング
-    インジケーターを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-send-typing-indicator)を参照してください。
+    インジケーターを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-activities#typing)を参照してください。
