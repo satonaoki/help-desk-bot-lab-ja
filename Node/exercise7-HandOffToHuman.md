@@ -26,6 +26,30 @@
 *   [Bot Framework Emulator](https://emulator.botframework.com/) (en-US ロケールで構成されていることを確認してください)
 *   [LUIS ポータル](https://www.luis.ai/) のアカウント
 
+<!-- ドライラン時に補足追加 -->
+> 補足: このドキュメントの動作確認はそれぞれ下記バージョンにて実施しています。
+>* node-v6.11.0-x64
+>* botframework-emulator-Setup-3.5.29
+>* Windows 10 Version 1703 (Build 15063.413)
+> package.json ファイルのバージョンが下記になっていることを確認してください。
+
+```json
+ "dependencies": {
+    "botbuilder": "^3.8.4",
+    "dotenv": "^4.0.0",
+    "restify": "^4.3.0"
+  };
+```
+
+もし、なっていない場合は 下記のコマンドでコンポーネントの再インストールを行います。
+```
+    npm install --save botbuilder@3.8.4 restify@4.3.0 dotenv@4.0.0 
+    npm install -g nodemon
+```
+
+<!-- ドライラン時に補足追加 -->
+
+
 ## タスク 1: ハンドオフ ロジックの構築
 
 このタスクでは、2 人の人物 (ユーザーとエージェント) を橋渡しする通信を処理するために必要な "裏側" のロジックを追加します。送受信イベント/メッセージをインターセプトするミドルウェアを作成して配置する方法を学習します。
@@ -39,13 +63,13 @@ Bot Builder SDK for Node.js のミドルウェア機能により、ボットは�
     > -   **TEXT\_ANALYTICS\_KEY** を、自分が使用している Text Analytics キーに置き換えます (演習 6 で説明しています)。
     > -   **AZURE\_SEARCH\_INDEX** と **AZURE\_SEARCH\_KEY** を、自分が使用している検索インデックス名とキーに置き換えます (演習 4 で説明しています)。
 
-2.  ハンズオン ラボの `assets` フォルダーから次のファイルをコピーします。
+2.  `handoff` フォルダーを作成し、ハンズオン ラボの `assets` フォルダーから次のファイルをコピーします。
 
     *   [`provider.js`](../assets/exercise7-HandOffToHuman/provider.js): ヒューマン エージェントとの通信を待つユーザーを入れるキューを作成します。各会話には、次の 3 つの状態があります: `ConnectedToBot`、`WaitingForAgent`、`ConnectedToAgent`。状態に応じて、(次のステップで構築する) ルーターがメッセージをどちらか一方の会話に転送します。このモジュールでは、外部ストレージでキューを存続させません。これは、会話のメタデータを格納する場所でもあります。
 
     *   [`command.js`](../assets/exercise7-HandOffToHuman/command.js): エージェントとボット間の特別な対話を処理し、会話や会話の再開を待つユーザーをピークします。このモジュールには、ヒューマン エージェントからのメッセージをインターセプトして、ユーザーとの接続や通信の再開を実行するオプションにメッセージをルーティングする[ミドルウェア](../assets/exercise7-HandOffToHuman/command.js#L9)があります。
 
-3.  次のボイラープレート コードを使用して、handoff フォルダーに `router.js` ファイルを作成します。ルーターには、各メッセージがエージェントまたはユーザーのいずれに送信される必要があるかを把握する役割があります。
+3.  次のボイラープレート コードを使用して、`handoff` フォルダーに `router.js` ファイルを作成します。ルーターには、各メッセージがエージェントまたはユーザーのいずれに送信される必要があるかを把握する役割があります。
 
 ```javascript
     const builder = require('botbuilder');
@@ -248,7 +272,7 @@ Bot Builder SDK for Node.js のミドルウェア機能により、ボットは�
 
 ## タスク 3: エミュレーターからのボットのテスト
 
-1.  コンソールからアプリを実行して (`nodemon app.js`)、エミュレーターの 2 つのインスタンスを開きます。両方に、ボットの URL  (http://localhost:3978/api/messages ) をいつもどおり入力します。
+1.  コンソールからアプリを実行して (`nodemon app.js`)、エミュレーターの 2 つのインスタンスを開きます。両方に、ボットの URL (`http://localhost:3978/api/messages` ) をいつもどおり入力します。
 
 2.  1 つのエミュレーターで、`I need to reset my password, this is urgent` と入力して、新しいチケットを作成し、送信を確認します。ボットからフィードバックを求められたら、`it was useless and time wasting` と入力します。エージェントと話すかどうかを尋ねる、新しいプロンプトが表示されるはずです。
 

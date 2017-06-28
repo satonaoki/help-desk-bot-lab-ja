@@ -30,6 +30,29 @@ Also, you need to replace the `{DIRECTLINE_SECRET}` and `{BOT_ID}` placeholders 
 *   [Bot Framework Emulator](https://emulator.botframework.com/) (`en-US` ロケールで構成されていることを確認してください)
 *   ローカル開発用 [ngrok](https://ngrok.com/)
 
+<!-- ドライラン時に補足追加 -->
+> 補足: このドキュメントの動作確認はそれぞれ下記バージョンにて実施しています。
+>* node-v6.11.0-x64
+>* botframework-emulator-Setup-3.5.29
+>* Windows 10 Version 1703 (Build 15063.413)
+> package.json ファイルのバージョンが下記になっていることを確認してください。
+
+```json
+ "dependencies": {
+    "botbuilder": "^3.8.4",
+    "dotenv": "^4.0.0",
+    "restify": "^4.3.0"
+  };
+```
+
+もし、なっていない場合は 下記のコマンドでコンポーネントの再インストールを行います。
+```
+    npm install --save botbuilder@3.8.4 restify@4.3.0 dotenv@4.0.0 
+    npm install -g nodemon
+```
+
+<!-- ドライラン時に補足追加 -->
+
 ## タスク 1: ボットの Web チャット チャネルへの新しいサイトの追加
 
 1.  [Bot Framework ポータル](https://dev.botframework.com/) にサインインします。
@@ -38,11 +61,11 @@ Also, you need to replace the `{DIRECTLINE_SECRET}` and `{BOT_ID}` placeholders 
     
 > **注:** この演習では、Bot Framework ポータルにボットが既に登録されていることを前提としています。登録していない場合は、[演習 5](./exercise5-Deployment.md) の説明を参照してください。
 
-3.  Web チャット チャネルの **編集** ( ![exercise8-edit](media/aa9a2da6246391b3e1b7334f24ede1c9.png) ) リンクをクリックします。開いたウィンドウで **Add new site** をクリックします。サイト名 (例: ヘルプ デスク チケット検索) を入力します。
+3.  Web チャット チャネルの **Edit** ( ![exercise8-edit](media/aa9a2da6246391b3e1b7334f24ede1c9.png) ) リンクをクリックします。開いたウィンドウで **Add new site** をクリックします。_site name_ にサイト名 (例:  _Help Desk Ticket Search_) を入力します。
 
     ![exercise8-addnewsite](./media/8-3.png)
 
-4.  **完了** をクリックすると、次のページが表示されます。**秘密鍵**が 2 つあることに注意してください。後で使用できるように、いずれか 1 つを保存しておきます。**完了** をクリックします。
+4.  **Done** をクリックすると、次のページが表示されます。**Secret Keys**が 2 つあることに注意してください。後で使用できるように、いずれか 1 つを保存しておきます。**Done** をクリックします。
 
     ![exercise8-webchatsecrets](./media/8-4.png)
 

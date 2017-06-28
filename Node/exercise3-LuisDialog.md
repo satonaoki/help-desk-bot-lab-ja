@@ -22,6 +22,30 @@ Cognitive Services の一部である LUIS (Language Understanding Intelligent S
 * [Bot Framework Emulator](https://emulator.botframework.com/) (`en-US` ロケールで構成されていることを確認します)
 * [LUIS ポータル](https://www.luis.ai/)のアカウント
 
+<!-- ドライラン時に補足追加 -->
+> 補足: このドキュメントの動作確認はそれぞれ下記バージョンにて実施しています。
+>* node-v6.11.0-x64
+>* botframework-emulator-Setup-3.5.29
+>* Windows 10 Version 1703 (Build 15063.413)
+> package.json ファイルのバージョンが下記になっていることを確認してください。
+
+```json
+ "dependencies": {
+    "botbuilder": "^3.8.4",
+    "dotenv": "^4.0.0",
+    "restify": "^4.3.0"
+  };
+```
+
+もし、なっていない場合は 下記のコマンドでコンポーネントの再インストールを行います。
+```
+    npm install --save botbuilder@3.8.4 restify@4.3.0 dotenv@4.0.0 
+    npm install -g nodemon
+```
+
+<!-- ドライラン時に補足追加 -->
+
+
 ## タスク 1: LUIS アプリを作成する
 
 このタスクでは、LUIS ポータルでアプリを作成します。

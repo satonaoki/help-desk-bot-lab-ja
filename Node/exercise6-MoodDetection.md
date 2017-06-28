@@ -20,14 +20,37 @@ Azure Cognitive Services オファリングの一部である [Text AnalyticsAPI
 *   [Azure](https://azureinfo.microsoft.com/us-freetrial.html?cr_cc=200744395&wt.mc_id=usdx_evan_events_reg_dev_0_iottour_0_0) サブスクリプション
 *   [Bot Framework Emulator](https://emulator.botframework.com/) (`en-US` ロケールで構成されていることを確認してください)
 
+<!-- ドライラン時に補足追加 -->
+> 補足: このドキュメントの動作確認はそれぞれ下記バージョンにて実施しています。
+>* node-v6.11.0-x64
+>* botframework-emulator-Setup-3.5.29
+>* Windows 10 Version 1703 (Build 15063.413)
+> package.json ファイルのバージョンが下記になっていることを確認してください。
+
+```json
+ "dependencies": {
+    "botbuilder": "^3.8.4",
+    "dotenv": "^4.0.0",
+    "restify": "^4.3.0"
+  };
+```
+
+もし、なっていない場合は 下記のコマンドでコンポーネントの再インストールを行います。
+```
+    npm install --save botbuilder@3.8.4 restify@4.3.0 dotenv@4.0.0 
+    npm install -g nodemon
+```
+
+<!-- ドライラン時に補足追加 -->
+
+
 ## タスク 1: Text Analytics API キーの作成
 
 このタスクでは、Text Analytics アカウントを作成します。
 
 1.  [ここ](https://azure.microsoft.com/ja-jp/try/cognitive-services/)を参照して、**言語** タブをクリックします。Text Analytics API を見つけて **作成** をクリックします。使用条件に同意し、国を選択するように求められます。次に、**次へ** をクリックします。
 
-2.  Azure サブスクリプション アカウントでログインします。1 か月あたり 5,000の無料要求が可能な評価キーを含む次のようなページが表示されます。後で使用できるように、キーの
-1 つを保存しておきます。
+2.  Azure サブスクリプション アカウントでログインします。1 か月あたり 5,000 トランザクションの無料リクエストが可能な評価キーを含む次のようなページが表示されます。後で使用できるように、キーの 1 つを保存しておきます。
 
    ![exercise6-text-analytics-keys](./media/6-1.png)
 

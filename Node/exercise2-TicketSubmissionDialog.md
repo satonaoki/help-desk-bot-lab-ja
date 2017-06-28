@@ -26,9 +26,9 @@
 
 ```json
  "dependencies": {
-    "botbuilder": "^3.8.4",
-    "dotenv": "^4.0.0",
-    "restify": "^4.3.0"
+    "botbuilder": "3.8.4",
+    "dotenv": "4.0.0",
+    "restify": "4.3.0"
   };
 ```
 
