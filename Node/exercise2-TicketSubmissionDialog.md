@@ -4,8 +4,7 @@
 
 この演習では、ボットに会話機能を追加して、ヘルプ デスクチケットの作成をユーザーに案内する方法を学習します。
 
-[こちらのフォルダー](./exercise2-TicketSubmissionDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。ソリューションを使用するには、まず必ず
-`npm install` を実行してください。
+[こちらのフォルダー](./exercise2-TicketSubmissionDialog)内には、この演習のステップの完了結果として得られるコードを含むソリューションが入っています。このソリューションは、演習を進めるにあたってさらにヒントが必要な場合に、ガイダンスとして使用できます。ソリューションを使用するには、まず必ず `npm install` を実行してください。
 
 **前の演習** [演習1 Bot Builder SDK による初めての "おうむ返し" ボットの作成](./exercise1-EchoBot.md)
 
@@ -14,10 +13,16 @@
 この演習を完了するには、以下のソフトウェアが必要です。
 
 * [最新の Node.js と NPM](https://nodejs.org/en/download)
-
 * [Visual Studio Code](https://code.visualstudio.com/download) (推奨) や Visual Studio 2017 Community 以上などのコード エディター
-
 * [Bot Framework Emulator](https://emulator.botframework.com/) (en-US ロケールで構成されていることを確認してください)
+
+
+<!-- ドライラン時に補足追加 -->
+> 補足: このドキュメントの動作確認はそれぞれ下記バージョンにて実施しています。
+>* node-v6.11.0-x64
+>* botframework-emulator-Setup-3.5.29
+>* Windows 10 Version 1703 (Build 15063.413)
+<!-- ドライラン時に補足追加 -->
 
 ## ラボ ノート
 
@@ -49,13 +54,13 @@
     ]);
 ```
 
-3.  コンソール (`nodemon app.js`) からアプリを実行し、エミュレーターを開きます。いつもどおりにボットの URL を入力し (http://localhost:3978/api/messages )、ボットをテストします。
+3.  コンソール (`nodemon app.js`) からアプリを実行し、エミュレーターを開きます。いつもどおりにボットの URL を入力し (`http://localhost:3978/api/messages` )、ボットをテストします。
 
-   ![](./media/2-1.png)
+   ![exercise2-dialog](./media/2-1.png)
 
 4.  コンソール ウィンドウでも、メッセージ ハンドラーが 1 つずつ実行される様子を確認できます。
 
-   ![](./media/2-2.png)
+   ![exercise2-console](./media/2-2.png)
 
 ## タスク 2: チケット詳細のプロンプト
 
@@ -107,7 +112,7 @@
 
 2.  アプリを再実行して、エミュレーターの [Start new conversation] ボタン ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png) を使用します。新しい会話をテストします。
 
-   ![](./media/2-4.png)
+   ![exercise2-full-conversation-1](./media/2-4.png)
 
    この時点で再度ボットに話しかけると、ウォーターフォールが最初から開始されます。
 
@@ -117,10 +122,9 @@
 
  **注:** ボットについての重要事項として、構築するほとんどのボットが既存の API のフロント エンドとなるということに留意してください。単純に言えば、ボットはアプリであり、人工知能 (AI)、機械学習 (ML)、または自然言語処理 (NLP) がなくてもボットとみなされます。
 
-1.  アプリのルート フォルダーで新しい **ticketsApi.js**
-    ファイルを作成し、以下のコードを追加します。
+1.  アプリのルート フォルダーで新しい **ticketsApi.js** ファイルを作成し、以下のコードを追加します。
 
-    ``` javascript
+``` javascript
     var tickets = [];
     var lastTicketId = 1;
 
@@ -133,7 +137,7 @@
 
         res.send(ticketId.toString());
     };
-    ```
+```
 
 ## タスク 4: サーバーを更新して API をホスト
 
@@ -204,7 +208,7 @@
 
 7.  ファイルを保存して、エミュレーターの [Start new conversation] ボタン ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png) をクリックします。すべての会話を再度テストして、API からチケット ID が返されることを確認します。
 
-   ![](./media/2-5.png)
+   ![exercise2-full-conversation-2](./media/2-5.png)
 
 ## タスク 5: 通知メッセージを変更してアダプティブ カードを表示
 
@@ -254,16 +258,18 @@
    }));
 ```
 
-5.  ファイルを保存して、エミュレーターの [Start new conversation] ボタンを使用します ![](media/71c86a62bc7b5654b4d29c75091ee7b4.png)。新しい会話をテストします。確認メッセージについては、以下を参照してください。
+5.  ファイルを保存して、エミュレーターの [Start new conversation] ボタンを使用します ![exercise2-start-new](media/71c86a62bc7b5654b4d29c75091ee7b4.png)。新しい会話をテストします。確認メッセージについては、以下を参照してください。
 
-   ![](./media/2-6.png)
+   ![exercise2-emulator-adaptivecards](./media/2-6.png)
 
 ## その他の課題
 
 自主的に学習を続ける場合は、次のタスクを利用できます。
 
-* conversationUpdate イベントを使用してボットにウェルカムメッセージを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-handle-conversation-events#greet-a-user-on-conversation-join)を参照してください。
-
+* `conversationUpdate` イベントを使用してボットにウェルカムメッセージを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-handle-conversation-events#greet-a-user-on-conversation-join)を参照してください。
 * ボットがチケット API を呼び出す間、ボットにタイピングインジケーターを送信します。詳細は、[こちら](https://docs.microsoft.com/en-us/bot-framework/nodejs/bot-builder-nodejs-send-typing-indicator)を参照してください。
+* トラブルチケットを使用するために、データストアの SQL Server, MongoDB, Cosmos DB woSQL Server, MongoDB, Cosmos DB などのデーターベースを更新してください。
 
+<!--* Update the data store for the trouble tickets to use a database, such as SQL Server, MongoDB, or Cosmos DB.
+-->
 **次の演習** [演習3 言語理解の機能 (LUIS) によるボットのスマート化](./exercise3-LuisDialog.md)
