@@ -17,13 +17,9 @@ Cognitive Services の一部である LUIS (Language Understanding Intelligent S
 この演習を完了するには、以下のソフトウェアが必要です。
 
 * [最新の Node.js と NPM](https://nodejs.org/en/download)
-
 * [Visual Studio Code](https://code.visualstudio.com/download) (推奨) や Visual Studio 2017 Community 以上などのコード エディター
-
 * [Azure](https://azureinfo.microsoft.com/us-freetrial.html?cr_cc=200744395&wt.mc_id=usdx_evan_events_reg_dev_0_iottour_0_0) サブスクリプション
-
 * [Bot Framework Emulator](https://emulator.botframework.com/) (`en-US` ロケールで構成されていることを確認します)
-
 * [LUIS ポータル](https://www.luis.ai/)のアカウント
 
 ## タスク 1: LUIS アプリを作成する
@@ -38,7 +34,7 @@ Cognitive Services の一部である LUIS (Language Understanding Intelligent S
 
 2.  **New App** をクリックします。ダイアログ ボックスにアプリケーションの**名前** (たとえば、_HelpDeskBot_ ) を入力します。まだ選択されていない場合は、**Culture** で _English_ を選択します。
 
-   ![](./media/3-1.png)
+   ![exercise3-addluisapp](./media/3-1.png)
 <!---ドライラン追記--->
 補足：**New App** はブラウザ画面中央左上に表示されています。
 
@@ -46,7 +42,7 @@ Cognitive Services の一部である LUIS (Language Understanding Intelligent S
 
 4.  **Create** をクリックします。空の LUIS アプリ ダッシュボードが表示されます。
 
-   ![](./media/3-2.png)
+   ![exercise3-luis-dashboard](./media/3-2.png)
 
 ## タスク 2: LUIS に新しいエンティティを追加する
 
@@ -60,7 +56,7 @@ Cognitive Services の一部である LUIS (Language Understanding Intelligent S
 
 3.  表示されたダイアログで **Entity name** に _category_ と入力します。**Entity type** には _List_ を選択します。**Save** をクリックします。
 
-   ![](./media/3-3.png)
+   ![exercise3-luis-entity](./media/3-3.png)
 
 4.  新しいページが表示され、そのページで使用可能な値を追加できます。この処理をスピードアップするには、**Import Lists** リンクをクリックします。
 <!---ドライラン追記--->
@@ -70,7 +66,7 @@ Cognitive Services の一部である LUIS (Language Understanding Intelligent S
 
 6.  **severity** という名前の新しいエンティティでもこの処理を繰り返します、同じ場所にある severities.json という名前のファイルを使用して読み込みます。
 
-   ![](./media/3-4.png)
+   ![exercise3-severity](./media/3-4.png)
 
 7.  次に、左パネルの **Train & Test** をクリックします。
 
@@ -105,7 +101,7 @@ Cognitive Services の一部である LUIS (Language Understanding Intelligent S
 
 5.  前述の手順を使用して、発話を _help_、_hi_、_hello_ として新しい `Help` インテントを追加します。
 
-   ![](./media/3-6.png)
+   ![exercise3-save-utterances](./media/3-6.png)
 
 **注:** 他のインテントと異なる場合でも、"None" インテントに発話をいくつか追加することをお勧めします。トレーニング サンプルを指定しても、"None" インテントを起動するテキストに制約はかかりませんが、他のインテントの起動精度の向上に役立ちます。
 
@@ -113,7 +109,7 @@ Cognitive Services の一部である LUIS (Language Understanding Intelligent S
 
 7.  **Intents** メニューを開き、**SubmitTicket** インテントをクリックします。発話がエンティティ値によって認識されることを確認します。
 
-   ![](./media/3-7.png)
+   ![exercise3-luis-recognizedutterances](./media/3-7.png)
 
 8.  次に、LUIS アプリを発行してボットから使用できるようにします。左側のメニューの **Publish App** をクリックします。
 
@@ -137,8 +133,12 @@ LUIS アプリの出力が、HTTP エンドポイント (自然言語の理解�
 2.  次の行を追加して `.env` ファイルを更新し、_LUIS_MODEL_URL_ キーに前のタスクから得られた値を設定します。
 
 ```javascript
-    LUIS_MODEL_URL=`[前のタスクから得られた値]`
+    LUIS_MODEL_URL= 前のタスクから得られた値
 ```
+
+<!--- ドライラン追記 --->
+>**補足**
+> LUIS のURLは引用句でくくらずに記入してください。
 
 3.  ボット初期化後に次の行を追加して、ボットに LuisRecognizer を追加します (`new builder.UniversalBot(...)`)。標準の Bot Builder SDK には、LUISRecognizer
 クラスが含まれ、LUIS ポータルを使用してトレーニングした機械学習モデルの呼び出しに使用できます。このクラスには、`onEnabled` という名前の関数が存在し、条件に応じて認識エンジンの有効/無効を切り替えることができます。これは、ボットがユーザーに確認を行い、応答を待っている場合など、LUIS 抽出インテントおよびエンティティの必要がないことがわかっている場合に有益です。`onEnabled` 関数の詳細については、[こちら](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.intentrecognizer.html#onenabled)で確認できます。また、[onFilter](https://docs.botframework.com/en-us/node/builder/chat-reference/classes/_botbuilder_d_.intentrecognizer.html#onfilter)
