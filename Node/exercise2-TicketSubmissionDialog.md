@@ -17,6 +17,8 @@
 * [Bot Framework Emulator](https://emulator.botframework.com/) (en-US ロケールで構成されていることを確認してください)
 
 
+* [このドキュメントの原文](https://github.com/GeekTrainer/help-desk-bot-lab/blob/master/Node/exercise2-TicketSubmissionDialog.md)
+
 <!-- ドライラン時に補足追加 -->
 > 補足: このドキュメントの動作確認はそれぞれ下記バージョンにて実施しています。
 >* node-v6.11.0-x64

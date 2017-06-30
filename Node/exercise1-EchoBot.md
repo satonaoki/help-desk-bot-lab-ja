@@ -19,6 +19,8 @@
 >* node-v6.11.0-x64
 >* botframework-emulator-Setup-3.5.29
 >* Windows 10 Version 1703 (Build 15063.413)
+
+* [このドキュメントの原文](https://github.com/GeekTrainer/help-desk-bot-lab/blob/master/Node/exercise1-EchoBot.md)
 <!-- ドライラン時に補足追加 -->
 
 ## タスク 1: アプリを初期化し Bot Builder SDK をインストールする

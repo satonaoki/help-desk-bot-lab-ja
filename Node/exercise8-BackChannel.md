@@ -30,6 +30,8 @@ Also, you need to replace the `{DIRECTLINE_SECRET}` and `{BOT_ID}` placeholders 
 *   [Bot Framework Emulator](https://emulator.botframework.com/) (`en-US` ロケールで構成されていることを確認してください)
 *   ローカル開発用 [ngrok](https://ngrok.com/)
 
+* [このドキュメントの原文](https://github.com/GeekTrainer/help-desk-bot-lab/blob/master/Node/exercise8-BackChannel.md)
+
 <!-- ドライラン時に補足追加 -->
 > 補足: このドキュメントの動作確認はそれぞれ下記バージョンにて実施しています。
 >* node-v6.11.0-x64

@@ -20,6 +20,9 @@ Azure Cognitive Services オファリングの一部である [Text AnalyticsAPI
 *   [Azure](https://azureinfo.microsoft.com/us-freetrial.html?cr_cc=200744395&wt.mc_id=usdx_evan_events_reg_dev_0_iottour_0_0) サブスクリプション
 *   [Bot Framework Emulator](https://emulator.botframework.com/) (`en-US` ロケールで構成されていることを確認してください)
 
+* [このドキュメントの原文](https://github.com/GeekTrainer/help-desk-bot-lab/blob/master/Node/exercise6-MoodDetection.md)
+
+
 <!-- ドライラン時に補足追加 -->
 > 補足: このドキュメントの動作確認はそれぞれ下記バージョンにて実施しています。
 >* node-v6.11.0-x64

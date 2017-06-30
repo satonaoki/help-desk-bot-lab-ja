@@ -16,6 +16,8 @@
 *   [Git コマンド ライン インターフェイス](https://git-scm.com/downloads)
 *   [Skype](https://www.skype.com/) アカウント (オプション)
 
+* [このドキュメントの原文](https://github.com/GeekTrainer/help-desk-bot-lab/blob/master/Node/exercise5-Deployment.md)
+
 <!-- ドライラン時に補足追加 -->
 > 補足: このドキュメントの動作確認はそれぞれ下記バージョンにて実施しています。
 >* node-v6.11.0-x64
