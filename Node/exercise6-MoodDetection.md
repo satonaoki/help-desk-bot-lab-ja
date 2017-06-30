@@ -192,8 +192,8 @@ Azure Cognitive Services オファリングの一部である [Text AnalyticsAPI
         }
     }
 ```
-    
-    この部分を、`UserFeedbackRequest` ダイアログを呼び出す次のコードに置き換えてください。
+
+この部分を、`UserFeedbackRequest` ダイアログを呼び出す次のコードに置き換えてください。
 
 ```javascript
     session.replaceDialog('UserFeedbackRequest');
