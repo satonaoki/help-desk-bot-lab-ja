@@ -185,6 +185,11 @@ Bot Builder SDK for Node.js のミドルウェア機能により、ボットは�
     const handOffCommand = new HandOffCommand(handOffRouter);
 ```
 
+<!--- ドライラン追記 --->
+>**補足** ３の宣言よりも上に追加します。
+<!--- ドライラン追記 --->
+
+
 5.  `bot.use(...)` を使用して、各ミドルウェアをボットに接続します。
 
 ```javascript
