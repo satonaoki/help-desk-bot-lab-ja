@@ -68,6 +68,8 @@ Azure Cognitive Services オファリングの一部である [Text AnalyticsAPI
 
     > **注:** クライアントは `/sentiment` エンドポイントにアクセスしていますが、Text Analytics API は `/keyPhrases` エンドポイントと `/languages` エンドポイントも提供します。また、複数のドキュメントを分析用に送信できます。
 
+    
+
 ```javascript
     const restify = require('restify');
 
@@ -103,6 +105,7 @@ Azure Cognitive Services オファリングの一部である [Text AnalyticsAPI
         };
     };
 ```
+
 
 ## タスク 3: フィードバックを要求してユーザーのセンチメントを分析できるようにするためのボットの変更
 
@@ -169,7 +172,8 @@ Azure Cognitive Services オファリングの一部である [Text AnalyticsAPI
     ]);
 ```
 
-    > **注:** センチメント分析では、テキストを文に分割することをお勧めします。一般に、この分割によって、センチメント予測の精度が向上します。
+> **注:** センチメント分析では、テキストを文に分割することをお勧めします。一般に、この分割によって、センチメント予測の精度が向上します。
+
 
 6.  **SubmitTicket** ダイアログの最後のウォーターフォールステップを更新します。次のコード内の `session.endDialog();` の部分を変更します。
 
@@ -212,6 +216,7 @@ Azure Cognitive Services オファリングの一部である [Text AnalyticsAPI
    ![exercise6-negativefeedback](./media/6-4.png)
    
    この後の演習 (7) では、会話を人間の担当者に引き渡し (ハンドオフ)、担当者を通じてユーザーを支援する方法について学習します。
+
 
 ## その他の課題
 

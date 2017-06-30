@@ -164,7 +164,8 @@ Bot Builder SDK for Node.js のミドルウェア機能により、ボットは�
     *   _Connect me to a human being_
     *   _Operator_
 
-    > **注:** 既に LUIS に習熟している場合は、この演習の [assets](../assets/exercise7-HandOffToHuman/luis_model.json) フォルダーにあるファイル `luis_model.json` を各自のアカウントにインポートし、モデルをトレーニングおよび発行して、タスク 3 に進むことができます。しかし、LUIS の初心者である場合は、学習のためにモデルを最初から作成することをお勧めします。
+> **注:** 既に LUIS に習熟している場合は、この演習の [assets](../assets/exercise7-HandOffToHuman/luis_model.json) フォルダーにあるファイル `luis_model.json` を各自のアカウントにインポートし、モデルをトレーニングおよび発行して、タスク 3 に進むことができます。しかし、LUIS の初心者である場合は、学習のためにモデルを最初から作成することをお勧めします。
+
 
 2.  アプリをトレーニングして再度発行します。
 
@@ -273,6 +274,15 @@ Bot Builder SDK for Node.js のミドルウェア機能により、ボットは�
 ## タスク 3: エミュレーターからのボットのテスト
 
 1.  コンソールからアプリを実行して (`nodemon app.js`)、エミュレーターの 2 つのインスタンスを開きます。両方に、ボットの URL (`http://localhost:3978/api/messages` ) をいつもどおり入力します。
+
+<!--- ドライラン追記--->
+**補足** 
+macOS をご利用いただいている場合は、エミュレーターを開く際に、Terminal から `open` コマンドで実施してください。
+
+```
+    open -n {エミュレーターのフルパス}
+```
+
 
 2.  1 つのエミュレーターで、`I need to reset my password, this is urgent` と入力して、新しいチケットを作成し、送信を確認します。ボットからフィードバックを求められたら、`it was useless and time wasting` と入力します。エージェントと話すかどうかを尋ねる、新しいプロンプトが表示されるはずです。
 
