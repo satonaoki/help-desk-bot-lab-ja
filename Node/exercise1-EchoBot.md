@@ -19,6 +19,8 @@
 >* node-v6.11.0-x64
 >* botframework-emulator-Setup-3.5.29
 >* Windows 10 Version 1703 (Build 15063.413)
+>* macOS での前提条件の環境構築法については下記リンクを参考にしてください。
+> [演習 0: 前提条件にある環境を構築する](./exercise0-preparation.md)
 
 * [このドキュメントの原文](https://github.com/GeekTrainer/help-desk-bot-lab/blob/master/Node/exercise1-EchoBot.md)
 <!-- ドライラン時に補足追加 -->
