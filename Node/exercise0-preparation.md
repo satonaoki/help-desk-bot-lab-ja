@@ -18,7 +18,7 @@
 >* Google Chrome Version 59.0.3071.115 (Official Build) (64-bit)
 >* Visual Studio Code (version 1.13)
 >* macOS Sierra version 10.12.5
-<!--->* Windows 10 Version 1703 (Build 15063.413) --->
+<!---* Windows 10 Version 1703 (Build 15063.413) --->
 
 ## タスク 1 Node.js のインストール
 1. [https://nodejs.org/en/download/](https://nodejs.org/en/download/) にアクセスします。
